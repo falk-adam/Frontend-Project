@@ -1,4 +1,5 @@
-//HomePage
+//HomePage, browse and search for listings
+
 function HomePage() {
   return (
     <div className="bg-gray-400 flex-grow flex p-10">

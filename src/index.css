@@ -1,7 +1,10 @@
+/*import of google font Nunito Sans*/
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
 
+/*import of tailwind, includes basic reset*/
 @import "tailwindcss";
 
+/*custom reset/global styling can be added to the default tailwind base layer as done her below w., setting the Nunito Sans font globally*/
 @layer base {
   body {
     font-family: "Nunito Sans", sans-serif;
