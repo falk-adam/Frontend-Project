@@ -17,38 +17,36 @@ function LoginPage() {
 
     try {
       await login(username, password);
-      navigate("/");
+      navigate("/user");
     } catch {
       console.log("error" + error);
     }
   };
 
   return (
-    <div className="bg-gray-500 w-100% p-4 items-center justify-center">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div class="mx-2 mb-3 rounded bg-gray-800 p-4">
-          <label for="username" class="text-white">
-            Enter your username here:
-          </label>
-          <input
-            class="w-full bg-gray-800 py-2 text-xs text-gray-50 outline-none"
-            id="username"
-            type="text"
-            placeholder="username"
-          />
-        </div>
-        <div class="mx-2 mb-3 rounded bg-gray-800 p-4">
-          <label for="username" class="text-white">
-            Enter your password here:
-          </label>
-          <input
-            class="w-full bg-gray-800 py-2 text-xs text-gray-50 outline-none"
-            id="password"
-            type="password"
-          />
-        </div>
-        <button type="submit">Login</button>
+    <div className="bg-gray-400 w-full flex flex-col gap-2 justify-center items-center p-10">
+      <h2 className="text-xl">Login</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="bg-gray-200 flex flex-col gap-2 justify-center items-center"
+      >
+        <label htmlFor="username">Username</label>
+        <input
+          className="w-100 border bg-white"
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          className="w-100 border bg-white"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="bg-black rounded-sm text-white px-2" type="submit">
+          Login
+        </button>
       </form>
     </div>
   );
