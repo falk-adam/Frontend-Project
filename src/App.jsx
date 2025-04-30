@@ -12,6 +12,7 @@ import LoginPage from "./components/pages/LoginPage";
 import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 
 function App() {
+  // test push
   return (
     <BrowserRouter>
       <AuthProvider>
