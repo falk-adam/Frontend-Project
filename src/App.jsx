@@ -11,6 +11,7 @@ import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
+  // test push
   return (
     <BrowserRouter>
       <AuthProvider>
