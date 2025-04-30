@@ -11,3 +11,7 @@
     letter-spacing: 1px;
   }
 }
+
+@theme {
+  --breakpoint-mobile: 450px;
+}
