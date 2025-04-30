@@ -25,22 +25,22 @@ function Header() {
       </Link>
 
       {/*Right-side container: link to "request become a host page (not implemented) and a dropdown menu (not implemented, only icons currently*/}
-      <div className="h-full flex gap-2 items-center max-mobile:gap-1">
-        <div className="text-gray-600 p-3 text-center leading-[15px] max-mobile:p-1 max-mobile:w-15 max-mobile:text-[11px]">
+      <div className="h-full flex gap-2 items-center">
+        <div className="text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
           Become a host
         </div>
-        <div className="border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-1 pl-3 max-mobile:p-1 max-mobile:pl-2 max-mobile:gap-2">
+        <button className="border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2">
           <FontAwesomeIcon
             icon={faBars}
             style={{ color: "gray" }}
-            className="text-2xl max-mobile:text-[18px]"
+            className="text-[22px] max-mobile:text-[18px]"
           />
           <FontAwesomeIcon
             icon={faCircleUser}
             style={{ color: "gray" }}
-            className="text-4xl max-mobile:text-[28px]"
+            className="text-[32px] max-mobile:text-[28px]"
           />
-        </div>
+        </button>
       </div>
     </header>
   );
