@@ -3,27 +3,37 @@ import { useState, useEffect } from "react";
 import { getAllListings } from "../../api/listingService";
 
 const HomePage = () => {
+  //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchAllListings = async () => {
-      try {
-        const data = await getAllListings();
-        setListings(data);
-      } catch (error) {
-        console.log("Error: " + error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //method for getting all listings
+  const fetchAllListings = async () => {
+    try {
+      //try to get listings via imported listingService method
+      const data = await getAllListings();
+      setListings(data);
+      //catch error (e.g., failure to reach api)
+    } catch (error) {
+      console.log("Error: " + error);
+      //set loading to false once try/catch has been executed
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  //execute fetch all listings, done once per loading of the page
+  useEffect(() => {
+    //run method
     fetchAllListings();
   }, []);
 
+  //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
 
   return (
+    /*all styling in current return is temporary/subject for change, made just to test backend link,
+     e.g., listings will be shown in listing card component instead*/
     <div className="flex flex-wrap w-full h-full m-2 p-5 bg-gray-100">
       {listings.map((listing) => (
         <div key={listing.id} className="w-110 h-110 m-5 p-5 bg-gray-200">
