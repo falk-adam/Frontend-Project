@@ -5,6 +5,7 @@ import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
 import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import HeaderMenu from "./HeaderMenu";
+import ToggleButton from "./ToggleButton";
 
 /*Header component
 Inludes a logo on that links to the homepage and a dropdown navigation menu*/
@@ -15,6 +16,21 @@ function Header() {
   //keep shadow on button when clicked
   const clicked = showMenu ? "shadow-lg" : "";
   const menuButtonClass = `${clicked} border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2`;
+
+  const menuButton = (
+    <>
+      <FontAwesomeIcon
+        icon={faBars}
+        style={{ color: "gray" }}
+        className="text-[22px] max-mobile:text-[18px]"
+      />
+      <FontAwesomeIcon
+        icon={faCircleUser}
+        style={{ color: "gray" }}
+        className="text-[32px] max-mobile:text-[28px]"
+      />
+    </>
+  );
 
   //handle menu toggle
   function handleShowMenu() {
@@ -43,19 +59,13 @@ function Header() {
           Become a host
         </div>
 
-        <button onClick={handleShowMenu} className={menuButtonClass}>
-          <FontAwesomeIcon
-            icon={faBars}
-            style={{ color: "gray" }}
-            className="text-[22px] max-mobile:text-[18px]"
-          />
-          <FontAwesomeIcon
-            icon={faCircleUser}
-            style={{ color: "gray" }}
-            className="text-[32px] max-mobile:text-[28px]"
-          />
-        </button>
-        {showMenu && <HeaderMenu />}
+        <ToggleButton
+          inputButtonClass="border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2"
+          buttonClickedStyling="shadow-lg"
+          buttonContent={menuButton}
+        >
+          <HeaderMenu />
+        </ToggleButton>
       </div>
     </header>
   );
