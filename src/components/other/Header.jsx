@@ -55,12 +55,12 @@ function Header() {
 
       {/*Right-side container: link to "request become a host page (not implemented) and a dropdown menu (not implemented, only icons currently*/}
       <div className="h-full flex gap-2 items-center">
-        <div className="text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
+        <div className="cursor-pointer text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
           Become a host
         </div>
 
         <ToggleButton
-          inputButtonClass="border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2"
+          inputButtonClass="cursor-pointer border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2"
           buttonClickedStyling="shadow-lg"
           buttonContent={menuButton}
         >

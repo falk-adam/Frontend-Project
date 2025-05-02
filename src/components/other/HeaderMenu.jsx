@@ -11,7 +11,7 @@ function HeaderMenu() {
   ]);
 
   //check auth context here and modify options
-  useEffect();
+  //useEffect();
 
   return (
     <nav className="bg-white absolute right-6 top-18 w-50 outline-solid outline-2 outline-gray-300 rounded-lg shadow-lg">
