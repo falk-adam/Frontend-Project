@@ -5,7 +5,7 @@ import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
 import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import HeaderMenu from "./HeaderMenu";
-import ToggleButton from "./ToggleButton";
+import ToggleButton from "../other/ToggleButton";
 
 /*Header component
 Inludes a logo on that links to the homepage and a dropdown navigation menu*/
