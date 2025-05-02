@@ -40,7 +40,8 @@ function Header() {
   return (
     /*header container*/
     <header className="border-b-2 border-gray-200 w-full h-20 flex px-6 py-4 justify-between items-center max-mobile:h-15 max-mobile:p-4">
-      {/*Right side container: Link with the airbnb logo and text*/}
+      
+      {/*Left-side header container: Link with the airbnb logo and text*/}
       <Link to="/" className="h-full flex gap-1 items-center max-mobile:w-20">
         <FontAwesomeIcon
           icon={faAirbnb}
@@ -53,7 +54,7 @@ function Header() {
         </h1>
       </Link>
 
-      {/*Right-side container: link to "request become a host page (not implemented) and a dropdown menu (not implemented, only icons currently*/}
+      {/*Right-side header container: link to "request become a host page (not implemented) and a dropdown menu (not implemented, only icons currently*/}
       <div className="h-full flex gap-2 items-center">
         <div className="cursor-pointer text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
           Become a host

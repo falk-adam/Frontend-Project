@@ -5,16 +5,32 @@ import { useEffect, useState } from "react";
 /*HeaderMenu component*/
 
 function HeaderMenu() {
-  const [options, setOptions] = useState([
+  const OptionsNotLoggedIn = [
     { text: "Login", url: "/login" },
     { text: "Register", url: "/register" },
-  ]);
+  ];
+
+  const OptionsUser = [
+    { text: "User profile", url: "/profile" },
+    { text: "My Bookings", url: "/" },
+    { text: "Logout", url: "" },
+  ];
+
+  const OptionsHost = [
+    { text: "My Profile", url: "/profile" },
+    { text: "My Bookings", url: "/" },
+    { text: "Create Listing", url: "/" },
+    { text: "Manage Listings", url: "/" },
+    { text: "Logout", url: "" },
+  ];
+
+  const [options, setOptions] = useState(OptionsNotLoggedIn);
 
   //check auth context here and modify options
   //useEffect();
 
   return (
-    <nav className="bg-white absolute right-6 top-18 w-50 outline-solid outline-2 outline-gray-300 rounded-lg shadow-lg">
+    <nav className="bg-white absolute right-6 top-18 w-50 outline-solid outline-2 outline-gray-300 rounded-lg shadow-lg overflow-hidden">
       <ul>
         {options.map((option) => (
           <Link to={option.url}>
