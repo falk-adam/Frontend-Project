@@ -1,5 +1,6 @@
 //imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 /***
  * ToggleButton component - toggels visibility of child element when clicked
@@ -11,7 +12,7 @@ import { useState } from "react";
  ***/
 
 function ToggleButton({
-  children,
+  expandedElement,
   buttonContent,
   inputButtonClass,
   buttonClickedStyling,
@@ -25,6 +26,15 @@ function ToggleButton({
     setShowExpandedElement(!showExpandedElement);
   }
 
+  //url location
+  const { pathname } = useLocation();
+
+  //hide element when changing page
+  useEffect(() => {
+    setShowExpandedElement(false);
+  }, [pathname]);
+
+  //add button class when button is clicked
   const buttonClass = `${
     showExpandedElement ? `${buttonClickedStyling}` : ""
   } ${inputButtonClass}`;
@@ -34,7 +44,7 @@ function ToggleButton({
       <button className={buttonClass} onClick={handleShowExpandedElement}>
         {buttonContent}
       </button>
-      {showExpandedElement && children}
+      {showExpandedElement && expandedElement}
     </>
   );
 }

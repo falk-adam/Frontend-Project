@@ -11,12 +11,7 @@ import ToggleButton from "../other/ToggleButton";
 Inludes a logo on that links to the homepage and a dropdown navigation menu*/
 
 function Header() {
-  const [showMenu, setShowMenu] = useState(false);
-
-  //keep shadow on button when clicked
-  const clicked = showMenu ? "shadow-lg" : "";
-  const menuButtonClass = `${clicked} border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2`;
-
+  //menu button content
   const menuButton = (
     <>
       <FontAwesomeIcon
@@ -32,15 +27,9 @@ function Header() {
     </>
   );
 
-  //handle menu toggle
-  function handleShowMenu() {
-    setShowMenu(!showMenu);
-  }
-
   return (
     /*header container*/
     <header className="border-b-2 border-gray-200 w-full h-20 flex px-6 py-4 justify-between items-center max-mobile:h-15 max-mobile:p-4">
-      
       {/*Left-side header container: Link with the airbnb logo and text*/}
       <Link to="/" className="h-full flex gap-1 items-center max-mobile:w-20">
         <FontAwesomeIcon
@@ -60,13 +49,13 @@ function Header() {
           Become a host
         </div>
 
+        {/*Menu toggle button element with styling, menuButton and HeaderMenu as prop*/}
         <ToggleButton
           inputButtonClass="cursor-pointer border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2"
           buttonClickedStyling="shadow-lg"
           buttonContent={menuButton}
-        >
-          <HeaderMenu />
-        </ToggleButton>
+          expandedElement={<HeaderMenu />}
+        ></ToggleButton>
       </div>
     </header>
   );

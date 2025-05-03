@@ -12,13 +12,13 @@ export const MENU_OPTIONS = {
     { text: "Register", url: "/register" },
   ],
 
-  //option for user with role USER (and not HOST or ADMIN)
+  //option for user with role USER
   MENU_USER: [
-    { text: "User profile", url: "/profile" },
+    { text: "User profile", url: "/user" },
     { text: "My Bookings", url: "/" },
   ],
 
-  //options for user with role HOST (and not ADMIN)
+  //additional options for user with role HOST
   MENU_HOST: [
     { text: "My Profile", url: "/user" },
     { text: "My Bookings", url: "/" },
@@ -26,9 +26,9 @@ export const MENU_OPTIONS = {
     { text: "Manage Listings", url: "/" },
   ],
 
-  //options for user with role ADMIN
+  //additional options for user with role ADMIN
   MENU_ADMIN: [
-    { text: "My Profile", url: "/profile" },
+    { text: "My Profile", url: "/user" },
     { text: "My Bookings", url: "/" },
     { text: "Create Listing", url: "/" },
     { text: "Manage Listings", url: "/" },
