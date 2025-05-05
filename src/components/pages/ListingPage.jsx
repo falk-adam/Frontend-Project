@@ -40,10 +40,24 @@ function ListingPage() {
 
     if(loading) return <div>Loading...</div>
 
-    return <div>
-      <h1>{listing.title}</h1>
-      <p>{listing.description}</p>
-    </div>;
+    return (
+    <div className="flex flex-wrap h-full w-full ml-20 mr-20 mt-10 bg-gray-200">
+        <div>
+          <h1 className="font-bold text-[30px] bg-green-400 w-120 pb-3">
+            {listing.title}
+          </h1> 
+          <p className="bg-gray-500 h-200 w-210">IMG PLACE HOLDER</p>
+          <p>
+            <strong>LOCATION: </strong> {listing.location} <br />
+            GUESTS: {listing.capacity} 
+          </p>
+          <h2 className="font-bold text-[20px]">Description</h2>
+          <p className="">{listing.description}</p>
+        </div>
+
+    </div>
+
+    );
 
 }
   export default ListingPage;
