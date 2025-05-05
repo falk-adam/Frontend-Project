@@ -1,6 +1,6 @@
 //HomePage, browse and search for listings
 import { useState, useEffect } from "react";
-import { getAllListings } from "../../api/listingService";
+import { getAllListings } from "../../api/ListingService";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)

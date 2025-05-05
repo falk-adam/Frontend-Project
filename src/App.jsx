@@ -12,8 +12,6 @@ import LoginPage from "./components/pages/LoginPage";
 import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 
 function App() {
-  // test push
-  console.log("app is rengering")
   return (
     <BrowserRouter>
       <AuthProvider>
