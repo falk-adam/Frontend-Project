@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { MENU_OPTIONS } from "./MenuOptionConstants";
 import { useAuth } from "../../hooks/useAuth";
 
-/*HeaderMenu component*/
+/***
+ * HeaderMenu component - extracts currentUser from authContext and displays options according to user roles
+ * Possible menu choices are stored in MENU_OPTIONS which is imported from MenuOptionConstants
+ ***/
+
 
 function HeaderMenu() {
   const [options, setOptions] = useState(MENU_OPTIONS.MENU_DEFAULT);
@@ -15,7 +19,7 @@ function HeaderMenu() {
     await logout();
   };
 
-  //useEffect, run every time currentUser changes
+  //useEffect, run every time currentUser changes to update the menu options
   useEffect(() => {
     if (currentUser && currentUser.roles) {
       if (currentUser.roles.includes("ADMIN")) {
