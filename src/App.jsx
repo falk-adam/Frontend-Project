@@ -13,6 +13,7 @@ import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 
 function App() {
   // test push
+  console.log("app is rengering")
   return (
     <BrowserRouter>
       <AuthProvider>
@@ -21,6 +22,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/listing/:listingId" element={<ListingPage />} />
+            
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<UserRegistrationPage />} />
 
