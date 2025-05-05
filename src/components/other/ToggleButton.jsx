@@ -29,7 +29,8 @@ function ToggleButton({
   //url of current page
   const { pathname } = useLocation();
 
-  //expanded element is hidden again if url changes (relevant for when it is used in Header, which is displayed on different urls but where the menu should auto-hide when page is changed)
+  //expanded element is hidden again if url changes (relevant for when it is used in Header,
+  //which is not re-rendered when changing urls but where the menu should still auto-hide when page is changed)
   useEffect(() => {
     setShowExpandedElement(false);
   }, [pathname]);
