@@ -8,7 +8,7 @@ export const getAllListings = async () => {
 
 export const getListingsById = async (listingId) => {
   console.log("Fetching listing with ID:", listingId);  // Debugging
-  const response = await api.get(`/listings/id/${listingId}`);
+  const response = await api.get(`/listings/${listingId}`);
   console.log("API response data:", response.data); // Debugging
   return response.data;
 };

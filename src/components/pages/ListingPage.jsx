@@ -7,16 +7,14 @@ See an individual listings w. details, host info and reviews*/
 
 function ListingPage() {
   console.log("ListingPage is rendering")
+  const { listingId } = useParams();
+  console.log("Param: ", listingId)
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // method for getting specific listing via id
-  const fetchListingById = async () => {
     // get the :id from current URL
-    const params = useParams();
-    console.log("All params:", params)
-    const [listing, setListing] = useState(null);
-    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
       // debug
@@ -30,7 +28,7 @@ function ListingPage() {
           setListing(data);
         } catch (error) { 
           console.log("Error: " + error);
-          console.error("Error fetching listing:", err);
+          console.error("Error fetching listing:", error);
         } finally {
           setLoading(false);
         }
@@ -43,8 +41,9 @@ function ListingPage() {
     if(loading) return <div>Loading...</div>
 
     return <div>
-      <h1>HEJ</h1>
+      <h1>{listing.title}</h1>
+      <p>{listing.description}</p>
     </div>;
-  }
+
 }
   export default ListingPage;
