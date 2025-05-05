@@ -1,6 +1,3 @@
-/*LoginPage:
-Page with input form for login credentials*/
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
@@ -29,27 +26,31 @@ function LoginPage() {
       style={{ fontFamily: "Nunito Sans, sans-serif" }}
     >
       <div className="flex-1 flex justify-center items-center w-full h-full">
-        <div className="w-[600px] max-w-full border border-gray-200 rounded-xl shadow-md p-12 flex flex-col items-center">
-          <div className="mb-6 flex flex-col items-center">
-            <span className="text-center text-sm font-semibold mb-2 mt-2">
+        <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white">
+          
+          
+          {/* Top section */}
+          <div className="w-full flex flex-col items-center mb-6">
+            <span className="text-center text-lg font-semibold mb-2 mt-2 max-[430px]:text-base">
               Login to Your Account
             </span>
-            <svg
-              width="70"
-              height="70"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="mb-4 mt-2"
+
+
+            {/* Logo */}
+            <div
+              className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2"
+              style={{
+                width: "120px",
+                height: "120px",
+                fontSize: "1.5rem",
+              }}
             >
-              <path
-                d="M16 3C10.477 3 6 7.477 6 13c0 3.866 2.239 7.163 5.5 8.938V27a2 2 0 002 2h5a2 2 0 002-2v-5.062C23.761 20.163 26 16.866 26 13c0-5.523-4.477-10-10-10z"
-                stroke="#EA5C5A"
-                strokeWidth="2"
-                fill="none"
-              />
-            </svg>
+              Logo
+            </div>
           </div>
+
+
+          {/* Form */}
           <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
             <div>
               <label
@@ -63,7 +64,7 @@ function LoginPage() {
                 type="text"
                 autoComplete="username"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
-                placeholder="Placeholder text"
+                placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -81,7 +82,7 @@ function LoginPage() {
                 type="password"
                 autoComplete="current-password"
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
-                placeholder="Placeholder text"
+                placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -94,11 +95,11 @@ function LoginPage() {
               type="submit"
               className="w-full bg-red-400 hover:bg-red-500 text-white font-semibold py-2 rounded-md transition-colors duration-200 mt-2"
             >
-              Sign in
+              Login
             </button>
           </form>
           <div className="flex flex-col items-center mt-4 text-sm text-gray-500 w-full">
-            <div className="flex justify-between w-full">
+            <div className="flex flex-col max-[430px]:flex-row max-[430px]:justify-between w-full">
               <span>Don't have an account?</span>
               <button
                 type="button"
