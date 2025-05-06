@@ -21,11 +21,11 @@ export const MENU_OPTIONS = {
   MENU_DEFAULT: MENU_ALL_OPTIONS.slice(0, 2),
 
   //option for user with role USER
-  MENU_USER: MENU_ALL_OPTIONS.slice(2, 5),
+  MENU_USER: MENU_ALL_OPTIONS.slice(2, 4),
 
   //options for user with role HOST
-  MENU_HOST: MENU_ALL_OPTIONS.slice(2, 6),
+  MENU_HOST: MENU_ALL_OPTIONS.slice(2, 5),
 
   //options for user with role ADMIN
-  MENU_ADMIN: MENU_ALL_OPTIONS.slice(2, 7),
+  MENU_ADMIN: MENU_ALL_OPTIONS.slice(2, 6),
 };

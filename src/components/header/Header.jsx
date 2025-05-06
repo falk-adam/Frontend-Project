@@ -1,9 +1,11 @@
 //imports
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
 import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+
+//not in use
+//import { faAirbnb } from "@fortawesome/free-brands-svg-icons";
+//import { useState } from "react";
 import HeaderMenu from "./HeaderMenu";
 import ToggleButton from "../other/ToggleButton";
 
@@ -31,13 +33,10 @@ function Header() {
     /*header container*/
     <header className="border-b-2 border-gray-200 w-full h-20 flex px-6 py-4 justify-between items-center max-mobile:h-15 max-mobile:p-4">
       {/*Left-side header container: Link to "/" with the airbnb logo and text*/}
-      <Link to="/" className="h-full flex gap-1 items-center max-mobile:w-20">
-        <FontAwesomeIcon
-          icon={faAirbnb}
-          style={{ color: "red" }}
-          transform={{ rotate: 180 }}
-          className="text-3xl"
-        />
+      <Link to="/" className="h-full flex gap-2 items-center max-mobile:w-24">
+        <div className="rounded-full bg-red-400 text-white text-[14px] flex items-center justify-center h-12 w-12 max-mobile:text-[9px] max-mobile:h-8 max-mobile:w-12">
+          Logo
+        </div>
         <h1 className="text-red-500 font-bold text-[22px] tracking-normal leading-[16px] max-mobile:text-[14px] max-mobile:pl-1">
           airbnb clone
         </h1>
