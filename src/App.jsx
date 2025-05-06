@@ -12,6 +12,7 @@ import MyBookingsPage from "./components/pages/MyBookingsPage";
 import MyListingsPage from "./components/pages/MyListingsPage";
 import LoginPage from "./components/pages/LoginPage";
 import UserRegistrationPage from "./components/pages/UserRegistrationPage";
+import AdminPage from "./components/pages/AdminPage";
 
 function App() {
   return (
