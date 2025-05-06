@@ -27,27 +27,24 @@ function AppLayout() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<UserRegistrationPage />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="/user" element={<UserProfilePage />} />
-              <Route path="/user/bookings" element={<MyBookingsPage />} />
-              {/*Create Booking is accessed via ListingPage*/}
-              <Route
-                path="/:listingId/booking"
-                element={<CreateBookingPage />}
-              />
-            </Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/user" element={<UserProfilePage />} />
+            <Route path="/user/bookings" element={<MyBookingsPage />} />
+            {/*Create Booking is accessed via ListingPage*/}
+            <Route path="/:listingId/booking" element={<CreateBookingPage />} />
+          </Route>
 
           <Route element={<ProtectedRoute equiredRoles={["HOST"]} />}>
             <Route path="/user/listings" element={<MyListingsPage />} />
-              {/*Create Listings is accessed via MyListingsPage*/}
-              <Route
-                path="/user/listings/create"
-                element={<CreateListingPage />}
-              />
-            </Route>
-            {/*Probably will not be implemented, but added it here as a placeholder*/}
-            <Route element={<ProtectedRoute equiredRoles={["ADMIN"]} />}>
-              <Route path="/admin" element={<AdminPage />} />
+            {/*Create Listings is accessed via MyListingsPage*/}
+            <Route
+              path="/user/listings/create"
+              element={<CreateListingPage />}
+            />
+          </Route>
+          {/*Probably will not be implemented, but added it here as a placeholder*/}
+          <Route element={<ProtectedRoute equiredRoles={["ADMIN"]} />}>
+            <Route path="/admin" element={<AdminPage />} />
           </Route>
         </Routes>
       </main>
