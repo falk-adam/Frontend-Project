@@ -49,11 +49,11 @@ const HomePage = () => {
             other filters placeholder
           </div>
         </div>
-        <div className="flex flex-wrap w-full gap-[2.61%] max-lg:gap-[3.5%] max-md:gap-[4%]">
+        <div className="flex flex-wrap w-full gap-y-10 gap-x-[2.61%] max-lg:gap-x-[3.5%] max-md:gap-x-[4%] max-mobile:flex-nowrap max-mobile:flex-col">
           {listings.map((listing) => (
             <Link
               to={`/${listing.id}`}
-              className="w-[23%] h-[23vw] max-lg:w-[31%] max-lg:h-[31vw] max-md:w-[48%] max-md:h-[48vw] max-mobile:w-[100%]"
+              className="w-[23%] h-[23vw] max-lg:w-[31%] max-lg:h-[30vw] max-md:w-[48%] max-md:h-[45vw] max-mobile:h-[90vw] max-mobile:w-full"
             >
               <ListingCard listing={listing} />
             </Link>
