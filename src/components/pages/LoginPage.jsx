@@ -12,29 +12,23 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      await login(username, password);
+    const result = await login(username, password);
+    if (result) {
       navigate("/");
-    } catch (error) {
+    } else {
       setError("Either the username or the password is incorrect.");
     }
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col bg-white font-sans relative"
-      style={{ fontFamily: "Nunito Sans, sans-serif" }}
-    >
+    <div className="min-h-screen flex flex-col bg-white relative">
       {/* Top-left logo as a Link */}
       <Link
         to="/"
         className="absolute top-4 left-4 z-10"
         aria-label="Go to Home"
       >
-        <div
-          className="rounded-full bg-red-400 text-white flex items-center justify-center"
-          style={{ width: "48px", height: "48px", fontSize: "1rem" }}
-        >
+        <div className="rounded-full bg-red-400 text-white flex items-center justify-center w-[48px] h-[48px] text-[1rem]">
           Logo
         </div>
       </Link>
@@ -47,10 +41,7 @@ function LoginPage() {
             </span>
 
             {/* Login Form logo, same markup as top-left but larger */}
-            <div
-              className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2"
-              style={{ width: "120px", height: "120px", fontSize: "1.5rem" }}
-            >
+            <div className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2 w-[120px] h-[120px] text-[1.5rem]">
               Logo
             </div>
           </div>
