@@ -25,7 +25,6 @@ function LoginPage() {
       className="min-h-screen flex flex-col bg-white font-sans relative"
       style={{ fontFamily: "Nunito Sans, sans-serif" }}
     >
-
       {/* Top-left logo as a Link */}
       <Link
         to="/"
@@ -36,22 +35,18 @@ function LoginPage() {
           className="rounded-full bg-red-400 text-white flex items-center justify-center"
           style={{ width: "48px", height: "48px", fontSize: "1rem" }}
         >
-          
           Logo
         </div>
       </Link>
       <div className="flex-1 flex justify-center items-center w-full h-full">
         <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white">
-          
-          
           {/* Top section */}
           <div className="w-full flex flex-col items-center mb-6">
             <span className="text-center text-lg font-semibold mb-2 mt-2 max-[430px]:text-base">
               Login to Your Account
             </span>
 
-
-            {/* Form logo, same markup as top-left but larger */}
+            {/* Login Form logo, same markup as top-left but larger */}
             <div
               className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2"
               style={{ width: "120px", height: "120px", fontSize: "1.5rem" }}
@@ -60,8 +55,7 @@ function LoginPage() {
             </div>
           </div>
 
-          
-          {/* Form */}
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
             <div>
               <label
@@ -109,6 +103,8 @@ function LoginPage() {
               Login
             </button>
           </form>
+
+          {/* Links and text under Login Form */}
           <div className="flex flex-col items-center mt-4 text-sm text-gray-500 w-full">
             <div className="flex justify-center items-center w-full gap-2 mb-1">
               <span>Don't have an account?</span>
