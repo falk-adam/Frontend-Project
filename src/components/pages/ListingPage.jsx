@@ -41,28 +41,28 @@ function ListingPage() {
     if(loading) return <div>Loading...</div>
 
     return (
-    <div className="flex flex-wrap h-full w-full ml-20 mr-20 mt-10 bg-gray-200">
+    <div className="flex flex-wrap h-full w-full ml-20 mr-20 mt-10">
         <div>
-          <h1 className="font-bold text-[30px] bg-green-400 w-120 pb-3">
+          <h1 className="font-bold text-[30px] w-120">
             {listing.title} 
-          </h1> 
-          <p className="bg-gray-500 h-200 w-210 rounded-xl">IMG PLACE HOLDER</p>
+          </h1>
+          {/* https://tailwindcss.com/docs/grid-auto-flow very usefull when doing grids */}
+          <div className="grid grid-flow-col-dense gap-3">
+
+              <img className="h-full w-full col-span-2 row-span-2 object-cover rounded-xl" src={listing.imageUrls[0]}></img>
+              <img className="h-full w-full rounded-xl" src={listing.imageUrls[1]}></img>
+              <img className="h-full w-full rounded-xl" src={listing.imageUrls[2]}></img>
+              <img className="h-full w-full rounded-xl" src={listing.imageUrls[3]}></img>
+              <img className="h-full w-full rounded-xl" src={listing.imageUrls[4]}></img>
+
+          </div>
           <p className="text-[22px]"> {listing.location} </p>
           <p>{listing.capacity} guests allowed</p>
           <h2 className="font-bold text-[20px]">Description</h2>
           <p className="">{listing.description}</p>
           <h2>{listing.host.name}</h2>
           <h3>{listing.averageRating} rating</h3>
-          <div className="flex max-w-md">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-500 h-50 w-50 rounded-xl"></div>
-              <div className="bg-gray-500 h-50 w-50 rounded-xl"></div>
-              <div className="bg-gray-500 h-50 w-50 rounded-xl"></div>
-              <div className="bg-gray-500 h-50 w-50 rounded-xl"></div>
-            </div>
-          </div>
         </div>
-
     </div>
 
     ); 
