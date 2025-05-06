@@ -53,9 +53,9 @@ const HomePage = () => {
           {listings.map((listing) => (
             <Link
               to={`/${listing.id}`}
-              className="w-[23%] h-[23vw] max-lg:w-[31%] max-lg:h-[30vw] max-md:w-[48%] max-md:h-[45vw] max-mobile:h-[90vw] max-mobile:w-full"
+              className="w-[23%] h-[26vw] max-lg:w-[31%] max-lg:h-[33vw] max-md:w-[48%] max-md:h-[50vw] max-mobile:h-[90vw] max-mobile:w-full"
             >
-              <ListingCard listing={listing} />
+              <ListingCard listing={listing} currency="SEK" />
             </Link>
           ))}
         </div>
