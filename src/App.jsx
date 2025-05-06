@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/other/ProtectedRoute";
 import Header from "./components/header/Header";
@@ -14,17 +14,18 @@ import LoginPage from "./components/pages/LoginPage";
 import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 import AdminPage from "./components/pages/AdminPage";
 
-function App() {
+function AppLayout() {
+  const location = useLocation();
+  const hideHeader = ["/login", "/register"].includes(location.pathname);
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <Header />
-        <main className="flex w-full min-h-[calc(100vh-7.5rem)] max-mobile:min-h-[calc(100vh-6.3rem)]">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/:listingId" element={<ListingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<UserRegistrationPage />} />
+    <>
+      {!hideHeader && <Header />}
+      <main className="w-full min-h-[calc(100vh-7.5rem)] max-mobile:min-h-[calc(100vh-6.3rem)]">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:listingId" element={<ListingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<UserRegistrationPage />} />
 
             <Route element={<ProtectedRoute />}>
               <Route path="/user" element={<UserProfilePage />} />
@@ -36,8 +37,8 @@ function App() {
               />
             </Route>
 
-            <Route element={<ProtectedRoute equiredRoles={["HOST"]} />}>
-              <Route path="/user/listings" element={<MyListingsPage />} />
+          <Route element={<ProtectedRoute equiredRoles={["HOST"]} />}>
+            <Route path="/user/listings" element={<MyListingsPage />} />
               {/*Create Listings is accessed via MyListingsPage*/}
               <Route
                 path="/user/listings/create"
@@ -47,10 +48,19 @@ function App() {
             {/*Probably will not be implemented, but added it here as a placeholder*/}
             <Route element={<ProtectedRoute equiredRoles={["ADMIN"]} />}>
               <Route path="/admin" element={<AdminPage />} />
-            </Route>
-          </Routes>
-        </main>
-        <Footer />
+          </Route>
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppLayout />
       </AuthProvider>
     </BrowserRouter>
   );
