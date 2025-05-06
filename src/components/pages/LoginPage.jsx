@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 function LoginPage() {
@@ -22,9 +22,24 @@ function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-white font-sans"
+      className="min-h-screen flex flex-col bg-white font-sans relative"
       style={{ fontFamily: "Nunito Sans, sans-serif" }}
     >
+
+      {/* Top-left logo as a Link */}
+      <Link
+        to="/"
+        className="absolute top-4 left-4 z-10"
+        aria-label="Go to Home"
+      >
+        <div
+          className="rounded-full bg-red-400 text-white flex items-center justify-center"
+          style={{ width: "48px", height: "48px", fontSize: "1rem" }}
+        >
+          
+          Logo
+        </div>
+      </Link>
       <div className="flex-1 flex justify-center items-center w-full h-full">
         <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white">
           
@@ -36,20 +51,16 @@ function LoginPage() {
             </span>
 
 
-            {/* Logo */}
+            {/* Form logo, same markup as top-left but larger */}
             <div
               className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2"
-              style={{
-                width: "120px",
-                height: "120px",
-                fontSize: "1.5rem",
-              }}
+              style={{ width: "120px", height: "120px", fontSize: "1.5rem" }}
             >
               Logo
             </div>
           </div>
 
-
+          
           {/* Form */}
           <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
             <div>
@@ -99,23 +110,15 @@ function LoginPage() {
             </button>
           </form>
           <div className="flex flex-col items-center mt-4 text-sm text-gray-500 w-full">
-            <div className="flex flex-col max-[430px]:flex-row max-[430px]:justify-between w-full">
+            <div className="flex justify-center items-center w-full gap-2 mb-1">
               <span>Don't have an account?</span>
-              <button
-                type="button"
-                className="text-red-400 hover:underline ml-2"
-                onClick={() => navigate("/register")}
-              >
+              <Link to="/register" className="text-red-400 hover:underline">
                 Sign up
-              </button>
+              </Link>
             </div>
-            <button
-              className="mt-1 text-xs text-gray-400 hover:underline"
-              type="button"
-              disabled
-            >
+            <span className="mt-1 text-xs text-gray-400 hover:underline cursor-not-allowed text-center">
               Forgot password?
-            </button>
+            </span>
           </div>
         </div>
       </div>
