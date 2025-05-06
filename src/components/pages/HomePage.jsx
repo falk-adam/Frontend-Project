@@ -24,6 +24,9 @@ const HomePage = () => {
     }
   };
 
+  //gap-y-10 gap-x-[2.61%] max-lg:gap-x-[3.5%] max-md:gap-x-[4%] max-mobile:flex-nowrap max-mobile:flex-col
+  //className="w-[23%] h-[26vw] max-lg:w-[31%] max-lg:h-[33vw] max-md:w-[48%] max-md:h-[50vw] max-mobile:h-[90vw] max-mobile:w-full"
+
   //execute fetch all listings, done once per loading of the page
   useEffect(() => {
     //run method
@@ -41,7 +44,7 @@ const HomePage = () => {
         Searchbar placeholder
       </div>
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
-        <div className="w-full h-20 flex justify-between items-center">
+        <div className="w-full h-16 flex justify-between items-center">
           <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
             utility filter placeholder
           </div>
@@ -49,11 +52,12 @@ const HomePage = () => {
             other filters placeholder
           </div>
         </div>
-        <div className="flex flex-wrap w-full gap-y-10 gap-x-[2.61%] max-lg:gap-x-[3.5%] max-md:gap-x-[4%] max-mobile:flex-nowrap max-mobile:flex-col">
+        <div className="w-full grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-mobile:grid-cols-1">
           {listings.map((listing) => (
             <Link
               to={`/${listing.id}`}
-              className="w-[23%] h-[26vw] max-lg:w-[31%] max-lg:h-[33vw] max-md:w-[48%] max-md:h-[50vw] max-mobile:h-[90vw] max-mobile:w-full"
+              key={listing.id}
+              className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw]"
             >
               <ListingCard listing={listing} currency="SEK" />
             </Link>
