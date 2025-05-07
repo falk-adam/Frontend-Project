@@ -99,7 +99,7 @@ function UserRegistrationPage() {
         </div>
       </Link>
       <div className="flex-1 flex justify-center items-center w-full h-full">
-        <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white">
+        <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white mt-16 mb-16">
           {/* Top section */}
           <div className="w-full flex flex-col items-center mb-6">
             <span className="text-center text-lg font-semibold mb-2 mt-2 max-[430px]:text-base">
@@ -113,7 +113,10 @@ function UserRegistrationPage() {
           </div>
 
           {/* Registration Form */}
-          <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit}
+            className="w-full flex flex-col gap-4 m"
+          >
             <input
               name="username"
               placeholder="Username *"
@@ -192,11 +195,13 @@ function UserRegistrationPage() {
             />
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
+              //Styling is not looking great here
             )}
             {success && (
               <div className="text-green-500 text-sm text-center">
                 Registration successful! Redirecting to login...
               </div>
+              //Styling is not looking great here
             )}
             <button
               type="submit"
