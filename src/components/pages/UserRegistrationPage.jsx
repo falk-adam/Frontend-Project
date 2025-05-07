@@ -8,12 +8,11 @@ function UserRegistrationPage() {
     password: "",
     email: "",
     phoneNr: "",
-    address: {
-      street: "",
-      zipCode: "",
-      city: "",
-      country: "",
-    }, //Thought this was my issue that i did not send it as an object but still getting an error message
+    //Change address and remove object and only using strings test v3
+    street: "",
+    zipCode: "",
+    city: "",
+    country: "",
     profilePictureURL: "",
     description: "",
   });
@@ -29,22 +28,11 @@ function UserRegistrationPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.startsWith("address.")) {
-      const addressField = name.split(".")[1];
-      setForm((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          [addressField]: value,
-        },
-      }));
-    } else {
-      setForm((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };  // this didn't help me neither with the error
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,7 +62,16 @@ function UserRegistrationPage() {
 
     // Registration payload
     const payload = {
-      ...form,
+      username: form.username,
+      password: form.password,
+      email: form.email,
+      phoneNr: form.phoneNr,
+      street: form.street,
+      zipCode: form.zipCode,
+      city: form.city,
+      country: form.country,
+      profilePictureURL: form.profilePictureURL,
+      description: form.description,
       roles: ["USER"],
     };
 
@@ -109,7 +106,7 @@ function UserRegistrationPage() {
               Create an Account
             </span>
 
-            {/* Form logo, same markup as top-left but larger */}
+            {/* Register Form logo, same markup as top-left but larger */}
             <div className="rounded-full bg-red-400 text-white flex items-center justify-center mb-6 mt-2 w-[120px] h-[120px] text-[1.5rem]">
               Logo
             </div>
@@ -150,32 +147,32 @@ function UserRegistrationPage() {
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
               required
             />
-            {/* Address fields (newly added) */}
+            {/* Address fields (v2) */}
             <input
-              name="address.street"
+              name="street"
               placeholder="Street"
-              value={form.address.street}
+              value={form.street}
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
             />
             <input
-              name="address.zipCode"
+              name="zipCode"
               placeholder="Zip Code"
-              value={form.address.zipCode}
+              value={form.zipCode}
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
             />
             <input
-              name="address.city"
+              name="city"
               placeholder="City"
-              value={form.address.city}
+              value={form.city}
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
             />
             <input
-              name="address.country"
+              name="country"
               placeholder="Country"
-              value={form.address.country}
+              value={form.country}
               onChange={handleChange}
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
             />
