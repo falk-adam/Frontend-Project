@@ -59,7 +59,7 @@ const HomePage = () => {
               key={listing.id}
               className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw]"
             >
-              <ListingCard listing={listing} currency="SEK" />
+              <ListingCard listing={listing} cardSize="h-full w-full" descriptionBoxHeight="h-20" />
             </Link>
           ))}
         </div>
