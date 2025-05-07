@@ -8,7 +8,6 @@ function UserRegistrationPage() {
     password: "",
     email: "",
     phoneNr: "",
-    //Change address and remove object and only using strings test v3
     street: "",
     zipCode: "",
     city: "",
@@ -21,7 +20,7 @@ function UserRegistrationPage() {
   const navigate = useNavigate();
   const { register } = useAuth();
 
-  // Regex patterns, Do I even need these? Since they are already validated in the backend?
+  // Regex patterns, Do I even need these? Since they are already validated in the backend? Not sure
   const passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
   const phonePattern = /^[0-9+]+$/;
@@ -39,7 +38,7 @@ function UserRegistrationPage() {
     setError("");
     setSuccess(false);
 
-    // Frontend validation, I think this is redundant since the backend already validates the data.
+    // Frontend validation, I think this is redundant since the backend already validates the data, not sure.
     if (!form.username || !form.password || !form.email || !form.phoneNr) {
       setError("Please fill in all required fields.");
       return;
@@ -54,13 +53,13 @@ function UserRegistrationPage() {
       setError("Phone number may only contain numbers and +");
       return;
     }
-    // Email validation, I think this is redundant since the backend already validates the data.
+    // Email validation, I think this is redundant since the backend already validates the data, not sure.
     if (!/\S+@\S+\.\S+/.test(form.email)) {
       setError("Email does not have a valid format.");
       return;
     }
 
-    // Registration payload
+    // Registration payload, Can be checked in -> Chrome, Inspect, Network, Name, Payload
     const payload = {
       username: form.username,
       password: form.password,
@@ -88,6 +87,7 @@ function UserRegistrationPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white font-sans relative">
+
       {/* Top-left logo as a Link */}
       <Link
         to="/"
@@ -100,6 +100,7 @@ function UserRegistrationPage() {
       </Link>
       <div className="flex-1 flex justify-center items-center w-full h-full">
         <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white mt-16 mb-16">
+
           {/* Top section */}
           <div className="w-full flex flex-col items-center mb-6">
             <span className="text-center text-lg font-semibold mb-2 mt-2 max-[430px]:text-base">
@@ -150,7 +151,6 @@ function UserRegistrationPage() {
               className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
               required
             />
-            {/* Address fields (v2) */}
             <input
               name="street"
               placeholder="Street"
@@ -196,12 +196,14 @@ function UserRegistrationPage() {
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
               //Styling is not looking great here
+              //Will keep it like this and revisit later, since it's show clearly if it works or not in dev
             )}
             {success && (
               <div className="text-green-500 text-sm text-center">
                 Registration successful! Redirecting to login...
               </div>
               //Styling is not looking great here
+              //Will keep it like this and revisit later, since it's show clearly if it works or not in dev
             )}
             <button
               type="submit"
