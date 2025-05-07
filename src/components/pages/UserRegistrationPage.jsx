@@ -99,7 +99,7 @@ function UserRegistrationPage() {
         </div>
       </Link>
       <div className="flex-1 flex justify-center items-center w-full h-full">
-        <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white mt-16 mb-16">
+        <div className="w-full max-w-[600px] mx-2 border border-gray-200 rounded-xl shadow-md p-12 max-[430px]:p-4 flex flex-col items-center bg-white mt-20 mb-16">
 
           {/* Top section */}
           <div className="w-full flex flex-col items-center mb-6">
@@ -196,14 +196,14 @@ function UserRegistrationPage() {
             {error && (
               <div className="text-red-500 text-sm text-center">{error}</div>
               //Styling is not looking great here
-              //Will keep it like this and revisit later, since it's show clearly if it works or not in dev
+              //Will keep it like this and revisit later, since it shows clearly if it works or not in dev
             )}
             {success && (
               <div className="text-green-500 text-sm text-center">
                 Registration successful! Redirecting to login...
               </div>
               //Styling is not looking great here
-              //Will keep it like this and revisit later, since it's show clearly if it works or not in dev
+              //Will keep it like this and revisit later, since it shows clearly if it works or not in dev
             )}
             <button
               type="submit"
