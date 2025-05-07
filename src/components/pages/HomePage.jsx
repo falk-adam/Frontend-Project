@@ -24,9 +24,6 @@ const HomePage = () => {
     }
   };
 
-  //gap-y-10 gap-x-[2.61%] max-lg:gap-x-[3.5%] max-md:gap-x-[4%] max-mobile:flex-nowrap max-mobile:flex-col
-  //className="w-[23%] h-[26vw] max-lg:w-[31%] max-lg:h-[33vw] max-md:w-[48%] max-md:h-[50vw] max-mobile:h-[90vw] max-mobile:w-full"
-
   //execute fetch all listings, done once per loading of the page
   useEffect(() => {
     //run method
@@ -37,21 +34,29 @@ const HomePage = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    /*all styling in current return is temporary/subject for change, made just to test backend link,
-     e.g., listings will be shown in listing card component instead*/
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
+      {/*Placeholder div for search bar component*/}
       <div className="outline-solid outline-2 outline-gray-200 h-15 w-[50vw] rounded-4xl flex items-center justify-center">
         Searchbar placeholder
       </div>
+
+      {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
+        {/*Top container with search filters*/}
         <div className="w-full h-16 flex justify-between items-center">
+          {/*Placeholder div for utility filter component*/}
+
           <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
             utility filter placeholder
           </div>
+
+          {/*Placeholder div for general filter component*/}
           <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
             other filters placeholder
           </div>
         </div>
+
+        {/*Listing gallery grid container*/}
         <div className="w-full grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-mobile:grid-cols-1">
           {listings.map((listing) => (
             <Link
@@ -59,7 +64,11 @@ const HomePage = () => {
               key={listing.id}
               className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw]"
             >
-              <ListingCard listing={listing} cardSize="h-full w-full" descriptionBoxHeight="h-20" />
+              <ListingCard
+                listing={listing}
+                cardSize="h-full w-full"
+                descriptionBoxHeight="h-20"
+              />
             </Link>
           ))}
         </div>
