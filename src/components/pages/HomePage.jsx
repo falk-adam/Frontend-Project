@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getAllListings } from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
+import Serchbar from "../other/Serchbar";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
@@ -30,14 +31,35 @@ const HomePage = () => {
     fetchAllListings();
   }, []);
 
+  // Function to handle search from Serchbar
+  const handleSearch = async (searchParams) => {
+    setLoading(true);
+    try {
+      // You may need to adjust this to match your actual API method for filtered search
+      const query = new URLSearchParams({
+        location: searchParams.location,
+        checkIn: searchParams.checkIn,
+        checkOut: searchParams.checkOut,
+        guests: searchParams.guests,
+      }).toString();
+      const response = await fetch(`/api/listings/search?${query}`);
+      const data = await response.json();
+      setListings(data);
+    } catch (error) {
+      console.log("Error: " + error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
-      {/*Placeholder div for search bar component*/}
+      {/* Searchbar component */}
       <div className="outline-solid outline-2 outline-gray-200 h-15 w-[50vw] rounded-4xl flex items-center justify-center">
-        Searchbar placeholder
+        <Serchbar onSearch={handleSearch} />
       </div>
 
       {/*Containter all main content apart from search bar*/}
