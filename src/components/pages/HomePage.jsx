@@ -35,7 +35,8 @@ const HomePage = () => {
   const handleSearch = async (searchParams) => {
     setLoading(true);
     try {
-      // You may need to adjust this to match your actual API method for filtered search
+      
+    
       const query = new URLSearchParams({
         location: searchParams.location,
         checkIn: searchParams.checkIn,
@@ -62,8 +63,13 @@ const HomePage = () => {
         <Serchbar onSearch={handleSearch} />
       </div>
 
+
+
       {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
+        
+        
+        
         {/*Top container with search filters*/}
         <div className="w-full h-16 flex justify-between items-center">
           {/*Placeholder div for utility filter component*/}
