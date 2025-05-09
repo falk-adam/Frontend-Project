@@ -23,11 +23,5 @@ export const getListingsById = async (listingId) => {
   }
 };
 
-export const getHostProfile = async () => {
-  try {
 
-  } catch (error) {
-    console.error("Error: ", error)
-    throw error;
-  }
-};
+

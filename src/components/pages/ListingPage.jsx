@@ -1,11 +1,8 @@
 import { useState, useEffect} from "react";
 import { getListingsById } from "../../api/ListingService";
 import { useParams } from "react-router-dom";
-import Kitchen from "../../icons/Kitchen"
-import Pets from "../../icons/Pets"
-import Pool from "../../icons/Pool"
-import Wifi from "../../icons/Wifi"
 import Star from "../../icons/Star";
+import IconHandler from "../../icons/IconHandler";
 
 
 
@@ -18,7 +15,7 @@ function ListingPage() {
   console.log("Param: ", listingId) // debug
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [logo, setLogo] = useState([])
+  const [logo, setLogo] = useState([]);
 
   // method for getting specific listing via id
     // get the :id from current URL
@@ -39,10 +36,12 @@ function ListingPage() {
           setLoading(false);
         }
       };
-
       fetchListing();
 
     }, [listingId]);
+
+    
+
 
     if(loading) return <div>Loading...</div>
 
@@ -64,30 +63,36 @@ function ListingPage() {
           <p className="text-[22px]"> {listing.location} </p>
           <p>{listing.capacity} guests allowed</p>
 
+          
           <div className="h-15 w-200 flex mt-5">
             {listing.utilities.map((utility) => (
               <div 
               key={utility}
-              className="flex flex-row"
+              className="flex flex-row mr-5"
               >
-                {utility}
+                <IconHandler icon={utility}  
+                />
+                {/* This utility provides the text while the one above is for matching icon */}
+                <p className="ml-2 mt-2">{utility}</p>
               </div>
             ))}
           </div>
           
           <h2 className="font-bold text-[20px]">Description</h2>
-          <p className="w-270">{listing.description}</p>
+          <p className="w-200">{listing.description}</p>
           <div className="flex flex-row mt-10 mb-5">
             <div className="bg-amber-900 rounded-full w-30 h-30"></div>
             <h2 className="ml-10 mt-12 text-[20px] font-bold">{listing.host.name}</h2>
+            <p>{listing.host.description}</p>
           </div>
 
           <div className="flex flex-row">
           <Star />
-          <h3 className="ml-1 font-bold">{listing.averageRating} rating</h3>
+          <h3 className="ml-2 mb-2 font-bold">{listing.averageRating} rating</h3>
           </div>
 
         </div>
+        
     </div>
 
     ); 
