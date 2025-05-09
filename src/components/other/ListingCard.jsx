@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NoImageIcon from "../../assets/NoImageIcon";
+import NoImageIcon from "../../assets/icons/NoImageIcon";
 /***
  * Listing Card:
  * A smaller card showing the title, location, price, rating and first image for a listing
