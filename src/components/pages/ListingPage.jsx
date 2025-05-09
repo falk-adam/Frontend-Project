@@ -3,7 +3,7 @@ import { getListingsById } from "../../api/ListingService";
 import { useParams } from "react-router-dom";
 import Star from "../../assets/icons/Star";
 import IconHandler from "../../assets/icons/IconHandler";
-import BookingCard from "../other/BookingCard";
+import BookingCard from "../bookingSelection/BookingCard";
 
 /*ListingPage:
 See an individual listings w. details, host info and reviews*/

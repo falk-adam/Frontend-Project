@@ -1,5 +1,5 @@
 //imports
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import HeaderMenu from "./HeaderMenu";
@@ -9,6 +9,9 @@ import ToggleButton from "../other/ToggleButton";
 Inludes an airbnb logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side*/
 
 function Header() {
+  //url of current page, to pass on to togglebutton as a prop (see toggleButton element for more details)
+  const { pathname } = useLocation();
+
   //icons that are displayed in the drop down nav menu button (saved as constant and later passed as prop in return statement)
   const menuButton = (
     <>
@@ -40,7 +43,7 @@ function Header() {
 
       {/*Right-side header container: link to "request become a host page (not implemented) and a dropdown menu composed of <ToggleButton/> and <HeaderMenu/> components*/}
       <div className="h-full flex gap-2 items-center">
-        <div className="cursor-pointer text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
+        <div className="cursor-not-allowed text-gray-600 p-3 text-center leading-[15px] py-4 rounded-4xl hover:bg-gray-100 max-mobile:p-[5px] max-mobile:px-3 max-mobile:w-17 max-mobile:text-[11px]">
           Become a host
         </div>
 
@@ -49,8 +52,10 @@ function Header() {
           inputButtonClass="cursor-pointer border-2 border-gray-300 rounded-4xl items-center flex gap-3 p-2 pl-3 hover:shadow-lg max-mobile:p-1 max-mobile:pl-2"
           buttonClickedStyling="shadow-lg"
           buttonContent={menuButton}
-          expandedElement={<HeaderMenu />}
-        ></ToggleButton>
+          hideElementDependencies={pathname}
+        >
+          <HeaderMenu />
+        </ToggleButton>
       </div>
     </header>
   );
