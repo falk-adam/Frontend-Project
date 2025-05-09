@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ToggleButton from "../other/ToggleButton";
 import NrOfGuestsMenu from "./NrOfGuestsMenu";
 
@@ -11,6 +11,8 @@ import NrOfGuestsMenu from "./NrOfGuestsMenu";
  * **/
 
 function BookingCard({ listing }) {
+  const refGuestElement = useRef();
+
   const [nrOfGuests, setNrOfGuests] = useState(1);
   const [startDate, setStartDate] = useState("click to select");
   const [endDate, setEndDate] = useState("click to select");
@@ -57,6 +59,7 @@ function BookingCard({ listing }) {
           </ToggleButton>
         </div>
         <ToggleButton
+          childrenRef={refGuestElement}
           hideElementDependencies={nrOfGuests}
           inputButtonClass="w-full h-16 py-[10px] px-[15px] text-gray-600 text-left"
           buttonContent={
@@ -67,6 +70,7 @@ function BookingCard({ listing }) {
           }
         >
           <NrOfGuestsMenu
+            ref={refGuestElement}
             handleSetNrOfGuests={handleSetNrOfGuests}
             capacity={listing.capacity}
           />
