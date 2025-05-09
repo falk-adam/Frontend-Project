@@ -9,8 +9,7 @@ import { useAuth } from "../../hooks/useAuth";
  * Possible menu choices are stored in MENU_OPTIONS which is imported from MenuOptionConstants
  ***/
 
-
-function HeaderMenu() {
+function HeaderMenu({ ref }) {
   const [options, setOptions] = useState(MENU_OPTIONS.MENU_DEFAULT);
 
   const { currentUser, logout } = useAuth();
@@ -39,7 +38,10 @@ function HeaderMenu() {
     "w-full h-9 p-2 pl-4 flex items-center text-[15px] hover:bg-gray-100 max-mobile:justify-center max-mobile:pl-2 max-mobile:text-[12px] max-mobile:h-6";
 
   return (
-    <nav className="bg-white absolute right-6 top-18 w-50 outline-solid outline-2 outline-gray-300 rounded-lg shadow-lg overflow-hidden max-mobile:right-0 max-mobile:w-screen max-mobile:rounded-none max-mobile:top-15">
+    <nav
+      ref={ref}
+      className="bg-white absolute right-6 top-18 w-50 outline-solid outline-2 outline-gray-300 rounded-lg shadow-lg overflow-hidden max-mobile:right-0 max-mobile:w-screen max-mobile:rounded-none max-mobile:top-15"
+    >
       <ul>
         {/*map the options in the options array to a list*/}
         {options.map((option, index) => (

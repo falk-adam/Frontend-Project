@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import HeaderMenu from "./HeaderMenu";
 import ToggleButton from "../other/ToggleButton";
+import { useRef } from "react";
 
 /*Header component
 Inludes an airbnb logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side*/
@@ -11,6 +12,8 @@ Inludes an airbnb logo (that links to the homepage) on the left side and a dropd
 function Header() {
   //url of current page, to pass on to togglebutton as a prop (see toggleButton element for more details)
   const { pathname } = useLocation();
+
+  const menuRef = useRef();
 
   //icons that are displayed in the drop down nav menu button (saved as constant and later passed as prop in return statement)
   const menuButton = (
@@ -53,8 +56,9 @@ function Header() {
           buttonClickedStyling="shadow-lg"
           buttonContent={menuButton}
           hideElementDependencies={pathname}
+          childrenRef={menuRef}
         >
-          <HeaderMenu />
+          <HeaderMenu ref={menuRef} />
         </ToggleButton>
       </div>
     </header>

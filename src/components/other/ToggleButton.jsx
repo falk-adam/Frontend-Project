@@ -1,6 +1,5 @@
 //imports
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
 
 /***
  * ToggleButton component - toggels visibility of child element when clicked
@@ -10,6 +9,7 @@ import { useLocation } from "react-router-dom";
  * 3. buttonContent = the content of the button itself (images/text/other)
  * 4. children = the pop-up element that button toggels the visibility of
  * 5. hideElementDependencies = dependencies that, when changed, should prompt the element to hide
+ * 6. childrenRef = reference to the child element, used to check if clicks are outside of child element (in which case the element should become hidden)
  ***/
 
 function ToggleButton({
@@ -18,6 +18,7 @@ function ToggleButton({
   inputButtonClass,
   buttonClickedStyling,
   hideElementDependencies,
+  childrenRef,
 }) {
   //dynamic styling of button depending on if it is clicked
   //inital state is for expanded element to be hidden
@@ -28,8 +29,30 @@ function ToggleButton({
     setShowExpandedElement(!showExpandedElement);
   }
 
-  //expanded element is hidden again if url changes (relevant for when it is used in Header,
-  //which is not re-rendered when changing urls but where the menu should still auto-hide when page is changed)
+  //reference to toggle button
+  const thisElement = useRef();
+
+  //function checking if a click is inside or outside of togglebutton and expandableElement
+  function handleClick(event) {
+    if (
+      thisElement.current &&
+      thisElement.current.contains(event.target) &&
+      childrenRef.current &&
+      !childrenRef.current.contains(event.target)
+    ) {
+      setShowExpandedElement(false);
+    }
+  }
+
+  //mount and unmount eventListener that listens for click anywhere on the page and calles handleClick()
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [showExpandedElement, thisElement, childrenRef]);
+
+  //expanded element is hidden again if dependencies (props) change (can e.g. be a url change, incase of header menu)
   useEffect(() => {
     setShowExpandedElement(false);
   }, [hideElementDependencies]);
@@ -41,7 +64,11 @@ function ToggleButton({
 
   return (
     <>
-      <button className={buttonClass} onClick={handleShowExpandedElement}>
+      <button
+        className={buttonClass}
+        onClick={handleShowExpandedElement}
+        ref={thisElement}
+      >
         {buttonContent}
       </button>
       {/*if showExpandedElement === true, show expandedElement*/}
