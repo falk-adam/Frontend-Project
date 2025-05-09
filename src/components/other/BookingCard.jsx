@@ -1,21 +1,58 @@
 import { useState } from "react";
 
 /***
- * Listing Card:
- * A smaller card showing the title, location, price, rating and first image for a listing
+ * Booking card
+ *
  * recieves:
  * 1. listing = listing object retrieved from database
- * 2. isDescriptionUnderImage = places the description (title, etc.) under the listing image (if set to true) or to the right of the picture (if set to false)
- * 3. cardSize = height and width of component (input must be tailwind classes, e.g.,"h-20 w-20")
- * 4. descriptionBoxHeight (NB! only applied if isDescriptionUnderImage = true) = height of description container (e.g., "h-10")
- * 5. descriptionBoxWidth (NB! only applied if isDescriptionUnderImage = false) = width of description container (e.g., "w-10")
+ *
  * **/
 
 function BookingCard({ listing }) {
+  const [nrOfGuests, setNrOfGuests] = useState(1);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+
   return (
     <div
-      className={`rounded-xl shadow-xl border-2 border-gray-200 w-full h-100 flex`}
-    ></div>
+      className={`rounded-xl shadow-xl border-2 border-gray-200 w-full flex flex-col p-8 gap-6 text-[14px]`}
+    >
+      <div className="rounded-xl border-2 border-gray-400 overflow-hidden">
+        <div className="w-full h-16 flex flex-row border-b-2 border-gray-400">
+          <p className="py-[10px] px-[15px] w-[50%] border-r-2 h-full border-gray-400 text-gray-600">
+            <span className="uppercase text-black">check-in</span> <br />{" "}
+            2025/07/09
+          </p>
+          <p className="py-[10px] px-[15px] w-[50%] h-full text-gray-600">
+            <span className="uppercase text-black">check-out</span> <br />{" "}
+            2025/07/09
+          </p>
+        </div>
+        <p className="py-[10px] px-[15px] w-full h-16 text-gray-600">
+          <span className="uppercase text-black">guests</span> <br />{" "}
+          {nrOfGuests} guests
+        </p>
+      </div>
+      <button className="w-full bg-red-400 hover:bg-red-500 text-white text-[16px] font-semibold py-2 rounded-lg transition-colors duration-200 h-15">
+        Reserve
+      </button>
+      <p className="w-full text-center text-gray-400">
+        You will not be charged yet
+      </p>
+      <p className="w-full flex justify-between">
+        <span>Price per night:</span>
+        <span>{listing.pricePerNight} SEK</span>
+      </p>
+      <p className="mb-2 w-full flex justify-between">
+        <span>Length of stay:</span>
+        <span>- nights</span>
+      </p>
+
+      <p className="font-bold pt-7 border-t-1 border-gray-400 w-full flex justify-between">
+        <span>Total price:</span>
+        <span>- SEK</span>
+      </p>
+    </div>
   );
 }
 
