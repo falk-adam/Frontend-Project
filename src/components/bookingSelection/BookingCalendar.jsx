@@ -1,84 +1,51 @@
 import { useState } from "react";
+import { weekdays } from "./CalendarConstants";
+import BookingCalendarPeriod from "./BookingCalendarPeriod";
 
 /***
- * Booking card
+ * BookingCalendar
  *
  * recieves:
- * 1. listing = listing object retrieved from database
- *
+ * 1. availableDates = availabileDates from the listing object displayed on the ListingPage
+ * 2. handleSetBookingStartDate = function for setting the value on the startDate constant of the BookingCard
+ * 3. handleSetBookingEndDate = function for setting the value on the endDate constant of the BookingCard
+ * 4. ref = reference for the html object, is used by the toggle button to detect clicks outisde of the pop-up element
  * **/
 
 function BookingCalendar({
   availableDates,
-  handleSetStartDate,
-  handleSetEndDate,
+  handleSetBookingStartDate,
+  handleSetBookingEndDate,
   ref,
 }) {
-  let listingStartDates = [];
-  let listingEndDates = [];
+  //the available date range currently displayed in the calendar, starts at the first availableDate range
+  const [currentAvailableDatesPeriod, setCurrentAvailableDatesPeriod] =
+    useState(0);
 
+  //all listing availableDates start dates
+  const listingStartDates = [];
+  //all listing availableDates end dates
+  const listingEndDates = [];
+
+  //availableDates prop is a listing variable,
+  // which contains an array of instances of the DateRange class (in backend, Java)
+  // The DateRange class which holds two dates (start and end), each start and end date are here added to two separate arrays for ease of use
   availableDates.map(
     (dateRange) => (
-      listingStartDates.push(dateRange.startDate),
-      listingEndDates.push(dateRange.endDate)
+      listingStartDates.push(new Date(dateRange.startDate)),
+      listingEndDates.push(new Date(dateRange.endDate))
     )
   );
-
-  const firstDate = new Date(listingStartDates[1]);
-  console.log(firstDate);
-
-  const firstDayOfMonth = new Date(
-    firstDate.getFullYear(),
-    firstDate.getMonth(),
-    1
-  ).getDay();
-
-  let dates = [];
-
-  for (let i = 1; i < firstDayOfMonth; i++) dates.push("");
-  for (let i = 1; i <= 30; i++) {
-    dates.push(i);
-  }
-
-  const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
-  const months = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december",
-  ];
-
-  const classNameGrid = "w-10 h-8 flex justify-center items-center";
 
   return (
     <div
       ref={ref}
       className="bg-white absolute right-71 top-130 border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden flex flex-col items-center p-2"
     >
-      <span className={`${classNameGrid} uppercase font-bold text-[16px]`}>
-        {months[firstDate.getMonth()]}
-      </span>
-      <div className="grid grid-cols-7">
-        {days.map((day, index) => (
-          <div key={index} className={classNameGrid}>
-            {day}
-          </div>
-        ))}
-        {/*map the options in the options array to a list*/}
-        {dates.map((date, index) => (
-          <div key={index} className={classNameGrid}>
-            {date}
-          </div>
-        ))}
-      </div>
+      <BookingCalendarPeriod
+        startDate={listingStartDates[currentAvailableDatesPeriod]}
+        endDate={listingEndDates[currentAvailableDatesPeriod]}
+      />
     </div>
   );
 }

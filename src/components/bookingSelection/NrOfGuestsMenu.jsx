@@ -10,7 +10,7 @@ import { useState } from "react";
 
 function NrOfGuestsMenu({ capacity, handleSetNrOfGuests, ref }) {
   //create array list of whole numbers from 1 to listings max capacity
-  let options = [];
+  const options = [];
   for (let i = 1; i <= capacity; i++) {
     options.push(i);
   }
