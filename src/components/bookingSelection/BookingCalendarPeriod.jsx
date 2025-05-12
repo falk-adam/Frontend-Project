@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  monthsNames,
-  monthsNrOfDays,
-  getFirstWeekdayOfMonth,
   weekdays,
+  monthNames,
+  renderBookingCalendarMonth,
+  renderBookingPeriod,
 } from "./CalendarConstants";
 
 /***
@@ -13,58 +13,29 @@ import {
  * 1.
  * **/
 
-function BookingCalendarPeriod({
-  handleSetBookingStartDate,
-  handleSetBookingEndDate,
-  startDate,
-  endDate,
-}) {
+function BookingCalendarPeriod({ startDate, endDate }) {
   const [changeStartDate, setChangeStartDate] = useState(true);
+  const [currentYear, setCurrentYear] = useState(startDate.getFullYear());
+  const [isFirstMonth, setIsFirstMonth] = useState(true);
+
+  let currentMonth = startDate.getMonth();
 
   function handleSetBookingDate() {}
 
-  const months = [];
+  const months = renderBookingPeriod(startDate, endDate);
 
-  let currentMonth = startDate.getMonth();
-  const currentYear = startDate.getFullYear();
-
-  console.log(startDate.getDate());
-
-  let isBookableRange = false;
-  let breakDate = startDate;
-
-  while (months.length < 2) {
-    let monthLet = [];
-    for (let i = 1; i < getFirstWeekdayOfMonth(currentYear, currentMonth); i++)
-      monthLet.push({ date: "", isBookable: isBookableRange });
-
-    for (let j = 1; j <= monthsNrOfDays(currentYear)[currentMonth]; j++) {
-      if (j === breakDate.getDate() && currentMonth == breakDate.getMonth()) {
-        isBookableRange = !isBookableRange;
-        breakDate = endDate;
-      }
-      monthLet.push({
-        date: j,
-        fullDate: new Date(currentYear, currentMonth, j),
-        isBookable: isBookableRange,
-      });
-    }
-    months.push({ days: monthLet, month: currentMonth });
-    currentMonth = currentMonth + 1;
-  }
-
-  console.log(months.length);
+  console.log(startDate, endDate);
 
   const classNameGrid = "w-10 h-8 flex justify-center items-center";
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 p-2 gap-2">
       {months.map((month, index) => (
         <div key={index}>
           <span
             className={`${classNameGrid} uppercase font-bold text-[16px] w-full text-center`}
           >
-            {monthsNames[month.month]}
+            {monthNames[month.month]}
           </span>
           <div className="grid grid-cols-7">
             {weekdays.map((day, index) => (

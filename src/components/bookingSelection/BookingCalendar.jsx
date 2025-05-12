@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { weekdays } from "./CalendarConstants";
 import BookingCalendarPeriod from "./BookingCalendarPeriod";
 
 /***
@@ -42,6 +41,9 @@ function BookingCalendar({
       ref={ref}
       className="bg-white absolute right-71 top-130 border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden flex flex-col items-center p-2"
     >
+      <div className="w-full h-8 text-center text-[16px] border-b-2 border-gray-300">
+        {listingStartDates[currentAvailableDatesPeriod].toString()}
+      </div>
       <BookingCalendarPeriod
         startDate={listingStartDates[currentAvailableDatesPeriod]}
         endDate={listingEndDates[currentAvailableDatesPeriod]}
