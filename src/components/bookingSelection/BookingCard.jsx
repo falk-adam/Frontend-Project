@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import ToggleButton from "../other/ToggleButton";
 import NrOfGuestsMenu from "./NrOfGuestsMenu";
+import BookingCalendar from "./BookingCalendar";
 
 /***
  * Booking card
@@ -14,19 +15,19 @@ function BookingCard({ listing }) {
   const refGuestElement = useRef();
 
   const [nrOfGuests, setNrOfGuests] = useState(1);
-  const [startDate, setStartDate] = useState("click to select");
-  const [endDate, setEndDate] = useState("click to select");
+  const [bookingStartDate, setBookingStartDate] = useState("click to select");
+  const [bookingEndDate, setBookingEndDate] = useState("click to select");
 
   function handleSetNrOfGuests(input) {
     setNrOfGuests(input);
   }
 
-  function handleSetStartDate(input) {
-    setStartDate(input);
+  function handleSetBookingStartDate(input) {
+    setBookingStartDate(input);
   }
 
-  function handleSetEndDate(input) {
-    setEndDate(input);
+  function handleSetBookingEndDate(input) {
+    setBookingEndDate(input);
   }
 
   return (
@@ -34,30 +35,28 @@ function BookingCard({ listing }) {
       className={`rounded-xl shadow-xl border-2 border-gray-200 w-full flex flex-col p-8 gap-6 text-[14px]`}
     >
       <div className="rounded-xl border-2 border-gray-400 overflow-hidden">
-        <div className="w-full h-16 flex flex-row border-b-2 border-gray-400">
-          <ToggleButton
-            buttonContent={
-              <>
+        <ToggleButton
+          inputButtonClass="w-full h-16 flex flex-row border-b-2 border-gray-400"
+          buttonContent={
+            <>
+              <div className="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left border-r-2 border-gray-400">
                 <span className="uppercase text-black">check-in</span> <br />{" "}
-                {startDate}
-              </>
-            }
-            inputButtonClass="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left border-r-2 border-gray-400"
-          >
-            hello
-          </ToggleButton>
-          <ToggleButton
-            buttonContent={
-              <>
+                {bookingStartDate}
+              </div>
+              <div className="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left">
                 <span className="uppercase text-black">check-out</span> <br />{" "}
-                {endDate}
-              </>
-            }
-            inputButtonClass="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left"
-          >
-            hello
-          </ToggleButton>
-        </div>
+                {bookingEndDate}
+              </div>
+            </>
+          }
+        >
+          <BookingCalendar
+            ref={refGuestElement}
+            handleSetStartDate={handleSetBookingStartDate}
+            handleSetEndDate={handleSetBookingEndDate}
+            availableDates={listing.availableDates}
+          />
+        </ToggleButton>
         <ToggleButton
           childrenRef={refGuestElement}
           hideElementDependencies={nrOfGuests}

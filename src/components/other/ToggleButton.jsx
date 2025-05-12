@@ -36,13 +36,16 @@ function ToggleButton({
   //handleClick() checks if a click is inside or outside of togglebutton and expandableElement
   useEffect(() => {
     function handleClick(event) {
-      if (
-        thisElement.current &&
-        !thisElement.current.contains(event.target) &&
-        childrenRef.current &&
-        !childrenRef.current.contains(event.target)
-      ) {
-        setShowExpandedElement(false);
+        if (
+          thisElement &&
+          thisElement.current &&
+          !thisElement.current.contains(event.target) &&
+          childrenRef &&
+          childrenRef.current &&
+          !childrenRef.current.contains(event.target)
+        ) {
+          setShowExpandedElement(false);
+        
       }
     }
     document.addEventListener("mousedown", handleClick);
