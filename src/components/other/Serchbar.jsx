@@ -49,7 +49,7 @@ const Serchbar = ({ onSearch }) => {
       />
       <button
         type="submit"
-        className="bg-pink-500 text-white px-4 py-2 rounded-full hover:bg-pink-600"
+        className="bg-red-400 hover:bg-red-500 text-white font-semibold px-4 py-2 rounded-md transition-colors duration-200"
       >
         Search
       </button>
