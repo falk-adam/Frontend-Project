@@ -19,6 +19,9 @@ function BookingCalendar({
   availableDates,
   handleSetBookingStartDate,
   handleSetBookingEndDate,
+  bookingStartDate,
+  bookingEndDate,
+  handleTriggerHideCalender,
   ref,
 }) {
   //index of the month currently displayed by the calendar
@@ -35,46 +38,29 @@ function BookingCalendar({
   function handleSetBookingDates(date) {
     //if there is: 1) there is no startDate, 2) the clicked date is not within the same bookingPeriod as the startDate
     // Then: set clicked date as startDate
-    if (startDateTime === 0 || bookingPeriod !== date.bookingPeriod) {
-      setStartDateTime(date.fullDate.getTime());
-      setEndDateTime(0);
+    if (bookingStartDate === 0 || bookingPeriod !== date.bookingPeriod) {
+      handleSetBookingStartDate(date.fullDate);
+      handleSetBookingEndDate(0);
       setBookingPeriod(date.bookingPeriod);
-      //SETENDDATE WITH HANDLE STARTDATE
 
       //else if the clicked date is after the startDate, set as startDate
-    } else if (startDateTime > date.fullDate.getTime()) {
-      setStartDateTime(date.fullDate.getTime());
+    } else if (bookingStartDate.getTime() > date.fullDate.getTime()) {
+      handleSetBookingStartDate(date.fullDate);
       //else if there is not enddate, set as enddate
-    } else if (endDateTime === 0) {
-      setEndDateTime(date.fullDate.getTime());
+    } else if (bookingEndDate === 0) {
+      handleSetBookingEndDate(date.fullDate);
       //else change end or start date depending on which is closest to
     } else {
       if (
-        Math.abs(date.fullDate.getTime() - startDateTime) >
-        Math.abs(date.fullDate.getTime() - endDateTime)
+        Math.abs(date.fullDate.getTime() - bookingStartDate.getTime()) >
+        Math.abs(date.fullDate.getTime() - bookingEndDate.getTime())
       ) {
-        setEndDateTime(date.fullDate.getTime());
+        handleSetBookingEndDate(date.fullDate);
       } else {
-        setStartDateTime(date.fullDate.getTime());
+        handleSetBookingStartDate(date.fullDate);
       }
     }
   }
-
-  ///update bookingstartDate in BookingCard according to startDateTime
-  useEffect(() => {
-    const newDate =
-      startDateTime === 0
-        ? "click to select"
-        : formatDate(new Date(startDateTime));
-    handleSetBookingStartDate(newDate);
-  }, [startDateTime]);
-
-  //update bookingEndDate in BookingCard according to endDateTime
-  useEffect(() => {
-    const newDate =
-      endDateTime === 0 ? "click to select" : formatDate(new Date(endDateTime));
-    handleSetBookingEndDate(newDate);
-  }, [endDateTime]);
 
   //det an array of data for the bookable months
   const months = createBookingPeriod(availableDates);
@@ -84,63 +70,92 @@ function BookingCalendar({
   return (
     <div
       ref={ref}
-      className="bg-white absolute top-150 right-110 border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden flex flex-col items-center p-2"
+      className="bg-white absolute bottom-22 right-0 w-160 max-mobile:w-80 border-2 border-gray-300 rounded-lg shadow-lg grid grid-cols-2 p-2 max-mobile:grid-cols-1 max-mobile:grid-rows-2"
     >
-      <div className="grid grid-cols-2 grid-rows-2 p-2 gap-2">
-        {months.map((month, index) => (
-          <div key={index}>
-            <span
-              className={`${classNameGrid} uppercase font-bold text-[16px] w-full text-center`}
-            >
-              {month.monthName}
-            </span>
-            <div className="grid grid-cols-7">
-              {weekdays.map((day, index) => (
-                <div key={index} className={classNameGrid}>
-                  {day}
-                </div>
-              ))}
-              {month.dates.map((date, index) => (
-                <div key={index}>
-                  {date.isBookable ? (
-                    <div
-                      className={`${classNameGrid} ${
-                        date.fullDate.getTime() === startDateTime
-                          ? "bg-red-400"
-                          : ""
-                      } ${
-                        date.fullDate.getTime() === endDateTime
-                          ? "bg-red-400"
-                          : ""
-                      }
+      <div
+        className="absolute bottom-3 right-3 text-[18px] rounded-md bg-gray-200 w-7 text-center cursor-pointer invisible max-mobile:visible"
+        onClick={() => handleTriggerHideCalender()}
+      >
+        X
+      </div>
+
+      {monthIndex > 0 ? (
+        <div
+          className="absolute top-3 left-3 text-[18px] rounded-md bg-gray-200 w-7 text-center cursor-pointer"
+          onClick={() => setMonthIndex(monthIndex - 1)}
+        >
+          &lt;
+        </div>
+      ) : (
+        ""
+      )}
+
+      {monthIndex < months.length - 2 ? (
+        <div
+          className="absolute top-3 right-3 text-[18px] rounded-md bg-gray-200 w-7 text-center cursor-pointer"
+          onClick={() => setMonthIndex(monthIndex + 1)}
+        >
+          &gt;
+        </div>
+      ) : (
+        ""
+      )}
+
+      {months.slice(monthIndex, monthIndex + 2).map((month, index) => (
+        <div className="px-3 pb-2" key={index}>
+          <span
+            className={`${classNameGrid} uppercase font-bold text-[16px] w-full text-center`}
+          >
+            {month.monthName}
+          </span>
+          <div className="grid grid-cols-7 grid-rows-7">
+            {weekdays.map((day, index) => (
+              <div key={index} className={classNameGrid}>
+                {day}
+              </div>
+            ))}
+            {month.dates.map((date, index) => (
+              <div key={index}>
+                {date.isBookable ? (
+                  <div
+                    className={`${classNameGrid} ${
+                      bookingStartDate !== 0 &&
+                      date.fullDate.getTime() === bookingStartDate.getTime()
+                        ? "bg-red-400"
+                        : ""
+                    } ${
+                      bookingEndDate !== 0 &&
+                      date.fullDate.getTime() === bookingEndDate.getTime()
+                        ? "bg-red-400"
+                        : ""
+                    }
                       ${
-                        startDateTime !== 0 &&
-                        endDateTime !== 0 &&
-                        date.fullDate.getTime() < endDateTime &&
-                        date.fullDate.getTime() > startDateTime
+                        bookingStartDate !== 0 &&
+                        bookingEndDate !== 0 &&
+                        date.fullDate.getTime() < bookingEndDate.getTime() &&
+                        date.fullDate.getTime() > bookingStartDate.getTime()
                           ? "bg-red-200"
                           : ""
                       }
                         cursor-pointer
                 } `}
-                      onClick={() => handleSetBookingDates(date)}
-                    >
-                      {date.date}
-                    </div>
-                  ) : (
-                    <div
-                      className={`${classNameGrid} text-gray-300
+                    onClick={() => handleSetBookingDates(date)}
+                  >
+                    {date.date}
+                  </div>
+                ) : (
+                  <div
+                    className={`${classNameGrid} text-gray-300
                 } `}
-                    >
-                      {date.date}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                  >
+                    {date.date}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

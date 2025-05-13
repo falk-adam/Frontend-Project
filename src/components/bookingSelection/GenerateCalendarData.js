@@ -21,10 +21,7 @@ export function formatDate(date) {
 }
 
 export function daysBetweenDates(startDate, endDate) {
-  return (
-    (new Date(endDate).getTime() - new Date(startDate).getTime()) /
-    (1000 * 3600 * 24)
-  );
+  return (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
 }
 
 //names of all months

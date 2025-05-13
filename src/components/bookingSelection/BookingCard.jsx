@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ToggleButton from "../other/ToggleButton";
 import NrOfGuestsMenu from "./NrOfGuestsMenu";
 import BookingCalendar from "./BookingCalendar";
-import { daysBetweenDates } from "./GenerateCalendarData";
+import { daysBetweenDates, formatDate } from "./GenerateCalendarData";
 
 /***
  * Booking card
@@ -17,8 +17,10 @@ function BookingCard({ listing }) {
   const refCalendarElement = useRef();
 
   const [nrOfGuests, setNrOfGuests] = useState(1);
-  const [bookingStartDate, setBookingStartDate] = useState("click to select");
-  const [bookingEndDate, setBookingEndDate] = useState("click to select");
+  const [bookingStartDate, setBookingStartDate] = useState(0);
+  const [bookingEndDate, setBookingEndDate] = useState(0);
+  const [nrOfDaysBetweenDates, setNrOfDaysBetweenDates] = useState(0);
+  const [calendarHideDependency, setCalendarHideDependency] = useState(true);
 
   function handleSetNrOfGuests(input) {
     setNrOfGuests(input);
@@ -32,23 +34,44 @@ function BookingCard({ listing }) {
     setBookingEndDate(input);
   }
 
+  function handleTriggerHideCalendar() {
+    setCalendarHideDependency(!calendarHideDependency);
+  }
+
+  //update nr of nrOfDaysBetweenDates when either is changed
+  //used to display nr of night and total price of stay
+  useEffect(() => {
+    if (bookingStartDate !== 0 && bookingEndDate !== 0) {
+      setNrOfDaysBetweenDates(
+        daysBetweenDates(bookingStartDate, bookingEndDate)
+      );
+    } else {
+      setNrOfDaysBetweenDates(0);
+    }
+  }, [bookingEndDate, bookingStartDate]);
+
   return (
     <div
       className={`rounded-xl shadow-xl border-2 border-gray-200 w-full flex flex-col p-8 gap-6 text-[14px]`}
     >
-      <div className="rounded-xl border-2 border-gray-400 overflow-hidden">
+      <div className="rounded-xl border-2 border-gray-400">
         <ToggleButton
           childrenRef={refCalendarElement}
+          hideElementDependencies={calendarHideDependency}
           inputButtonClass="w-full h-16 flex flex-row border-b-2 border-gray-400 cursor-pointer"
           buttonContent={
             <>
               <div className="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left border-r-2 border-gray-400">
                 <span className="uppercase text-black">check-in</span> <br />{" "}
-                {bookingStartDate}
+                {bookingStartDate !== 0
+                  ? formatDate(bookingStartDate)
+                  : "click to select"}
               </div>
               <div className="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left">
                 <span className="uppercase text-black">check-out</span> <br />{" "}
-                {bookingEndDate}
+                {bookingEndDate !== 0
+                  ? formatDate(bookingEndDate)
+                  : "click to select"}
               </div>
             </>
           }
@@ -58,6 +81,9 @@ function BookingCard({ listing }) {
             handleSetBookingStartDate={handleSetBookingStartDate}
             handleSetBookingEndDate={handleSetBookingEndDate}
             availableDates={listing.availableDates}
+            bookingStartDate={bookingStartDate}
+            bookingEndDate={bookingEndDate}
+            handleTriggerHideCalender={handleTriggerHideCalendar}
           />
         </ToggleButton>
         <ToggleButton
@@ -90,25 +116,12 @@ function BookingCard({ listing }) {
       </p>
       <p className="mb-2 w-full flex justify-between">
         <span>Length of stay:</span>
-        <span>
-          {bookingStartDate !== "click to select" &&
-          bookingEndDate !== "click to select"
-            ? daysBetweenDates(bookingStartDate, bookingEndDate)
-            : 0}{" "}
-          nights
-        </span>
+        <span>{nrOfDaysBetweenDates} nights</span>
       </p>
 
       <p className="font-bold pt-7 border-t-1 border-gray-400 w-full flex justify-between">
         <span>Total price:</span>
-        <span>
-          {bookingStartDate !== "click to select" &&
-          bookingEndDate !== "click to select"
-            ? daysBetweenDates(bookingStartDate, bookingEndDate) *
-              listing.pricePerNight
-            : 0}{" "}
-          SEK
-        </span>
+        <span>{nrOfDaysBetweenDates * listing.pricePerNight} SEK</span>
       </p>
     </div>
   );
