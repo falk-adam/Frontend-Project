@@ -70,7 +70,7 @@ function ListingPage() {
           <p>{listing.capacity} guests allowed</p>
 
           
-          <div className="h-15 sm:w-200 flex mt-5 mb-10">
+          <div className="h-15 flex mt-5 mb-10">
             {listing.utilities.map((utility) => (
               <div 
               key={utility}
@@ -84,13 +84,13 @@ function ListingPage() {
             ))}
           </div>
           
-          <div className="">
+          <div className="text-justify">
             <h2 className="font-bold text-[20px]">Description</h2>
-            <p className="sm:w-260">{listing.description}</p>
+            <p>{listing.description}</p>
           </div>
 
           
-          <div className="flex flex-col mt-20 mb-5 sm:w-200">
+          <div className="flex flex-col mt-20 mb-5 text-justify">
             <div className="bg-amber-900 rounded-full w-30 h-30"></div>
             <h2 className="text-[20px] font-bold mt-5">{listing.host.name}</h2>
             <p>{listing.host.description}</p>
