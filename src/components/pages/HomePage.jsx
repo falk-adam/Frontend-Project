@@ -83,7 +83,7 @@ const HomePage = () => {
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
 
       {/* Searchbar component */}
-      <div className="outline-solid outline-2 outline-gray-200 w-[50vw] rounded-4xl flex items-center justify-center px-4 py-2">
+      <div className="flex items-center justify-center px-4 py-2">
         <Serchbar onSearch={handleSearch} />
       </div>
 
