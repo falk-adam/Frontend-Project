@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import { getAllListings } from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
+import PriceFilterDropdown from "../other/PriceFilterDropdown";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
+  const [allListings, setAllListings] = useState([]);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,6 +16,7 @@ const HomePage = () => {
     try {
       //try to get listings via imported listingService method
       const data = await getAllListings();
+      setAllListings(data);
       setListings(data);
       //catch error (e.g., failure to reach api)
     } catch (error) {
@@ -29,6 +32,14 @@ const HomePage = () => {
     //run method
     fetchAllListings();
   }, []);
+
+  // Function to handle price filtering
+  const handlePriceFilter = (min, max) => {
+    const filtered = allListings.filter(
+      (listing) => listing.pricePerNight >= min && listing.pricePerNight <= max
+    );
+    setListings(filtered);
+  };
 
   //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
@@ -50,9 +61,9 @@ const HomePage = () => {
             utility filter placeholder
           </div>
 
-          {/*Placeholder div for general filter component*/}
-          <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
-            other filters placeholder
+          {/* Pricefilter dropdown-menu */}
+          <div className="h-full w-70 flex items-center justify-center">
+            <PriceFilterDropdown onFilter={handlePriceFilter} />
           </div>
         </div>
 
