@@ -22,7 +22,7 @@ function NrOfGuestsMenu({ capacity, handleSetNrOfGuests, ref }) {
   return (
     <ul
       ref={ref}
-      className="bg-white absolute right-71 top-228 w-[10.7rem] border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden max-mobile:right-0 max-mobile:w-screen max-mobile:rounded-none max-mobile:top-15"
+      className="bg-white absolute top-228 right-71 w-[10.7rem] border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden"
     >
       {/*map the options in the options array to a list*/}
       {options.map((option, index) => (

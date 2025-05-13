@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import ToggleButton from "../other/ToggleButton";
 import NrOfGuestsMenu from "./NrOfGuestsMenu";
 import BookingCalendar from "./BookingCalendar";
+import { daysBetweenDates } from "./GenerateCalendarData";
 
 /***
  * Booking card
@@ -13,6 +14,7 @@ import BookingCalendar from "./BookingCalendar";
 
 function BookingCard({ listing }) {
   const refGuestElement = useRef();
+  const refCalendarElement = useRef();
 
   const [nrOfGuests, setNrOfGuests] = useState(1);
   const [bookingStartDate, setBookingStartDate] = useState("click to select");
@@ -36,7 +38,8 @@ function BookingCard({ listing }) {
     >
       <div className="rounded-xl border-2 border-gray-400 overflow-hidden">
         <ToggleButton
-          inputButtonClass="w-full h-16 flex flex-row border-b-2 border-gray-400"
+          childrenRef={refCalendarElement}
+          inputButtonClass="w-full h-16 flex flex-row border-b-2 border-gray-400 cursor-pointer"
           buttonContent={
             <>
               <div className="w-[50%] h-16 py-[10px] px-[15px] text-gray-600 text-left border-r-2 border-gray-400">
@@ -51,16 +54,16 @@ function BookingCard({ listing }) {
           }
         >
           <BookingCalendar
-            ref={refGuestElement}
-            handleSetStartDate={handleSetBookingStartDate}
-            handleSetEndDate={handleSetBookingEndDate}
+            ref={refCalendarElement}
+            handleSetBookingStartDate={handleSetBookingStartDate}
+            handleSetBookingEndDate={handleSetBookingEndDate}
             availableDates={listing.availableDates}
           />
         </ToggleButton>
         <ToggleButton
           childrenRef={refGuestElement}
           hideElementDependencies={nrOfGuests}
-          inputButtonClass="w-full h-16 py-[10px] px-[15px] text-gray-600 text-left"
+          inputButtonClass="w-full h-16 py-[10px] px-[15px] text-gray-600 text-left cursor-pointer"
           buttonContent={
             <>
               <span className="uppercase text-black">guests</span> <br />{" "}
@@ -87,12 +90,25 @@ function BookingCard({ listing }) {
       </p>
       <p className="mb-2 w-full flex justify-between">
         <span>Length of stay:</span>
-        <span>- nights</span>
+        <span>
+          {bookingStartDate !== "click to select" &&
+          bookingEndDate !== "click to select"
+            ? daysBetweenDates(bookingStartDate, bookingEndDate)
+            : 0}{" "}
+          nights
+        </span>
       </p>
 
       <p className="font-bold pt-7 border-t-1 border-gray-400 w-full flex justify-between">
         <span>Total price:</span>
-        <span>- SEK</span>
+        <span>
+          {bookingStartDate !== "click to select" &&
+          bookingEndDate !== "click to select"
+            ? daysBetweenDates(bookingStartDate, bookingEndDate) *
+              listing.pricePerNight
+            : 0}{" "}
+          SEK
+        </span>
       </p>
     </div>
   );

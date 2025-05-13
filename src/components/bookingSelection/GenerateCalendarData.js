@@ -7,8 +7,28 @@
 //three letter abbreviations for the 7 days of the week
 export const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
+//function to formatDate
+export function formatDate(date) {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+}
+
+export function daysBetweenDates(startDate, endDate) {
+  return (
+    (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+    (1000 * 3600 * 24)
+  );
+}
+
 //names of all months
-export const monthNames = [
+const monthNames = [
   "january",
   "february",
   "march",
@@ -55,13 +75,12 @@ export function createBookingPeriod(availableDates) {
 
   //convert the availableDates variable to dates (stored as string in the input variable) and sort
   const availableDatesSorted = convertToSortedDateArray(availableDates);
-  console.log(availableDatesSorted);
-  console.log(availableDatesSorted[availableDatesSorted.length - 1]);
 
   let currentYear = availableDatesSorted[0].getFullYear();
   let currentMonth = availableDatesSorted[0].getMonth();
   let isBookableDateRange = false;
   let nextAvailableDateIndex = 0;
+  let currentBookingPeriod = 1;
   const endDate = availableDatesSorted[availableDatesSorted.length - 1];
   let checkNextDate = true;
   //-----------
@@ -69,12 +88,6 @@ export function createBookingPeriod(availableDates) {
   while (checkNextDate) {
     let month = [];
 
-    console.log(
-      endDate.getMonth(),
-      endDate.getFullYear(),
-      currentMonth,
-      currentYear
-    );
     for (
       let i = 1;
       i < getFirstWeekdayOfMonth(currentYear, currentMonth);
@@ -95,6 +108,9 @@ export function createBookingPeriod(availableDates) {
         ) {
           isBookableDateRange = !isBookableDateRange;
           nextAvailableDateIndex++;
+          if (nextAvailableDateIndex % 2 == 0) {
+            currentBookingPeriod++;
+          }
           if (nextAvailableDateIndex === availableDatesSorted.length) {
             checkNextDate = false;
           }
@@ -103,14 +119,13 @@ export function createBookingPeriod(availableDates) {
 
       month.push({
         date: i,
-        //fullDate: new Date(currentYear, currentMonth, i),
+        fullDate: new Date(currentYear, currentMonth, i),
         isBookable: isBookableDateRange ? true : false,
+        bookingPeriod: isBookableDateRange ? currentBookingPeriod : 0,
       });
     }
 
     months.push({ dates: month, monthName: monthNames[currentMonth] });
-
-    console.log(months);
 
     if (currentMonth === 11) {
       currentMonth = 0;
