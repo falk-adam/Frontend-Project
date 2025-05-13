@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BookingCalendarPeriod from "./BookingCalendarPeriod";
+import { createBookingPeriod, weekdays } from "./GenerateCalendarData";
 
 /***
  * BookingCalendar
@@ -17,37 +17,50 @@ function BookingCalendar({
   handleSetBookingEndDate,
   ref,
 }) {
-  //the available date range currently displayed in the calendar, starts at the first availableDate range
-  const [currentAvailableDatesPeriod, setCurrentAvailableDatesPeriod] =
-    useState(0);
+  //index of the month currently displayed by the calendar
+  const [currentMonthIndex, setCurrentMonthIndex] = useState(0);
 
-  //all listing availableDates start dates
-  const listingStartDates = [];
-  //all listing availableDates end dates
-  const listingEndDates = [];
+  const months = createBookingPeriod(availableDates);
 
-  //availableDates prop is a listing variable,
-  // which contains an array of instances of the DateRange class (in backend, Java)
-  // The DateRange class which holds two dates (start and end), each start and end date are here added to two separate arrays for ease of use
-  availableDates.map(
-    (dateRange) => (
-      listingStartDates.push(new Date(dateRange.startDate)),
-      listingEndDates.push(new Date(dateRange.endDate))
-    )
-  );
+  const classNameGrid = "w-10 h-8 flex justify-center items-center";
 
   return (
     <div
       ref={ref}
       className="bg-white absolute right-71 top-130 border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden flex flex-col items-center p-2"
     >
-      <div className="w-full h-8 text-center text-[16px] border-b-2 border-gray-300">
-        {listingStartDates[currentAvailableDatesPeriod].toString()}
+      <div className="grid grid-cols-2 grid-rows-2 p-2 gap-2">
+        {months.map((month, index) => (
+          <div key={index}>
+            <span
+              className={`${classNameGrid} uppercase font-bold text-[16px] w-full text-center`}
+            >
+              {month.monthName}
+            </span>
+            <div className="grid grid-cols-7">
+              {weekdays.map((day, index) => (
+                <div key={index} className={classNameGrid}>
+                  {day}
+                </div>
+              ))}
+              {month.dates.map((date, index) => (
+                <div key={index}>
+                  {date.isBookable ? (
+                    <div className={classNameGrid}>{date.date}</div>
+                  ) : (
+                    <div
+                      className={`${classNameGrid} text-gray-300
+                } `}
+                    >
+                      {date.date}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
-      <BookingCalendarPeriod
-        startDate={listingStartDates[currentAvailableDatesPeriod]}
-        endDate={listingEndDates[currentAvailableDatesPeriod]}
-      />
     </div>
   );
 }
