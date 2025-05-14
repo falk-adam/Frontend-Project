@@ -1,8 +1,13 @@
 //HomePage, browse and search for listings
 import { useState, useEffect } from "react";
-import { getAllListings } from "../../api/listingService";
+import {
+  getAllListings,
+  getListingsByLocation,
+  getListingsByCapacity,
+} from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
+import Serchbar from "../other/Serchbar";
 import PriceFilterDropdown from "../other/PriceFilterDropdown";
 
 const HomePage = () => {
@@ -18,7 +23,7 @@ const HomePage = () => {
       const data = await getAllListings();
       setAllListings(data);
       setListings(data);
-      //catch error (e.g., failure to reach api)
+      //catch error (like failure to reach api)
     } catch (error) {
       console.log("Error: " + error);
       //set loading to false once try/catch has been executed
@@ -33,6 +38,47 @@ const HomePage = () => {
     fetchAllListings();
   }, []);
 
+  // Function to handle search from Serchbar
+  const handleSearch = async ({ location, checkIn, checkOut, guests }) => {
+    setLoading(true);
+    try {
+      // Fetch by location if provided, else get all listings
+      let results = [];
+      if (location) {
+        results = await getListingsByLocation(location);
+      } else {
+        results = await getAllListings();
+      }
+
+      // Filter by capacity (at least 'guests')
+      if (guests) {
+        // Assuming a high max capacity (We can change this later to whatever we decide is reasonable)
+        const capacityResults = await getListingsByCapacity(guests, 1000);
+        const capacityIds = new Set(capacityResults.map((l) => l.id));
+        results = results.filter((l) => capacityIds.has(l.id));
+      }
+
+      // Filter by date availability if BOTH dates are provided
+      if (checkIn && checkOut) {
+        const start = new Date(checkIn);
+        const end = new Date(checkOut);
+        results = results.filter((listing) =>
+          listing.availableDates.some((range) => {
+            const rStart = new Date(range.startDate);
+            const rEnd = new Date(range.endDate);
+            return rStart <= start && rEnd >= end;
+          })
+        );
+      }
+
+      setListings(results);
+    } catch (error) {
+      console.log("Error: " + error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Function to handle price filtering
   const handlePriceFilter = (min, max) => {
     const filtered = allListings.filter(
@@ -46,17 +92,18 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
-      {/*Placeholder div for search bar component*/}
-      <div className="outline-solid outline-2 outline-gray-200 h-15 w-[50vw] rounded-4xl flex items-center justify-center">
-        Searchbar placeholder
+
+      {/* Searchbar component */}
+      <div className="flex items-center justify-center px-4 py-2">
+        <Serchbar onSearch={handleSearch} />
       </div>
 
       {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
+        
         {/*Top container with search filters*/}
         <div className="w-full h-16 flex justify-between items-center">
           {/*Placeholder div for utility filter component*/}
-
           <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
             utility filter placeholder
           </div>
