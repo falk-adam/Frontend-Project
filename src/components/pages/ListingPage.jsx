@@ -61,33 +61,39 @@ function ListingPage() {
         ))}
       </div>
 
-      <div className="w-full relative">
-        <p className="text-[22px]"> {listing.location} </p>
-        <p>{listing.capacity} guests allowed</p>
-        <div className="float-right">
-          <BookingCard listing={listing} />
+      <div className="w-full flex flex-row-reverse gap-10">
+        <div className="h-full w-100">
+          <BookingCard
+            listing={listing}
+            positionClasses="mb-6 mt-10 w-100 sticky top-10 w-full"
+          />
         </div>
+        <div className="flex flex-col gap-15 w-[calc(100%-20rem)]">
+          <div>
+            <p className="text-[22px]"> {listing.location} </p>
+            <p className="mb-4">{listing.capacity} guests allowed</p>
 
-        <div className="flex mt-5 mb-10 flex-wrap">
-          {listing.utilities.map((utility) => (
-            <div key={utility} className="flex flex-row mr-5 mb-3">
-              <IconHandler icon={utility} />
-              {/* This utility provides the text while the one above is for matching icon. Mobile size: only icons*/}
-              <p className="ml-2 mt-2 hidden sm:block">
-                {utility.replace("_", " ")}
-              </p>
+            <div className="flex flex-wrap gap-4">
+              {listing.utilities.map((utility) => (
+                <div key={utility} className="flex flex-row">
+                  <IconHandler icon={utility} />
+                  {/* This utility provides the text while the one above is for matching icon. Mobile size: only icons*/}
+                  <p className="ml-2 mt-2 hidden sm:block">
+                    {utility.replace("_", " ")}
+                  </p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        <div className="mt-10 mb-5 text-justify flex flex-col">
-          <h2 className="font-bold text-[20px]">Description</h2>
-          <p>{listing.description}</p>
-        </div>
+          <div className="text-justify flex flex-col">
+            <h2 className="font-bold text-[20px]">Description</h2>
+            <p>{listing.description}</p>
+          </div>
 
-        <div className="flex items-center mt-15 mb-5 text-justify">
-          <div className="bg-amber-900 rounded-full w-30 h-30"></div>
-          <div className="flex flex-col">
+          <div className="text-justify">
+            <div className="bg-amber-900 rounded-full w-25 h-25 mb-2"></div>
+
             <h2 className="text-[20px] font-bold">{listing.host.name}</h2>
             <p>{listing.host.description}</p>
             <p>
@@ -99,13 +105,13 @@ function ListingPage() {
               Lorem Ipsum.
             </p>
           </div>
-        </div>
 
-        <div className="flex flex-row mt-20">
-          <Star />
-          <h3 className="ml-2 mb-2 font-bold">
-            {listing.averageRating} rating
-          </h3>
+          <div className="flex flex-row mt-20">
+            <Star />
+            <h3 className="ml-2 mb-2 font-bold">
+              {listing.averageRating} rating
+            </h3>
+          </div>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ function ToggleButton({
   buttonClickedStyling,
   hideElementDependencies,
   childrenRef,
-  staticPostionMobile = false,
+  staticPositionMobile = false,
 }) {
   //dynamic styling of button depending on if it is clicked
   //inital state is for expanded element to be hidden
@@ -67,7 +67,7 @@ function ToggleButton({
 
   return (
     <div
-      className={`relative ${staticPostionMobile ? "max-mobile:static" : ""}`}
+      className={`relative ${staticPositionMobile ? "max-mobile:static" : ""}`}
     >
       <button
         className={buttonClass}

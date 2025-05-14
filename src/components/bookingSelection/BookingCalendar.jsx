@@ -27,10 +27,6 @@ function BookingCalendar({
   //index of the month currently displayed by the calendar
   const [monthIndex, setMonthIndex] = useState(0);
 
-  //start and enddates as time, to compare against other dates easily
-  const [startDateTime, setStartDateTime] = useState(0);
-  const [endDateTime, setEndDateTime] = useState(0);
-
   //which booking period currently clicked date is in
   const [bookingPeriod, setBookingPeriod] = useState(0);
 
@@ -62,6 +58,12 @@ function BookingCalendar({
     }
   }
 
+  //clear chosen dates
+  function handleClearDates() {
+    handleSetBookingStartDate(0);
+    handleSetBookingEndDate(0);
+  }
+
   //det an array of data for the bookable months
   const months = createBookingPeriod(availableDates);
 
@@ -70,13 +72,21 @@ function BookingCalendar({
   return (
     <div
       ref={ref}
-      className="bg-white absolute bottom-22 right-0 w-160 max-mobile:w-80 border-2 border-gray-300 rounded-lg shadow-lg grid grid-cols-2 p-2 max-mobile:grid-cols-1 max-mobile:grid-rows-2"
+      className="bg-white absolute bottom-20 right-0 border-2 border-gray-300 rounded-lg shadow-lg flex p-2 max-mobile:flex-col max-mobile:w-screen max-mobile:bottom-0"
     >
-      <div
-        className="absolute bottom-3 right-3 text-[18px] rounded-md bg-gray-200 w-7 text-center cursor-pointer invisible max-mobile:visible"
-        onClick={() => handleTriggerHideCalender()}
-      >
-        X
+      <div className="absolute bottom-3 right-3 text-[12px] flex gap-2 text-center cursor-pointer">
+        <div
+          className="rounded-md bg-gray-200 uppercase px-2 py-1"
+          onClick={() => handleClearDates()}
+        >
+          clear
+        </div>
+        <div
+          className="rounded-md bg-gray-200 uppercase px-2 py-1"
+          onClick={() => handleTriggerHideCalender()}
+        >
+          close
+        </div>
       </div>
 
       {monthIndex > 0 ? (
@@ -104,7 +114,7 @@ function BookingCalendar({
       {months.slice(monthIndex, monthIndex + 2).map((month, index) => (
         <div className="px-3 pb-2" key={index}>
           <span
-            className={`${classNameGrid} uppercase font-bold text-[16px] w-full text-center`}
+            className={`${classNameGrid} uppercase font-bold text-[16px] w-80 text-center`}
           >
             {month.monthName}
           </span>

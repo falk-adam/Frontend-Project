@@ -46,7 +46,7 @@ function Header() {
           }
           hideElementDependencies={pathname}
           childrenRef={menuRef}
-          staticPostionMobile={true}
+          staticPositionMobile={true}
         >
           <HeaderMenu ref={menuRef} />
         </ToggleButton>

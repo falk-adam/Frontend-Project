@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import ToggleButton from "../other/ToggleButton";
 import NrOfGuestsMenu from "./NrOfGuestsMenu";
 import BookingCalendar from "./BookingCalendar";
@@ -12,15 +14,20 @@ import { daysBetweenDates, formatDate } from "./GenerateCalendarData";
  *
  * **/
 
-function BookingCard({ listing }) {
+function BookingCard({ listing, positionClasses }) {
   const refGuestElement = useRef();
-  const refCalendarElement = useRef();
+  //const refCalendarElement = useRef();
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { currentUser } = useAuth();
 
   const [nrOfGuests, setNrOfGuests] = useState(1);
   const [bookingStartDate, setBookingStartDate] = useState(0);
   const [bookingEndDate, setBookingEndDate] = useState(0);
   const [nrOfDaysBetweenDates, setNrOfDaysBetweenDates] = useState(0);
-  const [calendarHideDependency, setCalendarHideDependency] = useState(true);
+  const [showError, setShowError] = useState(false);
+  const [calendarHideDependency, setCalendarHideDependency] = useState(false);
 
   function handleSetNrOfGuests(input) {
     setNrOfGuests(input);
@@ -38,8 +45,18 @@ function BookingCard({ listing }) {
     setCalendarHideDependency(!calendarHideDependency);
   }
 
-  //update nr of nrOfDaysBetweenDates when either is changed
-  //used to display nr of night and total price of stay
+  function submitBooking() {
+    if (nrOfDaysBetweenDates !== 0) {
+      localStorage.setItem("startDate", JSON.stringify(bookingStartDate));
+      localStorage.setItem("endDate", JSON.stringify(bookingEndDate));
+      localStorage.setItem("nrOfGuests", JSON.stringify(nrOfGuests));
+      navigate(pathname + "/booking");
+    } else {
+      setShowError(true);
+    }
+  }
+
+  //update nr of nrOfDaysBetweenDates when either start or endDate is changed, also reset submit-error
   useEffect(() => {
     if (bookingStartDate !== 0 && bookingEndDate !== 0) {
       setNrOfDaysBetweenDates(
@@ -48,15 +65,17 @@ function BookingCard({ listing }) {
     } else {
       setNrOfDaysBetweenDates(0);
     }
+    setShowError(false);
   }, [bookingEndDate, bookingStartDate]);
 
   return (
     <div
-      className={`rounded-xl shadow-xl border-2 border-gray-200 w-90 flex flex-col p-8 gap-6 text-[14px] ml-6 mb-6`}
+      className={`rounded-xl shadow-xl border-2 border-gray-200 flex flex-col p-8 gap-6 text-[14px] ${positionClasses}`}
     >
       <div className="rounded-xl border-2 border-gray-400">
         <ToggleButton
-          childrenRef={refCalendarElement}
+          //childrenRef={refCalendarElement}
+          staticPositionMobile={true}
           hideElementDependencies={calendarHideDependency}
           inputButtonClass="w-full h-16 flex flex-row border-b-2 border-gray-400 cursor-pointer"
           buttonContent={
@@ -77,7 +96,7 @@ function BookingCard({ listing }) {
           }
         >
           <BookingCalendar
-            ref={refCalendarElement}
+            //ref={refCalendarElement}
             handleSetBookingStartDate={handleSetBookingStartDate}
             handleSetBookingEndDate={handleSetBookingEndDate}
             availableDates={listing.availableDates}
@@ -104,12 +123,27 @@ function BookingCard({ listing }) {
           />
         </ToggleButton>
       </div>
-      <button className="w-full bg-red-400 hover:bg-red-500 text-white text-[16px] font-semibold py-2 rounded-lg transition-colors duration-200 h-15">
-        Reserve
-      </button>
-      <p className="w-full text-center text-gray-400">
-        You will not be charged yet
-      </p>
+      {currentUser && currentUser.roles ? (
+        <button
+          className="w-full bg-red-400 hover:bg-red-500 text-white text-[16px] font-semibold py-2 rounded-lg transition-colors cursor-pointer duration-200 h-15"
+          onClick={() => submitBooking()}
+        >
+          Reserve
+        </button>
+      ) : (
+        <div className="w-full bg-gray-200 flex justify-center items-center text-[16px] font-semibold py-2 rounded-lg h-15">
+          Login to Reserve
+        </div>
+      )}
+      {showError ? (
+        <p className="w-full text-center text-red-400">
+          Fill check-in and check-out dates
+        </p>
+      ) : (
+        <p className="w-full text-center text-gray-400">
+          You will not be charged yet
+        </p>
+      )}
       <p className="w-full flex justify-between">
         <span>Price per night:</span>
         <span>{listing.pricePerNight} SEK</span>
@@ -118,7 +152,6 @@ function BookingCard({ listing }) {
         <span>Length of stay:</span>
         <span>{nrOfDaysBetweenDates} nights</span>
       </p>
-
       <p className="font-bold pt-7 border-t-1 border-gray-400 w-full flex justify-between">
         <span>Total price:</span>
         <span>{nrOfDaysBetweenDates * listing.pricePerNight} SEK</span>
