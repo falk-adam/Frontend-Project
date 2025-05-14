@@ -15,6 +15,8 @@ const HomePage = () => {
   const [allListings, setAllListings] = useState([]);
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchCriteria, setSearchCriteria] = useState(null);
+  const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
 
   //method for getting all listings
   const fetchAllListings = async () => {
@@ -71,6 +73,14 @@ const HomePage = () => {
         );
       }
 
+      // Apply price filter to the search results
+      results = results.filter(
+        (listing) =>
+          listing.pricePerNight >= priceFilter.min &&
+          listing.pricePerNight <= priceFilter.max
+      );
+
+      setSearchCriteria({ location, checkIn, checkOut, guests });
       setListings(results);
     } catch (error) {
       console.log("Error: " + error);
@@ -81,10 +91,19 @@ const HomePage = () => {
 
   // Function to handle price filtering
   const handlePriceFilter = (min, max) => {
-    const filtered = allListings.filter(
-      (listing) => listing.pricePerNight >= min && listing.pricePerNight <= max
-    );
-    setListings(filtered);
+    setPriceFilter({ min, max });
+
+    // If we have search criteria, reapply the search with current price filter
+    if (searchCriteria) {
+      handleSearch(searchCriteria);
+    } else {
+      // If no search criteria, just filter the current listings
+      const filtered = allListings.filter(
+        (listing) =>
+          listing.pricePerNight >= min && listing.pricePerNight <= max
+      );
+      setListings(filtered);
+    }
   };
 
   //"Loading..." is shown while loading === true
@@ -92,15 +111,13 @@ const HomePage = () => {
 
   return (
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
-
       {/* Searchbar component */}
       <div className="flex items-center justify-center px-4 py-2">
-        <Serchbar onSearch={handleSearch} />
+        <Serchbar onSearch={handleSearch} initialValues={searchCriteria} />
       </div>
 
       {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
-        
         {/*Top container with search filters*/}
         <div className="w-full h-16 flex justify-between items-center">
           {/*Placeholder div for utility filter component*/}
@@ -110,7 +127,10 @@ const HomePage = () => {
 
           {/* Pricefilter dropdown-menu */}
           <div className="h-full w-70 flex items-center justify-center">
-            <PriceFilterDropdown onFilter={handlePriceFilter} />
+            <PriceFilterDropdown
+              onFilter={handlePriceFilter}
+              initialValues={priceFilter}
+            />
           </div>
         </div>
 

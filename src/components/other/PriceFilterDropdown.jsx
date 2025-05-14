@@ -2,13 +2,23 @@ import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const PriceFilterDropdown = ({ onFilter }) => {
+const PriceFilterDropdown = ({ onFilter, initialValues }) => {
   const [open, setOpen] = useState(false);
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(10000);
+  const [minPrice, setMinPrice] = useState(initialValues?.min || 0);
+  const [maxPrice, setMaxPrice] = useState(initialValues?.max || 10000);
   const ref = useRef(null);
 
+  // Update local state when initialValues change from parent
+  // This ensures the price filter is in sync with the parent
+  useEffect(() => {
+    if (initialValues) {
+      setMinPrice(initialValues.min || 0);
+      setMaxPrice(initialValues.max || 10000);
+    }
+  }, [initialValues]);
+
   //Close dropdown-menu "automatically" when clicking anywhere else on webpage
+  // Uses a ref to track the dropdown element and checks if the click was outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -21,11 +31,13 @@ const PriceFilterDropdown = ({ onFilter }) => {
     };
   }, []);
 
+  // Apply the current price filter and close the dropdown
   const applyFilter = () => {
     onFilter(minPrice, maxPrice);
     setOpen(false);
   };
 
+  // Reset price filter to default values and close the dropdown
   const clearFilter = () => {
     setMinPrice(0);
     setMaxPrice(10000);
@@ -40,7 +52,12 @@ const PriceFilterDropdown = ({ onFilter }) => {
         onClick={() => setOpen(!open)}
         className="flex items-center justify-between px-4 py-2 border-2 border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
       >
-        <div className="text-gray-600 font-medium">Filter</div>
+        {/*Display pricerange on the filter button / dropdown */}
+        <div className="text-gray-600 font-medium">
+          {minPrice > 0 || maxPrice < 10000
+            ? `${minPrice}kr - ${maxPrice}kr`
+            : "Filter"}
+        </div>
         <FontAwesomeIcon icon={faBars} className="text-gray-600 ml-2" />
       </button>
 
