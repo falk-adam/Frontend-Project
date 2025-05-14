@@ -52,7 +52,7 @@ function BookingCard({ listing }) {
 
   return (
     <div
-      className={`rounded-xl shadow-xl border-2 border-gray-200 w-full flex flex-col p-8 gap-6 text-[14px]`}
+      className={`rounded-xl shadow-xl border-2 border-gray-200 w-90 flex flex-col p-8 gap-6 text-[14px] ml-6 mb-6`}
     >
       <div className="rounded-xl border-2 border-gray-400">
         <ToggleButton
