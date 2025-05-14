@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from "react";
  * 4. children = the pop-up element that button toggels the visibility of
  * 5. hideElementDependencies = dependencies that, when changed, should prompt the element to hide
  * 6. childrenRef = reference to the child element, used to check if clicks are outside of child element (in which case the element should become hidden)
+ * 7. staticPostionMobile = if set to true, the element pos becomes static for mobile, this cases the pop-element position to relative to the screen instead of the parent element
  ***/
 
 function ToggleButton({
@@ -19,6 +20,7 @@ function ToggleButton({
   buttonClickedStyling,
   hideElementDependencies,
   childrenRef,
+  staticPostionMobile = false,
 }) {
   //dynamic styling of button depending on if it is clicked
   //inital state is for expanded element to be hidden
@@ -64,7 +66,9 @@ function ToggleButton({
   } ${inputButtonClass}`;
 
   return (
-    <div className="relative">
+    <div
+      className={`relative ${staticPostionMobile ? "max-mobile:static" : ""}`}
+    >
       <button
         className={buttonClass}
         onClick={handleShowExpandedElement}

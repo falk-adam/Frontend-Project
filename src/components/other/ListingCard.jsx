@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NoImageIcon from "../../assets/icons/NoImageIcon";
+import NoImage from "../../assets/icons/NoImage";
 /***
  * Listing Card:
  * A smaller card showing the title, location, price, rating and first image for a listing
@@ -34,7 +34,7 @@ function ListingCard({
         className={`rounded-lg bg-gray-200 grow overflow-hidden items-center flex`}
       >
         <div className="h-full w-full"></div>
-        <NoImageIcon className="h-40 w-40" />
+        <NoImage className="h-40 w-40" />
         <img
           src={`${listing.imageUrls[0]}`}
           onLoad={() => setIsImageUrlValid(true)}

@@ -40,7 +40,7 @@ function HeaderMenu({ ref }) {
   return (
     <nav
       ref={ref}
-      className="bg-white absolute right-0 top-15 w-50 outline-solid outline-2 z-10 outline-gray-300 rounded-lg shadow-lg overflow-hidden max-mobile:-right-[17px] max-mobile:w-screen max-mobile:rounded-none max-mobile:top-[3.15rem]"
+      className="bg-white absolute right-0 top-15 w-50 outline-solid outline-2 z-10 outline-gray-300 rounded-lg shadow-lg overflow-hidden max-mobile:w-screen max-mobile:rounded-none max-mobile:top-15 max-mobile:right-0 "
     >
       <ul>
         {/*map the options in the options array to a list*/}
