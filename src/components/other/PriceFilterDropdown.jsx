@@ -51,7 +51,7 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="flex items-center justify-between px-4 py-2 border-2 border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
+        className="flex w-54 items-center justify-between px-4 py-2 border-2 border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
       >
         {/*Display pricerange on the filter button / dropdown */}
         <div className="text-gray-600 font-medium">
