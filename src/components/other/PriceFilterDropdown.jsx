@@ -19,6 +19,7 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
 
   //Close dropdown-menu "automatically" when clicking anywhere else on webpage
   // Uses a ref to track the dropdown element and checks if the click was outside
+  //We can add this on HeaderMenu also later if we want
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -69,6 +70,15 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
               <label className="block text-sm font-medium mb-1">
                 Min Price
               </label>
+               {/*input for the slider */}
+               <input
+                type="range"
+                min="0"
+                max="10000"
+                value={minPrice}
+                onChange={(e) => setMinPrice(Number(e.target.value))}
+                className="w-full"
+              />
               {/*input for the manual number input */}
               <input
                 type="number"
@@ -83,6 +93,15 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
               <label className="block text-sm font-medium mb-1">
                 Max Price
               </label>
+              {/*input for the slider */}
+              <input
+                type="range"
+                min="0"
+                max="10000"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                className="w-full"
+              />
               {/*input for the manual number input */}
               <input
                 type="number"
