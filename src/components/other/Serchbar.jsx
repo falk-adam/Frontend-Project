@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Serchbar = ({ onSearch }) => {
-  const [destination, setDestination] = useState("");
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
+const Serchbar = ({ onSearch, initialValues }) => {
+  // Initialize state with initialValues if provided, otherwise use defaults
+  const [destination, setDestination] = useState(initialValues?.location || "");
+  const [checkIn, setCheckIn] = useState(initialValues?.checkIn || "");
+  const [checkOut, setCheckOut] = useState(initialValues?.checkOut || "");
   //guests always automatically set at 1 since you have to be atleast 1 person to make a booking
-  const [guests, setGuests] = useState(1);
+  const [guests, setGuests] = useState(initialValues?.guests || 1);
+
+  // Update local state when initialValues change from parent
+  // This ensures the searchbar is in sync with the parent
+  useEffect(() => {
+    if (initialValues) {
+      setDestination(initialValues.location || "");
+      setCheckIn(initialValues.checkIn || "");
+      setCheckOut(initialValues.checkOut || "");
+      setGuests(initialValues.guests || 1);
+    }
+  }, [initialValues]);
 
   const handleSearch = (e) => {
     e.preventDefault();
