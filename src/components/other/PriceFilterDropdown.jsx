@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Menu from "../../assets/icons/Menu";
 
 const PriceFilterDropdown = ({ onFilter, initialValues }) => {
   const [open, setOpen] = useState(false);
@@ -59,7 +58,7 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
             ? `${minPrice}kr - ${maxPrice}kr`
             : "Filter"}
         </div>
-        <FontAwesomeIcon icon={faBars} className="text-gray-600 ml-2" />
+        <Menu className="w-5 h-5 ml-2" />
       </button>
 
       {/*The filtering for max/min price is currently manually set by changing max="10000"*/}
@@ -70,8 +69,8 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
               <label className="block text-sm font-medium mb-1">
                 Min Price
               </label>
-               {/*input for the slider */}
-               <input
+              {/*input for the slider */}
+              <input
                 type="range"
                 min="0"
                 max="10000"

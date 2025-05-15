@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const Serchbar = ({ onSearch, initialValues }) => {
+const Searchbar = ({ onSearch, initialValues }) => {
   // Initialize state with initialValues if provided, otherwise use defaults
   const [destination, setDestination] = useState(initialValues?.location || "");
   const [checkIn, setCheckIn] = useState(initialValues?.checkIn || "");
@@ -106,4 +106,4 @@ const Serchbar = ({ onSearch, initialValues }) => {
   );
 };
 
-export default Serchbar;
+export default Searchbar;

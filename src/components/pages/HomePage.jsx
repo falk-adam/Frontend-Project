@@ -7,7 +7,7 @@ import {
 } from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
-import Serchbar from "../other/Serchbar";
+import Searchbar from "../other/Searchbar";
 import PriceFilterDropdown from "../other/PriceFilterDropdown";
 
 const HomePage = () => {
@@ -40,7 +40,7 @@ const HomePage = () => {
     fetchAllListings();
   }, []);
 
-  // Function to handle search from Serchbar
+  // Function to handle search from Searchbar
   const handleSearch = async ({ location, checkIn, checkOut, guests }) => {
     setLoading(true);
     try {
@@ -113,7 +113,7 @@ const HomePage = () => {
     <div className="flex flex-col w-full m-2 p-5 items-center gap-3">
       {/* Searchbar component */}
       <div className="flex items-center justify-center px-4 py-2">
-        <Serchbar onSearch={handleSearch} initialValues={searchCriteria} />
+        <Searchbar onSearch={handleSearch} initialValues={searchCriteria} />
       </div>
 
       {/*Containter all main content apart from search bar*/}

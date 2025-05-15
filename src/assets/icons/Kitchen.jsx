@@ -1,4 +1,3 @@
-import * as React from "react";
 const Kitchen = (props) => (
   <svg
     width={37}

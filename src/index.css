@@ -13,7 +13,7 @@
 }
 
 @theme {
-  --breakpoint-mobile: 430px;
+  --breakpoint-mobile: 450px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1200px;
 }

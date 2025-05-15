@@ -17,6 +17,7 @@ import AdminPage from "./components/pages/AdminPage";
 function AppLayout() {
   const location = useLocation();
   const hideHeader = ["/login", "/register"].includes(location.pathname);
+  
   return (
     <>
       {!hideHeader && <Header />}
