@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createBookingPeriod, weekdays } from "./GenerateCalendarData";
+import { createBookingCalendar, weekdays } from "./GenerateCalendarData";
 
 /***
  * BookingCalendar
@@ -62,7 +62,7 @@ function BookingCalendar({
 
   //create an array of data for the bookable months, using function imported from GenerateCalendarData.js
   //mapped in the return statement to create a calendar of the availableDates
-  const months = createBookingPeriod(availableDates);
+  const months = createBookingCalendar(availableDates);
 
   //const for styling classes used by mutliple elements
   const classNameGrid = "w-10 h-9 flex justify-center items-center rounded-3xl";

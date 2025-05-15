@@ -104,7 +104,7 @@ function ListingPage() {
             </h3>
           </div>
         </div>
-        <div className="w-[22.6rem] bg-gray-100 pt-10 max-mobile:w-full">
+        <div className="w-[22.6rem] pt-10 max-mobile:w-full">
           <BookingCard
             listing={listing}
             positionClasses="w-full sticky max-md:static top-10 w-full"
