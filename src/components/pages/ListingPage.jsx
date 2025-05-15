@@ -9,19 +9,12 @@ import BookingCard from "../bookingSelection/BookingCard";
 See an individual listings w. details, host info and reviews*/
 
 function ListingPage() {
-  console.log("ListingPage is rendering"); // debug
-  // get the :id from current URL
   const { listingId } = useParams();
-  console.log("Param: ", listingId); // debug
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // method for getting specific listing via id
-
   useEffect(() => {
-    // debug
-    console.log("ID from URL: ", listingId);
-
     const fetchListing = async () => {
       try {
         // fetch my listing by id
