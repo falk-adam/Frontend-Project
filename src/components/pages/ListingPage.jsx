@@ -61,14 +61,8 @@ function ListingPage() {
         ))}
       </div>
 
-      <div className="w-full flex flex-row-reverse gap-10">
-        <div className="h-full w-100">
-          <BookingCard
-            listing={listing}
-            positionClasses="mb-6 mt-10 w-100 sticky top-10 w-full"
-          />
-        </div>
-        <div className="flex flex-col gap-15 w-[calc(100%-20rem)]">
+      <div className="w-full h-full flex flex-row justify-between max-md:flex-col">
+        <div className="flex flex-col gap-15 w-[calc(100%-25rem)] max-md:w-full">
           <div>
             <p className="text-[22px]"> {listing.location} </p>
             <p className="mb-4">{listing.capacity} guests allowed</p>
@@ -92,7 +86,9 @@ function ListingPage() {
           </div>
 
           <div className="text-justify">
-            <div className="bg-amber-900 rounded-full w-25 h-25 mb-2"></div>
+            <div className="bg-amber-900 rounded-full w-25 h-25 mb-2 flex items-center text-white justify-center">
+              host image
+            </div>
 
             <h2 className="text-[20px] font-bold">{listing.host.name}</h2>
             <p>{listing.host.description}</p>
@@ -106,12 +102,20 @@ function ListingPage() {
             </p>
           </div>
 
-          <div className="flex flex-row mt-20">
+          <div className="flex flex-row mt-20 max-md:-mt-2">
             <Star />
             <h3 className="ml-2 mb-2 font-bold">
-              {listing.averageRating} rating
+              {listing.averageRating === 0
+                ? "No reviews"
+                : listing.averageRating.toFixed(2)}
             </h3>
           </div>
+        </div>
+        <div className="w-[22.6rem] bg-gray-100 pt-10 max-mobile:w-full">
+          <BookingCard
+            listing={listing}
+            positionClasses="w-full sticky max-md:static top-10 w-full"
+          />
         </div>
       </div>
     </div>

@@ -6,13 +6,17 @@ import { useRef } from "react";
 import User from "../../assets/icons/User";
 import Menu from "../../assets/icons/Menu";
 
-/*Header component
-Inludes an airbnb logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side*/
+/***
+ * Header component
+ *
+ * Inludes an airbnb logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side
+ ****/
 
 function Header() {
   //url of current page, to pass on to togglebutton as a prop (see toggleButton element for more details)
   const { pathname } = useLocation();
 
+  //reference to HeaderMenu component, used by ToggleButton (see ToggleButton for details)
   const menuRef = useRef();
 
   return (

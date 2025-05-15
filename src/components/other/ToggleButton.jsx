@@ -1,16 +1,16 @@
-//imports
 import { useEffect, useState, useRef } from "react";
 
 /***
- * ToggleButton component - toggels visibility of child element when clicked
+ * ToggleButton - button that toggles visibility of child element when clicked
+ * 
  * recieves:
- * 1. inputButtonClass = tailwind styling classes
+ * 1. inputButtonClass = tailwind styling classes for button
  * 2. buttonClickedStyling = tailwind styling classes to be ADDED when button is clicked
- * 3. buttonContent = the content of the button itself (images/text/other)
- * 4. children = the pop-up element that button toggels the visibility of
+ * 3. buttonContent = the content of the button div (images/text/other)
+ * 4. children = the pop-up element that button toggels
  * 5. hideElementDependencies = dependencies that, when changed, should prompt the element to hide
  * 6. childrenRef = reference to the child element, used to check if clicks are outside of child element (in which case the element should become hidden)
- * 7. staticPostionMobile = if set to true, the element pos becomes static for mobile, this cases the pop-element position to relative to the screen instead of the parent element
+ * 7. staticPostionMobile = if set to true, the element pos becomes static for mobile (this causes the pop-element position to relative to the screen instead of the parent element)
  ***/
 
 function ToggleButton({
