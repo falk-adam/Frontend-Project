@@ -62,6 +62,7 @@ function BookingCard({ listing, positionClasses }) {
       localStorage.setItem("startDate", JSON.stringify(bookingStartDate));
       localStorage.setItem("endDate", JSON.stringify(bookingEndDate));
       localStorage.setItem("nrOfGuests", JSON.stringify(nrOfGuests));
+      localStorage.setItem("nrOfNights", JSON.stringify(bookingDuration));
       navigate(pathname + "/booking");
     } else {
       setShowError(true);

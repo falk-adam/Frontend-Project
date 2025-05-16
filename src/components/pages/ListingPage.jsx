@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getListingsById } from "../../api/listingService";
+import { getListingById } from "../../api/listingService";
 import { useParams } from "react-router-dom";
 import Star from "../../assets/icons/Star";
 import IconHandler from "../../assets/icons/IconHandler";
@@ -17,13 +17,10 @@ function ListingPage() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        // fetch my listing by id
-        const data = await getListingsById(listingId);
-        console.log("fetched listing: ", data);
+        const data = await getListingById(listingId);
         setListing(data);
       } catch (error) {
         console.log("Error: " + error);
-        console.error("Error fetching listing:", error);
       } finally {
         setLoading(false);
       }

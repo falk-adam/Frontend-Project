@@ -13,11 +13,12 @@ import MyListingsPage from "./components/pages/MyListingsPage";
 import LoginPage from "./components/pages/LoginPage";
 import UserRegistrationPage from "./components/pages/UserRegistrationPage";
 import AdminPage from "./components/pages/AdminPage";
+import BookingConfirmationPage from "./components/pages/BookingConfirmationPage";
 
 function AppLayout() {
   const location = useLocation();
   const hideHeader = ["/login", "/register"].includes(location.pathname);
-  
+
   return (
     <>
       {!hideHeader && <Header />}
@@ -33,6 +34,10 @@ function AppLayout() {
             <Route path="/user/bookings" element={<MyBookingsPage />} />
             {/*Create Booking is accessed via ListingPage*/}
             <Route path="/:listingId/booking" element={<CreateBookingPage />} />
+            <Route
+              path="/booking_confirmation/:bookingId"
+              element={<BookingConfirmationPage />}
+            />
           </Route>
 
           <Route element={<ProtectedRoute equiredRoles={["HOST"]} />}>
