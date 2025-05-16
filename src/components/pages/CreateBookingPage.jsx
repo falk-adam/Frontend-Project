@@ -75,12 +75,7 @@ function CreateBookingPage() {
   return (
     <div className=" flex flex-col m-5">
       <div className="w-full flex flex-col gap-2 justify-center items-center p-5">
-        <div className="bg-amber-950 h-20 w-80 justify-center items-center">
-          progress bar{startDate}
-        </div>
-    <div className="w-full h-full flex flex-col bg-white">
-      <div className="w-full flex flex-col justify-center items-center p-10">
-        <div className="flex items-center justify-center w-120">
+      <div className="flex items-center justify-center w-120">
           {/* Step 1 */}
           <div className="flex flex-col items-center">
             <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl border-1 border-gray-400">
@@ -107,6 +102,9 @@ function CreateBookingPage() {
             <span className="mt-2 text-black">Confirmation</span>
           </div>
         </div>
+   
+      
+        
       </div>
       <div className="flex flex-row gap-10 m-5">
         <div className="bg-green-800 bg-blue-400 grow w-full">FORM</div>
