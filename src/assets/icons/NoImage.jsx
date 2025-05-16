@@ -1,4 +1,4 @@
-const NoImageIcon = ({ className }) => (
+const NoImage = ({ className }) => (
   <svg
     width={20}
     height={20}
@@ -13,4 +13,4 @@ const NoImageIcon = ({ className }) => (
     />
   </svg>
 );
-export default NoImageIcon;
+export default NoImage;

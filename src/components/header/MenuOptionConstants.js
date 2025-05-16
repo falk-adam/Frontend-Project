@@ -7,6 +7,7 @@
  */
 
 //all possible menu options, local variable
+//NB! does not include logout, which is handled directly in Header Menu component
 const MENU_ALL_OPTIONS = [
   { text: "Login", url: "/login" },
   { text: "Register", url: "/register" },
