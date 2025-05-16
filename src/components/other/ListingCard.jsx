@@ -1,5 +1,7 @@
 import { useState } from "react";
 import NoImage from "../../assets/icons/NoImage";
+import ImageCard from "./ImageCard";
+
 /***
  * Listing Card:
  * A smaller card showing the title, location, price, rating and first image for a listing
@@ -30,19 +32,7 @@ function ListingCard({
       key={listing.id}
       className={`flex ${flexDirection1} ${cardSize} p-2 gap-2 text-[14px] leading-[24px]`}
     >
-      <div
-        className={`rounded-lg bg-gray-200 grow overflow-hidden items-center flex`}
-      >
-        <div className="h-full w-full"></div>
-        <NoImage className="h-40 w-40" />
-        <img
-          src={`${listing.imageUrls[0]}`}
-          onLoad={() => setIsImageUrlValid(true)}
-          className={`w-full h-full ${
-            isImageUrlValid ? "visible" : "invisible"
-          } `}
-        />
-      </div>
+      <ImageCard imageUrl={listing.imageUrls[0]} />
       <div className={`flex ${flexDirection2} justify-between p-1`}>
         <div className="truncate">
           <span className="font-bold">

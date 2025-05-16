@@ -4,26 +4,22 @@ import api from "./axios";
 export const getAllListings = async () => {
   try {
     const response = await api.get("/listings");
-  return response.data;
-  } catch (error) {
-    console.error("Error fetching listings: ", error)
-    throw error;
-  }
-};
-
-export const getListingsById = async (listingId) => {
-  try {
-    console.log("Fetching listing with ID:", listingId);  // Debugging
-    const response = await api.get(`/listings/${listingId}`);
-    console.log("API response data:", response.data); // Debugging
     return response.data;
   } catch (error) {
-    console.error("Error fetching listing by ID: ", error)
+    console.error("Error fetching listings: ", error);
     throw error;
   }
 };
 
-
+export const getListingById = async (listingId) => {
+  try {
+    const response = await api.get(`/listings/${listingId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching listing by ID: ", error);
+    throw error;
+  }
+};
 
 // get listings by location
 export const getListingsByLocation = async (location) => {
