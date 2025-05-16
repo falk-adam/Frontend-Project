@@ -35,7 +35,7 @@ function AppLayout() {
             {/*Create Booking is accessed via ListingPage*/}
             <Route path="/:listingId/booking" element={<CreateBookingPage />} />
             <Route
-              path="/booking_confirmation/:bookingId"
+              path="/:listingId/booking/:bookingId"
               element={<BookingConfirmationPage />}
             />
           </Route>

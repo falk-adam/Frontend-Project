@@ -1,11 +1,19 @@
 import { useState } from "react";
 import NoImage from "../../assets/icons/NoImage";
 
-function ImageCard({ imageUrl }) {
+function ImageCard({
+  imageUrl,
+  circularImage = false,
+  noImageIconSize = "h-15 w-15",
+}) {
   const [isImageUrlValid, setIsImageUrlValid] = useState(false);
 
   return (
-    <div className="rounded-lg bg-gray-200 grow overflow-hidden items-center justify-center flex relative">
+    <div
+      className={`${
+        circularImage ? "rounded-full" : "rounded-lg"
+      } bg-gray-200 grow overflow-hidden items-center justify-center flex relative h-full w-full`}
+    >
       <img
         src={imageUrl}
         onLoad={() => setIsImageUrlValid(true)}
@@ -13,7 +21,7 @@ function ImageCard({ imageUrl }) {
           isImageUrlValid ? "visible" : "invisible"
         } `}
       />
-      <NoImage className="h-15 w-15" />
+      <NoImage className={noImageIconSize} />
     </div>
   );
 }

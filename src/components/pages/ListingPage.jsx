@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { getListingById } from "../../api/listingService";
+import { getListingById, getHostProfileById } from "../../api/listingService";
 import { useParams } from "react-router-dom";
 import Star from "../../assets/icons/Star";
 import IconHandler from "../../assets/icons/IconHandler";
 import BookingCard from "../bookingSelection/BookingCard";
+import ImageCard from "../other/ImageCard";
 
 /*ListingPage:
 See an individual listings w. details, host info and reviews*/
@@ -17,8 +18,8 @@ function ListingPage() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const data = await getListingById(listingId);
-        setListing(data);
+        const listingData = await getListingById(listingId);
+        setListing(listingData);
       } catch (error) {
         console.log("Error: " + error);
       } finally {
@@ -76,12 +77,15 @@ function ListingPage() {
           </div>
 
           <div className="text-justify">
-            <div className="bg-amber-900 rounded-full w-25 h-25 mb-2 flex items-center text-white justify-center">
-              host image
+            <div className="w-25 h-25 mb-2 flex items-center text-white justify-center">
+              <ImageCard
+                imageUrl="hello"
+                circularImage={true}
+                noImageIconSize="h-10 w-10"
+              />
             </div>
 
             <h2 className="text-[20px] font-bold">{listing.host.name}</h2>
-            <p>{listing.host.description}</p>
             <p>
               survived not only five centuries, but also the leap into
               electronic typesetting, remaining essentially unchanged. It was

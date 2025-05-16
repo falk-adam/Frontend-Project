@@ -1,24 +1,31 @@
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../api/bookingService";
 import { useEffect, useState } from "react";
+import ProgressBar from "../other/ProgressBar";
+import ListingCard from "../other/ListingCard";
+import { getListingById } from "../../api/listingService";
+import { daysBetweenDates } from "../bookingSelection/GenerateCalendarData";
 
 /*CreateListingPage:
 Page w. input form for creating a new listing */
 
 function BookingConfirmationPage() {
-  const { bookingId } = useParams();
+  const { listingId, bookingId } = useParams();
   const [booking, setBooking] = useState(null);
+  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function fetchBooking() {
     try {
-      //get Listing by ID
-      const data = await getBookingById(bookingId);
-      setBooking(data);
+      //get booking and listing by ids
+      const bookingData = await getBookingById(bookingId);
+      const listingData = await getListingById(listingId);
+      setBooking(bookingData);
+      setListing(listingData);
     } catch (error) {
       console.log("Error: " + error);
-      //if booking is not found, re-direct user back to home page
-      navigate("/");
+      //if booking or listing not found, navigate back to listingPage
+      navigate("/" + listingId);
     } finally {
       setLoading(false);
     }
@@ -31,46 +38,38 @@ function BookingConfirmationPage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className=" flex flex-col m-5">
+    <div className=" flex flex-col m-10 mt-5 gap-5">
       <div className="w-full flex flex-col gap-2 justify-center items-center p-5">
-      <div className="flex items-center justify-center w-120">
-          {/* Step 1 */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl border-1 border-gray-400">
-              1
-            </div>
-            <span className="mt-2 text-black">Listing</span>
-          </div>
-          {/* Line 1 */}
-          <div className="h-1 w-16 bg-gray-200 -mr-1 ml-1 mb-7"></div>
-          {/* Step 2 (Current) */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl border-1 border-gray-400">
-              2
-            </div>
-            <span className="mt-2 text-black">Payment</span>
-          </div>
-          {/* Line 2 */}
-          <div className="h-1 w-16 bg-gray-200 -mr-5 -ml-1 mb-7"></div>
-          {/* Step 3 */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-red-400 flex items-center justify-center text-2xl border-1 border-gray-400 text-white">
-              3
-            </div>
-            <span className="mt-2 text-black">Confirmation</span>
-          </div>
-        </div>
-   
-      
-        
+        <ProgressBar stage={3} />
       </div>
-    
-    <div>
-      {booking.id}, {booking.numberOfGuests}, {booking.endDate},{" "}
-      {booking.startDate}
+      <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex p-8 gap-6 text-[14px]">
+        <ListingCard
+          listing={listing}
+          isDescriptionUnderImage={false}
+          cardSize="w-120 h-60"
+          descriptionBoxWidth="w-[50%]"
+        />
+        {/*information on pricing for the listing and selected duration of stay*/}
+        <div className="flex grow justify-between border-l-1 p-5 border-gray-400">
+          <p className="w-full flex justify-between flex-col">
+            <span>Price per night:</span>
+            <span>{listing.pricePerNight} SEK</span>
+          </p>
+          <p className="mb-2 w-full flex justify-between flex-col">
+            <span>Length of stay:</span>
+            <span>{} nights</span>
+          </p>
+          <p className="font-bold pt-7 w-full flex justify-between flex-col">
+            <span>Total price:</span>
+            <span>{booking.totalPrice} SEK</span>
+          </p>
+        </div>
+      </div>
+      <div>
+        {booking.id}, {booking.numberOfGuests}, {booking.endDate},{" "}
+        {booking.startDate} {bookingId} {listingId}
+      </div>
     </div>
-    </div>
-    
   );
 }
 
