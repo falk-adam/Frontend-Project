@@ -82,7 +82,10 @@ function CreateBookingPage() {
         </div>
       </div>
       <div className="flex flex-row gap-10 m-5">
-        <div className="bg-green-800 bg-blue-400 grow w-full">FORM</div>
+        <div className="border-2 border-gray-200 rounded-xl shadow-xlx grow w-full">
+         <PaymentForm 
+         />
+        </div>
         <div className="h-full w-10/17 flex flex-col gap-10 ">
           <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-8 gap-6 text-[14px]">
             <ListingCard
