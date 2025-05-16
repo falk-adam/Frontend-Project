@@ -4,11 +4,12 @@ import {
   getAllListings,
   getListingsByLocation,
   getListingsByCapacity,
-} from "../../api/listingService"
+} from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
 import Searchbar from "../other/Searchbar";
 import PriceFilterDropdown from "../other/PriceFilterDropdown";
+import UtilityFilter from "../other/UtilityFilter";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
@@ -17,6 +18,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState(null);
   const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
+  const [utilityFilter, setUtilityFilter] = useState([]);
 
   //method for getting all listings
   const fetchAllListings = async () => {
@@ -80,6 +82,13 @@ const HomePage = () => {
           listing.pricePerNight <= priceFilter.max
       );
 
+      // Apply utility filter to the search results
+      if (utilityFilter.length > 0) {
+        results = results.filter((listing) =>
+          utilityFilter.every((util) => listing.utilities.includes(util))
+        );
+      }
+
       setSearchCriteria({ location, checkIn, checkOut, guests });
       setListings(results);
     } catch (error) {
@@ -106,6 +115,31 @@ const HomePage = () => {
     }
   };
 
+  // Function to handle utility filtering
+  const handleUtilityFilter = (selectedUtilities) => {
+    setUtilityFilter(selectedUtilities);
+
+    // If we have search criteria, reapply the search with current filters
+    if (searchCriteria) {
+      handleSearch(searchCriteria);
+    } else {
+      // If no search criteria, just filter the current listings
+      let filtered = allListings;
+      if (selectedUtilities.length > 0) {
+        filtered = filtered.filter((listing) =>
+          selectedUtilities.every((util) => listing.utilities.includes(util))
+        );
+      }
+      // Also apply price filter
+      filtered = filtered.filter(
+        (listing) =>
+          listing.pricePerNight >= priceFilter.min &&
+          listing.pricePerNight <= priceFilter.max
+      );
+      setListings(filtered);
+    }
+  };
+
   //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
 
@@ -119,14 +153,17 @@ const HomePage = () => {
       {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
         {/*Top container with search filters*/}
-        <div className="w-full h-16 flex justify-between items-center">
-          {/*Placeholder div for utility filter component*/}
-          <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
-            utility filter placeholder
+        <div className="w-full h-16 flex justify-between items-center max-[430px]:flex-col max-[430px]:h-auto max-[430px]:gap-2">
+          {/* Utility filter component */}
+          <div className="h-full ml-10 w-70 flex items-center justify-center max-[430px]:ml-0 max-[430px]:w-full">
+            <UtilityFilter
+              selectedUtilities={utilityFilter}
+              onFilterChange={handleUtilityFilter}
+            />
           </div>
 
           {/* Pricefilter dropdown-menu */}
-          <div className="h-full w-70 flex items-center justify-center">
+          <div className="h-full w-70 flex items-center justify-center max-[430px]:w-full">
             <PriceFilterDropdown
               onFilter={handlePriceFilter}
               initialValues={priceFilter}
