@@ -4,7 +4,7 @@ import {
   getAllListings,
   getListingsByLocation,
   getListingsByCapacity,
-} from "../../api/listingService";
+} from "../../api/listingService"
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
 import Searchbar from "../other/Searchbar";
