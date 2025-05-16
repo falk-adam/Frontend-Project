@@ -119,25 +119,51 @@ const HomePage = () => {
   const handleUtilityFilter = (selectedUtilities) => {
     setUtilityFilter(selectedUtilities);
 
-    // If we have search criteria, reapply the search with current filters
+    // If we have search criteria, start with the original search results
+    let filtered = searchCriteria ? allListings : allListings;
+
+    // Apply search criteria if it exists
     if (searchCriteria) {
-      handleSearch(searchCriteria);
-    } else {
-      // If no search criteria, just filter the current listings
-      let filtered = allListings;
-      if (selectedUtilities.length > 0) {
+      if (searchCriteria.location) {
         filtered = filtered.filter((listing) =>
-          selectedUtilities.every((util) => listing.utilities.includes(util))
+          listing.location
+            .toLowerCase()
+            .includes(searchCriteria.location.toLowerCase())
         );
       }
-      // Also apply price filter
-      filtered = filtered.filter(
-        (listing) =>
-          listing.pricePerNight >= priceFilter.min &&
-          listing.pricePerNight <= priceFilter.max
-      );
-      setListings(filtered);
+      if (searchCriteria.guests) {
+        filtered = filtered.filter(
+          (listing) => listing.capacity >= searchCriteria.guests
+        );
+      }
+      if (searchCriteria.checkIn && searchCriteria.checkOut) {
+        const start = new Date(searchCriteria.checkIn);
+        const end = new Date(searchCriteria.checkOut);
+        filtered = filtered.filter((listing) =>
+          listing.availableDates.some((range) => {
+            const rStart = new Date(range.startDate);
+            const rEnd = new Date(range.endDate);
+            return rStart <= start && rEnd >= end;
+          })
+        );
+      }
     }
+
+    // Apply utility filter if any are selected
+    if (selectedUtilities.length > 0) {
+      filtered = filtered.filter((listing) =>
+        selectedUtilities.every((util) => listing.utilities.includes(util))
+      );
+    }
+
+    // Apply price filter
+    filtered = filtered.filter(
+      (listing) =>
+        listing.pricePerNight >= priceFilter.min &&
+        listing.pricePerNight <= priceFilter.max
+    );
+
+    setListings(filtered);
   };
 
   //"Loading..." is shown while loading === true
