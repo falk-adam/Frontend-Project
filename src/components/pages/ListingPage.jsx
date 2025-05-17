@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Star from "../../assets/icons/Star";
 import IconHandler from "../../assets/icons/IconHandler";
 import BookingCard from "../bookingSelection/BookingCard";
-import ImageCard from "../other/ImageCard";
+import ImageCard from "../infoCards/ImageCard";
 
 /*ListingPage:
 See an individual listings w. details, host info and reviews*/

@@ -2,9 +2,8 @@ import { useParams } from "react-router-dom";
 import { getBookingById } from "../../api/bookingService";
 import { useEffect, useState } from "react";
 import ProgressBar from "../other/ProgressBar";
-import ListingCard from "../other/ListingCard";
 import { getListingById } from "../../api/listingService";
-import { daysBetweenDates } from "../bookingSelection/GenerateCalendarData";
+import BookingSummaryCard from "../infoCards/BookingSummaryCard";
 
 /*CreateListingPage:
 Page w. input form for creating a new listing */
@@ -42,13 +41,7 @@ function BookingConfirmationPage() {
       <div className="w-full flex flex-col gap-2 justify-center items-center p-5">
         <ProgressBar stage={3} />
       </div>
-      <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex p-8 gap-6 text-[14px]">
-        <ListingCard
-          listing={listing}
-          isDescriptionUnderImage={false}
-          cardSize="w-120 h-60"
-          descriptionBoxWidth="w-[50%]"
-        />
+      <BookingSummaryCard>
         {/*information on pricing for the listing and selected duration of stay*/}
         <div className="flex grow justify-between border-l-1 p-5 border-gray-400">
           <p className="w-full flex justify-between flex-col">
@@ -64,7 +57,7 @@ function BookingConfirmationPage() {
             <span>{booking.totalPrice} SEK</span>
           </p>
         </div>
-      </div>
+      </BookingSummaryCard>
       <div>
         {booking.id}, {booking.numberOfGuests}, {booking.endDate},{" "}
         {booking.startDate} {bookingId} {listingId}
