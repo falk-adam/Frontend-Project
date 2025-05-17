@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { getListingById } from "../../api/listingService";
+import ListingCard from "../other/ListingCard";
 import { createBooking } from "../../api/bookingService";
 import { formatDate } from "../bookingSelection/GenerateCalendarData";
-import BookingSummaryCard from "../infoCards/BookingSummaryCard";
 import ProgressBar from "../other/ProgressBar";
 
 /*CreateBookingPage:
 Page w. input form for creating a new booking for a spec. listing */
 
+// progress bar
+// payment form
+// complete booking card info
+// submit button
+
 function CreateBookingPage() {
-  const { listingId } = useParams;
+  const { listingId } = useParams();
   const navigate = useNavigate();
+  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   //useStates for nrOfGuest, nrOfNights and BookingDates from LocalStorage (saved to local storage by BookingCard comp. on ListinPage)
@@ -19,18 +26,29 @@ function CreateBookingPage() {
   const nrOfGuests = JSON.parse(localStorage.getItem("nrOfGuests"));
   const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights"));
 
-  function validateBookingDataRetrieval() {
-    //check that all constants from localStorage has been retrieved else clear and else re-direct user back to listing page
-    if (!(startDate && endDate && nrOfGuests && nrOfNights)) {
-      localStorage.clear();
-      navigate("/" + listingId);
+  async function fetchListingAndBookingData() {
+    try {
+      //get Listing by ID
+      const data = await getListingById(listingId);
+      setListing(data);
+
+      //check that all constants from localStorage has been retrieved else clear and else re-direct user back to listing page
+      if (!(startDate && endDate && nrOfGuests && nrOfNights)) {
+        localStorage.clear();
+        navigate("/" + listingId);
+      }
+    } catch (error) {
+      console.log("Error: " + error);
+      //if listing is not found, re-direct user back to home page
+      navigate("/");
+    } finally {
+      setLoading(false);
     }
   }
 
-  // when page loads, validate that booking details have been retrieved from local storage
+  // when page loads, fetch listing from database and booking details from local storage
   useEffect(() => {
-    validateBookingDataRetrieval();
-    setLoading(false);
+    fetchListingAndBookingData();
   }, []);
 
   //completeBooking button function
@@ -63,7 +81,13 @@ function CreateBookingPage() {
       <div className="flex flex-row gap-10 m-5">
         <div className="bg-green-800 bg-blue-400 grow w-full">FORM</div>
         <div className="h-full w-200 flex flex-col gap-10 ">
-          <BookingSummaryCard>
+          <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-8 gap-6 text-[14px]">
+            <ListingCard
+              listing={listing}
+              isDescriptionUnderImage={false}
+              cardSize="w-full h-60"
+              descriptionBoxWidth="w-[50%]"
+            />
             {/*information on pricing for the listing and selected duration of stay*/}
             <p className="w-full flex justify-between">
               <span>Price per night:</span>
@@ -77,7 +101,7 @@ function CreateBookingPage() {
               <span>Total price:</span>
               <span>{nrOfNights * listing.pricePerNight} SEK</span>
             </p>
-          </BookingSummaryCard>
+          </div>
           <button
             className="w-full bg-red-400 hover:bg-red-500 text-white text-[16px] font-semibold py-2 rounded-lg transition-colors cursor-pointer duration-200 h-15"
             onClick={() => completeBooking()}

@@ -1,5 +1,6 @@
+import { useState } from "react";
+import NoImage from "../../assets/icons/NoImage";
 import ImageCard from "./ImageCard";
-import Star from "../../assets/icons/Star";
 
 /***
  * Listing Card:
@@ -24,6 +25,8 @@ function ListingCard({
     ? `flex-row w-full ${descriptionBoxHeight}`
     : `flex-col h-full ${descriptionBoxWidth}`;
 
+  const [isImageUrlValid, setIsImageUrlValid] = useState(false);
+
   return (
     <div
       key={listing.id}
@@ -44,17 +47,14 @@ function ListingCard({
 
           <span>{listing.pricePerNight} SEK</span>
         </div>
-
         {listing.averageRating === 0 ? (
           <div className="text-nowrap flex flex-col justify-between text-right">
-            <span>
-              <Star class="h-2 w-2" /> -<br />
-            </span>
+            ★ -<br />
             <span className="text-[10px]">{"(No reviews)"}</span>
           </div>
         ) : (
-          <div className="text-nowrap flex">
-            <Star class="h-2 w-2" /> {listing.averageRating.toFixed(1)}
+          <div className="text-nowrap">
+            ★ {listing.averageRating.toFixed(1)}
           </div>
         )}
       </div>
