@@ -124,7 +124,7 @@ function BookingCalendar({
           <div className="grid grid-cols-7 grid-rows-7">
             {weekdays.map((day, index) => (
               <div key={index} className={classNameGrid}>
-                {day}
+                {day.slice(0, 3)}
               </div>
             ))}
 

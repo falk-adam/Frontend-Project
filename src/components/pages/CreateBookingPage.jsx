@@ -79,25 +79,25 @@ function CreateBookingPage() {
         <ProgressBar stage={2} />
       </div>
       <div className="flex flex-row gap-10 m-5">
-        <div className="bg-green-800 bg-blue-400 grow w-full">FORM</div>
-        <div className="h-full w-200 flex flex-col gap-10 ">
-          <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-8 gap-6 text-[14px]">
+        <div className="bg-green-800 bg-blue-400 grow">FORM</div>
+        <div className="h-full w-100 flex flex-col gap-10 ">
+          <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-7 gap-4 text-[14px]">
             <ListingCard
               listing={listing}
               isDescriptionUnderImage={false}
-              cardSize="w-full h-60"
-              descriptionBoxWidth="w-[50%]"
+              cardSize="w-full h-40"
+              descriptionBoxWidth="w-[55%]"
             />
             {/*information on pricing for the listing and selected duration of stay*/}
-            <p className="w-full flex justify-between">
+            <p className="w-full flex justify-between border-t-1 pt-6 mt-1 border-gray-400">
               <span>Price per night:</span>
               <span>{listing.pricePerNight} SEK</span>
             </p>
-            <p className="mb-2 w-full flex justify-between">
+            <p className="w-full flex justify-between">
               <span>Length of stay:</span>
               <span>{nrOfNights} nights</span>
             </p>
-            <p className="font-bold pt-7 border-t-1 border-gray-400 w-full flex justify-between">
+            <p className="font-bold w-full flex justify-between">
               <span>Total price:</span>
               <span>{nrOfNights * listing.pricePerNight} SEK</span>
             </p>

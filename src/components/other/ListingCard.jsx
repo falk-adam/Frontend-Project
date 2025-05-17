@@ -1,5 +1,3 @@
-import { useState } from "react";
-import NoImage from "../../assets/icons/NoImage";
 import ImageCard from "./ImageCard";
 
 /***
@@ -11,6 +9,7 @@ import ImageCard from "./ImageCard";
  * 3. cardSize = height and width of component (input must be tailwind classes, e.g.,"h-20 w-20")
  * 4. descriptionBoxHeight (NB! only applied if isDescriptionUnderImage = true) = height of description container (e.g., "h-10")
  * 5. descriptionBoxWidth (NB! only applied if isDescriptionUnderImage = false) = width of description container (e.g., "w-10")
+ * 6. showReviewScore = option to not show avg review score
  * **/
 
 function ListingCard({
@@ -19,13 +18,12 @@ function ListingCard({
   cardSize,
   descriptionBoxHeight,
   descriptionBoxWidth,
+  showReviewScore = true,
 }) {
   const flexDirection1 = isDescriptionUnderImage ? "flex-col" : "flex-row";
   const flexDirection2 = isDescriptionUnderImage
     ? `flex-row w-full ${descriptionBoxHeight}`
     : `flex-col h-full ${descriptionBoxWidth}`;
-
-  const [isImageUrlValid, setIsImageUrlValid] = useState(false);
 
   return (
     <div
@@ -34,7 +32,11 @@ function ListingCard({
     >
       <ImageCard imageUrl={listing.imageUrls[0]} />
       <div className={`flex ${flexDirection2} justify-between p-1`}>
-        <div className="truncate">
+        <div
+          className={`truncate ${
+            showReviewScore || "flex flex-col gap-4 h-full"
+          }`}
+        >
           <span className="font-bold">
             {listing.title}
             <br />
@@ -47,15 +49,23 @@ function ListingCard({
 
           <span>{listing.pricePerNight} SEK</span>
         </div>
-        {listing.averageRating === 0 ? (
-          <div className="text-nowrap flex flex-col justify-between text-right">
-            ★ -<br />
-            <span className="text-[10px]">{"(No reviews)"}</span>
-          </div>
-        ) : (
-          <div className="text-nowrap">
-            ★ {listing.averageRating.toFixed(1)}
-          </div>
+        {showReviewScore && (
+          <>
+            {listing.averageRating === 0 ? (
+              <div
+                className={`text-nowrap flex flex-col justify-between ${
+                  isDescriptionUnderImage && "text-right"
+                }`}
+              >
+                ★ -<br />
+                <span className="text-[10px]">{"(No reviews)"}</span>
+              </div>
+            ) : (
+              <div className="text-nowrap">
+                ★ {listing.averageRating.toFixed(1)}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

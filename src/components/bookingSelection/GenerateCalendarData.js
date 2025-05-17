@@ -4,23 +4,31 @@
  * Used by BookingCalendar and BookingCard
  */
 
-//three letter abbreviations for the 7 days of the week in an array (used by BookingCalendar)
-export const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+//names of weekdays in an array
+export const weekdays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 //names of all months in an array
 const monthNames = [
-  "january",
-  "february",
-  "march",
-  "april",
-  "may",
-  "june",
-  "july",
-  "august",
-  "september",
-  "october",
-  "november",
-  "december",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 //function to formatDate from Date object to a "YYYY-MM-DD"-string
@@ -38,6 +46,24 @@ export function formatDate(date) {
 //function for calculating nr of days between two dates (used to calculate lenght of a booking)
 export function daysBetweenDates(startDate, endDate) {
   return (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+}
+
+//function to format a "YYYY-MM-DD" string to "weekday, month (letters), day, year"
+export function reformatDateString(dateString) {
+  console.log(dateString);
+  const date = new Date(dateString);
+  console.log(date);
+  const weekdayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+  console.log();
+  return (
+    weekdays[weekdayIndex] +
+    ", " +
+    monthNames[date.getMonth()] +
+    " " +
+    date.getDate() +
+    ", " +
+    date.getFullYear()
+  );
 }
 
 //---------------------------------------------------------------------------------

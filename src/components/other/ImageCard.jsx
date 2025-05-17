@@ -12,7 +12,7 @@ function ImageCard({
     <div
       className={`${
         circularImage ? "rounded-full" : "rounded-lg"
-      } bg-gray-200 grow overflow-hidden items-center justify-center flex relative h-full w-full`}
+      } bg-gray-200 grow overflow-hidden items-center justify-center flex relative`}
     >
       <img
         src={imageUrl}
