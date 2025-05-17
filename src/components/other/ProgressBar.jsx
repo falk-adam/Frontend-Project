@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 const ProgressBar = ({ stage }) => {
   const circle = (number, name) => (
-    <div className="flex flex-col items-center w-15">
+    <div className="flex flex-col items-center w-12">
       <div
-        className={`w-14 h-14 rounded-full ${
+        className={`w-12 h-12 rounded-full ${
           stage === number ? "bg-red-400 text-white" : "bg-gray-300"
-        } flex items-center justify-center text-2xl border-1 border-gray-400`}
+        } flex items-center justify-center text-xl border-1 border-gray-400`}
       >
         {number}
       </div>
