@@ -11,6 +11,11 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
         }));
     };
 
+    // updates the localStorage on click for method
+    const handleMethodChange = (method) => {
+        setPaymentMethod(method);
+        localStorage.setItem("paymentMethod", method)
+    }
 
     return (
         <div>
@@ -20,7 +25,7 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "creditCard" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => setPaymentMethod("creditCard")}
+                onClick={() => handleMethodChange("creditCard")}
                 >
                     <span className={`w-5 h-5 rounded-full border-4 mr-3 ${
                         paymentMethod === "creditCard" ? "border-red-500" : "border-gray-300"
@@ -32,7 +37,7 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "paypal" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => setPaymentMethod("paypal")}
+                onClick={() => handleMethodChange("paypal")}
                 >
                     
                     <span className={`w-5 h-5 rounded-full border-4 mr-3 ${

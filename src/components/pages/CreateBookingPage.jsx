@@ -34,7 +34,7 @@ function CreateBookingPage() {
 
   // saves card number to localStorage for later visual use (UNSAFE), all information ready for use if implemented
   const [paymentInfo, setPaymentInfo] = useState(() => ({
-    cardNr: localStorage.getItem("cardNr") || "",
+    cardNr: "",
     expiryDate: "",
     cvv: "",
     cardName: ""
@@ -75,10 +75,10 @@ function CreateBookingPage() {
       endDate: formatDate(endDate),
       numberOfGuests: nrOfGuests,
     };
-
-    // save method and nr to localStorage, this is not safe and is used for visual purposes only 
+    localStorage.clear();
+    
+    // save method to localStorage for visuals on completion 
     localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
-    localStorage.setItem("cardNr", JSON.stringify(paymentInfo.cardNr))
 
     try {
       const newBooking = await createBooking(bookingData);
