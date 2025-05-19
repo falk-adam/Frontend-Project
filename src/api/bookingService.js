@@ -6,10 +6,7 @@ export const createBooking = async (bookingData) => {
     const response = await api.post("/bookings", bookingData);
     return response.data;
   } catch (error) {
-    console.error(
-      "Create booking error:",
-      error.response?.data || error.message
-    );
+    console.error("Create booking error:", error);
     throw error;
   }
 };
@@ -19,7 +16,7 @@ export const getBookingById = async (bookingId) => {
     const response = await api.get(`/bookings/${bookingId}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching lbookin by ID: ", error);
+    console.error("Error fetching booking by ID: ", error);
     throw error;
   }
 };

@@ -75,7 +75,6 @@ function CreateBookingPage() {
     } catch (error) {
       //if booking is not created
       console.log("Error: " + error);
-      localStorage.clear();
       navigate("/" + listingId);
     }
   }

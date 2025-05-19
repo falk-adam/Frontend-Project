@@ -9,6 +9,10 @@ import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
 import Searchbar from "../other/Searchbar";
 import PriceFilterDropdown from "../other/PriceFilterDropdown";
+import HeartEmpty from "../../assets/icons/HeartEmpty";
+import HeartFilled from "../../assets/icons/HeartFilled";
+import { addOrRemoveFavorite, getMyFavorites } from "../../api/userService";
+import { useAuth } from "../../hooks/useAuth";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
@@ -18,6 +22,7 @@ const HomePage = () => {
   const [searchCriteria, setSearchCriteria] = useState(null);
   const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
   const [favorites, setFavorites] = useState([]);
+  const { currentUser } = useAuth();
 
   //method for getting all listings
   const fetchAllListings = async () => {
@@ -35,10 +40,24 @@ const HomePage = () => {
     }
   };
 
+  //method for getting user favorite listings
+  const fetchUserFavorites = async () => {
+    try {
+      //try to get listings via imported listingService method
+      const data = await getMyFavorites();
+      setFavorites(data);
+      //catch error (like failure to reach api)
+    } catch (error) {
+      console.log("Error: " + error);
+      //set loading to false once try/catch has been executed
+    }
+  };
+
   //execute fetch all listings, done once per loading of the page
   useEffect(() => {
     //run method
     fetchAllListings();
+    fetchUserFavorites();
   }, []);
 
   // Function to handle search from Searchbar
@@ -107,6 +126,15 @@ const HomePage = () => {
     }
   };
 
+  async function handleAddOrRemoveFavorite(listingId) {
+    try {
+      const data = await addOrRemoveFavorite(listingId);
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+    fetchUserFavorites();
+  }
+
   //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
 
@@ -138,17 +166,30 @@ const HomePage = () => {
         {/*Listing gallery grid container*/}
         <div className="w-full grid grid-cols-4 gap-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-mobile:grid-cols-1">
           {listings.map((listing) => (
-            <Link
-              to={`/${listing.id}`}
+            <div
               key={listing.id}
-              className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw]"
+              className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw] relative"
             >
-              <ListingCard
-                listing={listing}
-                cardSize="h-full w-full"
-                descriptionBoxHeight="h-20"
-              />
-            </Link>
+              {currentUser && (
+                <div
+                  className="absolute top-4 right-4 z-10 cursor-pointer"
+                  onClick={() => handleAddOrRemoveFavorite(listing.id)}
+                >
+                  {favorites.includes(listing.id) ? (
+                    <HeartFilled className="h-7 w-7" />
+                  ) : (
+                    <HeartEmpty className="h-7 w-7" />
+                  )}
+                </div>
+              )}
+              <Link to={`/${listing.id}`}>
+                <ListingCard
+                  listing={listing}
+                  cardSize="h-full w-full"
+                  descriptionBoxHeight="h-20"
+                />
+              </Link>
+            </div>
           ))}
         </div>
       </div>
