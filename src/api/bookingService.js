@@ -29,7 +29,17 @@ export const getMyBookings = async () => {
     const response = await api.get(`/bookings/user`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching lbookin by ID: ", error);
+    console.error("Error fetching bookings current user: ", error);
+    throw error;
+  }
+};
+
+export const deleteBooking = async (bookingId) => {
+  try {
+    const response = await api.delete(`/bookings/${bookingId}`);
+    return response;
+  } catch (error) {
+    console.error("Error deleting booking: ", error);
     throw error;
   }
 };

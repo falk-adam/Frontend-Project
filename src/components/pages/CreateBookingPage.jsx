@@ -5,14 +5,10 @@ import ListingCard from "../other/ListingCard";
 import { createBooking } from "../../api/bookingService";
 import { formatDate } from "../bookingSelection/GenerateCalendarData";
 import ProgressBar from "../other/ProgressBar";
+import PaymentForm from "../other/PaymentForm";
 
 /*CreateBookingPage:
 Page w. input form for creating a new booking for a spec. listing */
-
-// progress bar
-// payment form
-// complete booking card info
-// submit button
 
 function CreateBookingPage() {
   const { listingId } = useParams();
@@ -25,6 +21,16 @@ function CreateBookingPage() {
   const endDate = JSON.parse(localStorage.getItem("endDate"));
   const nrOfGuests = JSON.parse(localStorage.getItem("nrOfGuests"));
   const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights"));
+
+  const [paymentMethod, setPaymentMethod] = useState(
+    localStorage.getItem("paymentMethod") || "creditCard"
+  );
+  const [paymentInfo, setPaymentInfo] = useState(() => ({
+    cardNr: "",
+    expiryDate: "",
+    cvv: "",
+    cardName: "",
+  }));
 
   async function fetchListingAndBookingData() {
     try {
@@ -60,6 +66,9 @@ function CreateBookingPage() {
       numberOfGuests: nrOfGuests,
     };
 
+    localStorage.clear();
+    localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
+
     try {
       const newBooking = await createBooking(bookingData);
       navigate(newBooking.id);
@@ -77,15 +86,23 @@ function CreateBookingPage() {
     <div className=" flex flex-col items-center m-10 gap-10">
       <ProgressBar stage={2} />
       <div className="flex flex-row gap-10 m-5">
-        <div className="bg-green-800 bg-blue-400 grow">FORM</div>
+        <div className="border-2 border-gray-200 rounded-xl shadow-xlx grow">
+          <PaymentForm
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentInfo={paymentInfo}
+            setPaymentInfo={setPaymentInfo}
+          />
+        </div>
         <div className="h-full w-100 flex flex-col gap-10 ">
           <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-7 gap-4 text-[14px]">
             <ListingCard
               listing={listing}
               isDescriptionUnderImage={false}
               cardSize="w-full h-40"
-              descriptionBoxWidth="w-[55%]"
+              descriptionBoxWidth="w-[50%]"
               showPricePerNight={false}
+              additionalClassesImageCard="w-25"
             />
             {/*information on pricing for the listing and selected duration of stay*/}
             <p className="w-full flex justify-between border-t-1 pt-6 mt-1 border-gray-400">

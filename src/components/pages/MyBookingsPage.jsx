@@ -1,7 +1,5 @@
-/*CreateListingPage:
-Page w. users bookings */
-
-import { getMyBookings } from "../../api/bookingService";
+import TrashCan from "../../assets/icons/TrashCan";
+import { getMyBookings, deleteBooking } from "../../api/bookingService";
 import BookingSummaryCard from "../other/BookingSummaryCard";
 import { useState, useEffect } from "react";
 
@@ -9,9 +7,8 @@ function MyBookingsPage() {
   const [bookings, setBookings] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function fetchBookings() {
+  async function fetchMyBookings() {
     try {
-      //get booking and listing by ids
       const bookingData = await getMyBookings();
       setBookings(bookingData);
     } catch (error) {
@@ -22,8 +19,21 @@ function MyBookingsPage() {
   }
 
   useEffect(() => {
-    fetchBookings();
+    fetchMyBookings();
   }, []);
+
+  //delete Booking
+  async function handleDeleteBooking(bookingId) {
+    try {
+      const response = await deleteBooking(bookingId);
+      if (response.status === 204) {
+        fetchMyBookings();
+      }
+    } catch (error) {
+      //if booking is not deleted
+      console.log("Error: " + error);
+    }
+  }
 
   if (loading) return <div>Loading...</div>;
 
@@ -31,7 +41,16 @@ function MyBookingsPage() {
     <div className="m-10 px-10 gap-10 flex flex-col grow">
       <h2 className="text-2xl font-bold -mb-5">My Bookings</h2>
       {bookings.map((booking) => (
-        <BookingSummaryCard key={booking.id} booking={booking} />
+        <div className="relative" key={booking.id}>
+          <BookingSummaryCard booking={booking} />
+
+          <div
+            className="absolute bottom-8 right-8 uppercase rounded-xl border-1 border-gray-500 bg-gray-200 text-[12px] p-2 cursor-pointer"
+            onClick={() => handleDeleteBooking(booking.id)}
+          >
+            <TrashCan className="h-6 w-6" />
+          </div>
+        </div>
       ))}
     </div>
   );

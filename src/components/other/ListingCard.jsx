@@ -20,6 +20,7 @@ function ListingCard({
   descriptionBoxWidth,
   showPricePerNight = true,
   showReviewScore = true,
+  additionalClassesImageCard = "",
 }) {
   const flexDirection1 = isDescriptionUnderImage ? "flex-col" : "flex-row";
   const flexDirection2 = isDescriptionUnderImage
@@ -31,13 +32,12 @@ function ListingCard({
       key={listing.id}
       className={`flex ${flexDirection1} ${cardSize} p-2 gap-2 text-[14px] leading-[24px]`}
     >
-      <ImageCard imageUrl={listing.imageUrls[0]} />
+      <ImageCard
+        imageUrl={listing.imageUrls ? listing.imageUrls[0] : null}
+        additionalClasses={additionalClassesImageCard}
+      />
       <div className={`flex ${flexDirection2} justify-between p-1`}>
-        <div
-          className={`truncate ${
-            showReviewScore || "flex flex-col gap-4 h-full"
-          }`}
-        >
+        <div className={`truncate ${showReviewScore || "h-full"}`}>
           <span className="font-bold">
             {listing.title}
             <br />

@@ -12,6 +12,9 @@ function BookingConfirmationPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
+  const paymentMethod = JSON.parse(
+    localStorage.getItem("paymentMethod") || "error"
+  );
 
   async function fetchBooking() {
     try {
@@ -43,8 +46,8 @@ function BookingConfirmationPage() {
           <Checkmark className="h-9 w-9" />
         </div>
         <span>
-          Your reservation request has been completed. A confirmation email has
-          been sent to your inbox.
+          Your reservation request has been completed. The request is pending
+          until accepted by the listing host
         </span>
       </div>
 
@@ -59,7 +62,9 @@ function BookingConfirmationPage() {
         <div className="w-full flex-col flex p-8 pt-4 gap-4">
           <p className="flex justify-between w-full">
             <span>Payment Method</span>
-            <span>PLACEHOLDER CARD INFO</span>
+            <span>
+              {paymentMethod === '"paypal"' ? "PayPal" : "Credit Card"}
+            </span>
           </p>
           <p className="flex justify-between w-full">
             <span>Total Charged</span>

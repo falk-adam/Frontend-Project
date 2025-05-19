@@ -4,7 +4,7 @@ import {
   getAllListings,
   getListingsByLocation,
   getListingsByCapacity,
-} from "../../api/listingService"
+} from "../../api/listingService";
 import { Link } from "react-router-dom";
 import ListingCard from "../other/ListingCard";
 import Searchbar from "../other/Searchbar";
@@ -17,6 +17,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [searchCriteria, setSearchCriteria] = useState(null);
   const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
+  const [favorites, setFavorites] = useState([]);
 
   //method for getting all listings
   const fetchAllListings = async () => {
