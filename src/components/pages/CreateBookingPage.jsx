@@ -27,11 +27,12 @@ function CreateBookingPage() {
   const nrOfGuests = JSON.parse(localStorage.getItem("nrOfGuests"));
   const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights"));
 
-  // Payment state
+  // state for saving payment method into localStorage for later use
   const [paymentMethod, setPaymentMethod] = useState(() => {
     return localStorage.getItem("paymentMethod") || "creditCard"
   });
 
+  // saves card number to localStorage for later visual use (UNSAFE), all information ready for use if implemented
   const [paymentInfo, setPaymentInfo] = useState(() => ({
     cardNr: localStorage.getItem("cardNr") || "",
     expiryDate: "",
