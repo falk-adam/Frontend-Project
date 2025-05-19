@@ -1,18 +1,7 @@
 import { useState } from "react";
 
 
-function PaymentForm() {
-    const [paymentMethod, setPaymentMethod] = useState("creditCard")
-    const [paymentInfo, setPaymentInfo] = useState({
-        cardNr: "",
-        expDate: "",
-        cvv: "",
-        cardName: ""
-    })
-
-    const handleMethodChange = (method) => {
-        setPaymentMethod(method)
-    };
+function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentInfo }) {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,22 +11,16 @@ function PaymentForm() {
         }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("Payment Method: ", paymentMethod)
-        console.log("Payment Info: ", paymentInfo)   
-    }
-    
 
     return (
-        <form onSubmit={handleSubmit} className="w-full mx-auto p-4">
+        <div>
             <div>
                 <label className="block mb-1">Payment Method</label>
 
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "creditCard" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => handleMethodChange("creditCard")}
+                onClick={() => setPaymentMethod("creditCard")}
                 >
                     <span className={`w-5 h-5 rounded-full border-4 mr-3 ${
                         paymentMethod === "creditCard" ? "border-red-500" : "border-gray-300"
@@ -49,7 +32,7 @@ function PaymentForm() {
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "paypal" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => handleMethodChange("paypal")}
+                onClick={() => setPaymentMethod("paypal")}
                 >
                     
                     <span className={`w-5 h-5 rounded-full border-4 mr-3 ${
@@ -77,11 +60,11 @@ function PaymentForm() {
                         Expiry Date
                     </label>
                     <input 
-                        name="expDate"
+                        name="expiryDate"
                         type="text"
                         className="border border-gray-300 w-full rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-300 placeholder-gray-400"
                         placeholder="XX / XX"
-                        value={paymentInfo.expDate}
+                        value={paymentInfo.expiryDate}
                         onChange={handleChange}
                     />
                 </div>
@@ -113,7 +96,7 @@ function PaymentForm() {
                     onChange={handleChange}
                 />
             </div>
-        </form>
+        </div>
     )
 }
 

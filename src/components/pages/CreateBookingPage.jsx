@@ -27,6 +27,20 @@ function CreateBookingPage() {
   const nrOfGuests = JSON.parse(localStorage.getItem("nrOfGuests"));
   const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights"));
 
+  // Payment state
+  const [paymentMethod, setPaymentMethod] = useState(() => {
+    return localStorage.getItem("paymentMethod") || "creditCard"
+  });
+
+  const [paymentInfo, setPaymentInfo] = useState(() => ({
+    cardNr: localStorage.getItem("cardNr") || "",
+    expiryDate: "",
+    cvv: "",
+    cardName: ""
+  }));
+
+
+
   async function fetchListingAndBookingData() {
     try {
       //get Listing by ID
@@ -60,6 +74,10 @@ function CreateBookingPage() {
       endDate: formatDate(endDate),
       numberOfGuests: nrOfGuests,
     };
+
+    // save method and nr to localStorage, this is not safe and is used for visual purposes only 
+    localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
+    localStorage.setItem("cardNr", JSON.stringify(paymentInfo.cardNr))
 
     try {
       const newBooking = await createBooking(bookingData);
@@ -111,6 +129,10 @@ function CreateBookingPage() {
       <div className="flex flex-row gap-10 m-5">
         <div className="border-2 border-gray-200 rounded-xl shadow-xlx grow w-full">
          <PaymentForm 
+          paymentMethod={paymentMethod}
+          setPaymentMethod={setPaymentMethod}
+          paymentInfo={paymentInfo}
+          setPaymentInfo={setPaymentInfo}
          />
         </div>
         <div className="h-full w-10/17 flex flex-col gap-10 ">
