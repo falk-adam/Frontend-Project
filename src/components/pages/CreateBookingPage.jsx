@@ -25,21 +25,7 @@ function CreateBookingPage() {
   const startDate = JSON.parse(localStorage.getItem("startDate"));
   const endDate = JSON.parse(localStorage.getItem("endDate"));
   const nrOfGuests = JSON.parse(localStorage.getItem("nrOfGuests"));
-  const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights"));
-
-  // state for saving payment method into localStorage for later use
-  const [paymentMethod, setPaymentMethod] = useState(() => {
-    return localStorage.getItem("paymentMethod") || "creditCard"
-  });
-
-  // saves card number to localStorage for later visual use (UNSAFE), all information ready for use if implemented
-  const [paymentInfo, setPaymentInfo] = useState(() => ({
-    cardNr: "",
-    expiryDate: "",
-    cvv: "",
-    cardName: ""
-  }));
-
+  const nrOfNights = JSON.parse(localStorage.getItem("nrOfNights")); 
 
 
   async function fetchListingAndBookingData() {
@@ -75,10 +61,6 @@ function CreateBookingPage() {
       endDate: formatDate(endDate),
       numberOfGuests: nrOfGuests,
     };
-    localStorage.clear();
-    
-    // save method to localStorage for visuals on completion 
-    localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 
     try {
       const newBooking = await createBooking(bookingData);
@@ -130,10 +112,7 @@ function CreateBookingPage() {
       <div className="flex flex-row gap-10 m-5">
         <div className="border-2 border-gray-200 rounded-xl shadow-xlx grow w-full">
          <PaymentForm 
-          paymentMethod={paymentMethod}
-          setPaymentMethod={setPaymentMethod}
-          paymentInfo={paymentInfo}
-          setPaymentInfo={setPaymentInfo}
+          
          />
         </div>
         <div className="h-full w-10/17 flex flex-col gap-10 ">
