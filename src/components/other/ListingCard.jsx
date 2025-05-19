@@ -18,6 +18,7 @@ function ListingCard({
   cardSize,
   descriptionBoxHeight,
   descriptionBoxWidth,
+  showPricePerNight = true,
   showReviewScore = true,
 }) {
   const flexDirection1 = isDescriptionUnderImage ? "flex-col" : "flex-row";
@@ -47,7 +48,7 @@ function ListingCard({
             <br />
           </span>
 
-          <span>{listing.pricePerNight} SEK</span>
+          {showPricePerNight && <span>{listing.pricePerNight} SEK</span>}
         </div>
         {showReviewScore && (
           <>

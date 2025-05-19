@@ -2,27 +2,22 @@ import { useParams } from "react-router-dom";
 import { getBookingById } from "../../api/bookingService";
 import { useEffect, useState } from "react";
 import ProgressBar from "../other/ProgressBar";
-import ListingCard from "../other/ListingCard";
 import Checkmark from "../../assets/icons/Checkmark";
-import { getListingById } from "../../api/listingService";
-import { reformatDateString } from "../bookingSelection/GenerateCalendarData";
+import BookingSummaryCard from "../other/BookingSummaryCard";
 
 /*CreateListingPage:
 Page w. input form for creating a new listing */
 
 function BookingConfirmationPage() {
-  const { listingId, bookingId } = useParams();
+  const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
-  const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function fetchBooking() {
     try {
       //get booking and listing by ids
       const bookingData = await getBookingById(bookingId);
-      const listingData = await getListingById(listingId);
       setBooking(bookingData);
-      setListing(listingData);
     } catch (error) {
       console.log("Error: " + error);
       //if booking or listing not found, navigate back to listingPage
@@ -48,42 +43,13 @@ function BookingConfirmationPage() {
           <Checkmark className="h-9 w-9" />
         </div>
         <span>
-          Your reservation request is completed. A confirmation email has been
-          sent to your inbox.
+          Your reservation request has been completed. A confirmation email has
+          been sent to your inbox.
         </span>
       </div>
 
       {/*Booking Summary*/}
-      <div className="rounded-xl w-full border-2 border-gray-200 flex flex-col text-[14px]">
-        <div className="w-full h-15 border-2 border-gray-200 relative bottom-1 rounded-xl bg-gray-100 flex flex-row justify-between px-5 items-center">
-          <span className="font-bold">Booking Details</span>
-          <span className="text-red-500">Booking #{booking.id}</span>
-        </div>
-        <div className="w-full flex-col flex p-8 pt-4 gap-6">
-          <ListingCard
-            listing={listing}
-            isDescriptionUnderImage={false}
-            cardSize="w-80 h-40"
-            descriptionBoxWidth="w-[50%]"
-            showReviewScore={false}
-          />
-
-          <div className="flex w-full grow justify-between border-t-1 p-2 pt-5 border-gray-400">
-            <p className="flex flex-col gap-4 w-[38%]">
-              <span>Check-in</span>
-              <span>{reformatDateString(booking.startDate)}</span>
-            </p>
-            <p className="flex flex-col gap-4 w-[38%]">
-              <span>Check-out</span>
-              <span>{reformatDateString(booking.endDate)}</span>
-            </p>
-            <p className="flex flex-col gap-4 grow">
-              <span>Guests</span>
-              <span>{booking.numberOfGuests} total</span>
-            </p>
-          </div>
-        </div>
-      </div>
+      <BookingSummaryCard booking={booking} showStatus={false} />
 
       {/*Payment Summary*/}
       <div className="rounded-xl w-full border-2 border-gray-200 flex flex-col text-[14px]">

@@ -85,6 +85,7 @@ function CreateBookingPage() {
               isDescriptionUnderImage={false}
               cardSize="w-full h-40"
               descriptionBoxWidth="w-[55%]"
+              showPricePerNight={false}
             />
             {/*information on pricing for the listing and selected duration of stay*/}
             <p className="w-full flex justify-between border-t-1 pt-6 mt-1 border-gray-400">

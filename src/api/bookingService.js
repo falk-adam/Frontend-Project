@@ -23,3 +23,13 @@ export const getBookingById = async (bookingId) => {
     throw error;
   }
 };
+
+export const getMyBookings = async () => {
+  try {
+    const response = await api.get(`/bookings/user`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching lbookin by ID: ", error);
+    throw error;
+  }
+};

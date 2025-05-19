@@ -50,11 +50,10 @@ export function daysBetweenDates(startDate, endDate) {
 
 //function to format a "YYYY-MM-DD" string to "weekday, month (letters), day, year"
 export function reformatDateString(dateString) {
-  console.log(dateString);
   const date = new Date(dateString);
-  console.log(date);
+
   const weekdayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
-  console.log();
+
   return (
     weekdays[weekdayIndex] +
     ", " +

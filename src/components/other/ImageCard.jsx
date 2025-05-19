@@ -5,6 +5,7 @@ function ImageCard({
   imageUrl,
   circularImage = false,
   noImageIconSize = "h-15 w-15",
+  additionalClasses = "",
 }) {
   const [isImageUrlValid, setIsImageUrlValid] = useState(false);
 
@@ -12,7 +13,7 @@ function ImageCard({
     <div
       className={`${
         circularImage ? "rounded-full" : "rounded-lg"
-      } bg-gray-200 grow overflow-hidden items-center justify-center flex relative`}
+      } ${additionalClasses} bg-gray-200 grow overflow-hidden items-center justify-center flex relative`}
     >
       <img
         src={imageUrl}
