@@ -29,6 +29,7 @@ function UserProfilePage() {
     zipCode: userProfile?.zipCode || "",
     city: userProfile?.city || "",
     country: userProfile?.country || "",
+    phoneNr: userProfile?.phoneNr || "",
   });
 
   // Update form data when userProfile changes
@@ -41,6 +42,7 @@ function UserProfilePage() {
         zipCode: userProfile.zipCode || "",
         city: userProfile.city || "",
         country: userProfile.country || "",
+        phoneNr: userProfile.phoneNr || "",
       };
       console.log("Setting new form data:", newFormData);
       setFormData(newFormData);
@@ -72,8 +74,8 @@ function UserProfilePage() {
       zipCode: userProfile?.zipCode || "",
       city: userProfile?.city || "",
       country: userProfile?.country || "",
+      phoneNr: userProfile?.phoneNr || "",
     });
-
     setIsEditing(false);
     setError(null);
     setSuccess("");
@@ -181,6 +183,21 @@ function UserProfilePage() {
               type="email"
               name="email"
               value={formData.email}
+              disabled={loading}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          {/* Phone Number field */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phoneNr"
+              value={formData.phoneNr}
               disabled={loading}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -316,6 +333,14 @@ function UserProfilePage() {
               <span className="font-medium text-gray-600">Email:</span>{" "}
               <span className="text-gray-800">
                 {userProfile.email || "Not set"}
+              </span>
+            </div>
+
+            {/* Display phoneNr */}
+            <div className="py-2 border-b border-gray-200">
+              <span className="font-medium text-gray-600">Phone Number:</span>{" "}
+              <span className="text-gray-800">
+                {userProfile.phoneNr || "Not set"}
               </span>
             </div>
 

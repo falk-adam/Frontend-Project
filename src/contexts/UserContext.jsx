@@ -80,6 +80,7 @@ export function UserProvider({ children }) {
       // The backend wants address fields in a nested object
       const updateData = {
         email: profileData.email,
+        phoneNr: profileData.phoneNr,
         address: {
           street: profileData.street,
           zipCode: profileData.zipCode,
