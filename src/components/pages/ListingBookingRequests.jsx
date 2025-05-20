@@ -25,7 +25,7 @@ function ListingBookingRequests() {
   }
 
   useEffect(() => {
-    fetchMyBookings();
+    fetchMyListingBookings();
   }, []);
 
   async function handleAcceptBooking(bookingId) {
