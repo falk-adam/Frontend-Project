@@ -58,7 +58,7 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
             ? `${minPrice}kr - ${maxPrice}kr`
             : "Filter"}
         </div>
-        <Menu className="w-5 h-5 ml-2" />
+        <Menu className="h-5 w-5" />
       </button>
 
       {/*The filtering for max/min price is currently manually set by changing max="10000"*/}

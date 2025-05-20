@@ -1,4 +1,12 @@
-function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentInfo }) {
+import { useState } from "react";
+
+
+function PaymentForm() {
+
+    // state for saving payment method into localStorage for later use
+    const [paymentMethod, setPaymentMethod] = useState(() => {
+        return localStorage.getItem("paymentMethod") || "creditCard";
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -8,6 +16,20 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
         }));
     };
 
+    // saves card number to localStorage for later visual use (UNSAFE), all information ready for use if implemented
+      const [paymentInfo, setPaymentInfo] = useState(() => ({
+        cardNr: "",
+        expiryDate: "",
+        cvv: "",
+        cardName: ""
+      }));
+    
+
+    // updates the localStorage on click for method
+    const handleMethodChange = (method) => {
+        setPaymentMethod(method);
+        localStorage.setItem("paymentMethod", method)
+    }
 
     return (
         <div>
@@ -17,24 +39,37 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "creditCard" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => setPaymentMethod("creditCard")}
+                onClick={() => handleMethodChange("creditCard")}
                 >
-                    <span className={`w-5 h-5 rounded-full border-4 mr-3 ${
-                        paymentMethod === "creditCard" ? "border-red-500" : "border-gray-300"
-                    }`} ></span>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="creditCard"
+                        checked={paymentMethod === "creditCard"}
+                        onChange={() => handleMethodChange("creditCard")}
+                        className={`w-5 h-5 rounded-full border-4 mr-3 ${
+                            paymentMethod === "creditCard" ? "border-red-500" : "border-gray-300"
+                        }`} 
+                    />
                     <span>Credit Card</span>
                 </div>
 
-
+                
                 <div className={`flex items center p-4 border rounded-lg cursor pointer mb-2 ${
                     paymentMethod === "paypal" ? "border-red-400" : "border-gray-300"
                 }`}
-                onClick={() => setPaymentMethod("paypal")}
+                onClick={() => handleMethodChange("paypal")}
                 >
-
-                    <span className={`w-5 h-5 rounded-full border-4 mr-3 ${
-                        paymentMethod === "paypal" ? "border-red-500" : "border-gray-300"
-                    }`} ></span>
+                    <input
+                        type="radio"
+                        name="paymentMethod"
+                        value="paypal"
+                        checked={paymentMethod === "paypal"}
+                        onChange={() => handleMethodChange("paypal")}
+                        className={`w-5 h-5 rounded-full border-4 mr-3 ${
+                            paymentMethod === "paypal" ? "border-red-500" : "border-gray-300"
+                        }`} 
+                    />
                     <span>PayPal</span>
                 </div>
             </div>
@@ -79,7 +114,7 @@ function PaymentForm({ paymentMethod, setPaymentMethod, paymentInfo, setPaymentI
                     />
                 </div>
             </div>
-
+            
             <div className="mt-5">
                 <label className="block mb-1" htmlFor="cardName">
                     Name on Card

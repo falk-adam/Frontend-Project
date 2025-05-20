@@ -13,6 +13,7 @@ import { createBookingCalendar, weekdays } from "./GenerateCalendarData";
  * 6. handleTriggerHideCalender = function for triggering hideElement by the ToggleButton regulating visibility of this element
  * **/
 
+
 function BookingCalendar({
   availableDates,
   bookingStartDate,

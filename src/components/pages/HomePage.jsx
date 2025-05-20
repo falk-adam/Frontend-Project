@@ -13,6 +13,7 @@ import HeartEmpty from "../../assets/icons/HeartEmpty";
 import HeartFilled from "../../assets/icons/HeartFilled";
 import { addOrRemoveFavorite, getMyFavorites } from "../../api/userService";
 import { useAuth } from "../../hooks/useAuth";
+import UtilityFilter from "../other/UtilityFilter";
 
 const HomePage = () => {
   //useStates for listings(all listings, or listings which full fill search/filter criteria) and loading(true/false)
@@ -23,6 +24,7 @@ const HomePage = () => {
   const [priceFilter, setPriceFilter] = useState({ min: 0, max: 10000 });
   const [favorites, setFavorites] = useState([]);
   const { currentUser } = useAuth();
+  const [utilityFilter, setUtilityFilter] = useState([]);
 
   //method for getting all listings
   const fetchAllListings = async () => {
@@ -100,6 +102,13 @@ const HomePage = () => {
           listing.pricePerNight <= priceFilter.max
       );
 
+      // Apply utility filter to the search results
+      if (utilityFilter.length > 0) {
+        results = results.filter((listing) =>
+          utilityFilter.every((util) => listing.utilities.includes(util))
+        );
+      }
+
       setSearchCriteria({ location, checkIn, checkOut, guests });
       setListings(results);
     } catch (error) {
@@ -129,11 +138,62 @@ const HomePage = () => {
   async function handleAddOrRemoveFavorite(listingId) {
     try {
       const data = await addOrRemoveFavorite(listingId);
+      setFavorites(data);
     } catch (error) {
       console.log("Error: " + error);
     }
-    fetchUserFavorites();
   }
+
+  // Function to handle utility filtering
+  const handleUtilityFilter = (selectedUtilities) => {
+    setUtilityFilter(selectedUtilities);
+
+    // If we have search criteria, start with the original search results
+    let filtered = searchCriteria ? allListings : allListings;
+
+    // Apply search criteria if it exists
+    if (searchCriteria) {
+      if (searchCriteria.location) {
+        filtered = filtered.filter((listing) =>
+          listing.location
+            .toLowerCase()
+            .includes(searchCriteria.location.toLowerCase())
+        );
+      }
+      if (searchCriteria.guests) {
+        filtered = filtered.filter(
+          (listing) => listing.capacity >= searchCriteria.guests
+        );
+      }
+      if (searchCriteria.checkIn && searchCriteria.checkOut) {
+        const start = new Date(searchCriteria.checkIn);
+        const end = new Date(searchCriteria.checkOut);
+        filtered = filtered.filter((listing) =>
+          listing.availableDates.some((range) => {
+            const rStart = new Date(range.startDate);
+            const rEnd = new Date(range.endDate);
+            return rStart <= start && rEnd >= end;
+          })
+        );
+      }
+    }
+
+    // Apply utility filter if any are selected
+    if (selectedUtilities.length > 0) {
+      filtered = filtered.filter((listing) =>
+        selectedUtilities.every((util) => listing.utilities.includes(util))
+      );
+    }
+
+    // Apply price filter
+    filtered = filtered.filter(
+      (listing) =>
+        listing.pricePerNight >= priceFilter.min &&
+        listing.pricePerNight <= priceFilter.max
+    );
+
+    setListings(filtered);
+  };
 
   //"Loading..." is shown while loading === true
   if (loading) return <div>Loading...</div>;
@@ -148,14 +208,17 @@ const HomePage = () => {
       {/*Containter all main content apart from search bar*/}
       <div className="w-full flex flex-col outline-solid outline-2 outline-gray-200 rounded-lg gap-8 p-8">
         {/*Top container with search filters*/}
-        <div className="w-full h-16 flex justify-between items-center">
-          {/*Placeholder div for utility filter component*/}
-          <div className="bg-gray-100 h-full w-70 flex items-center justify-center">
-            utility filter placeholder
+        <div className="w-full h-16 flex justify-between items-center max-[430px]:flex-col max-[430px]:h-auto max-[430px]:gap-2">
+          {/* Utility filter component */}
+          <div className="h-full ml-10 w-70 flex items-center justify-center max-[430px]:ml-0 max-[430px]:w-full">
+            <UtilityFilter
+              selectedUtilities={utilityFilter}
+              onFilterChange={handleUtilityFilter}
+            />
           </div>
 
           {/* Pricefilter dropdown-menu */}
-          <div className="h-full w-70 flex items-center justify-center">
+          <div className="h-full w-70 flex items-center justify-center max-[430px]:w-full">
             <PriceFilterDropdown
               onFilter={handlePriceFilter}
               initialValues={priceFilter}
