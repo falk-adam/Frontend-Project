@@ -5,7 +5,7 @@ import ListingCard from "../other/ListingCard";
 import { createBooking } from "../../api/bookingService";
 import { formatDate } from "../bookingSelection/GenerateCalendarData";
 import ProgressBar from "../other/ProgressBar";
-import PaymentForm from "../other/PaymentFor";
+import PaymentForm from "../other/PaymentForm";
 
 /*CreateBookingPage:
 Page w. input form for creating a new booking for a spec. listing */
