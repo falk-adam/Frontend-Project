@@ -76,8 +76,7 @@ export function UserProvider({ children }) {
     try {
       console.log("Updating profile with data:", profileData);
 
-      // Structure the data to match what the backend expects
-      // The backend wants address fields in a nested object
+      // Structure the data to match the UserUpdateRequest DTO
       const updateData = {
         email: profileData.email,
         phoneNr: profileData.phoneNr,
@@ -90,8 +89,8 @@ export function UserProvider({ children }) {
       };
 
       console.log("Structured update data:", updateData);
-      // Send the update to the backend
-      const response = await api.put("/users", updateData);
+      // Send the update to the backend using PATCH
+      const response = await api.patch("/users/update", updateData);
       console.log("Profile update response:", response.data);
 
       // Extract the address data from the response
