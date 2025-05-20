@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../api/bookingService";
 import { useEffect, useState } from "react";
+import ProgressBar from "../other/ProgressBar";
+import Checkmark from "../../assets/icons/Checkmark";
+import BookingSummaryCard from "../other/BookingSummaryCard";
 
 /*CreateListingPage:
 Page w. input form for creating a new listing */
@@ -9,16 +12,17 @@ function BookingConfirmationPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
+  const paymentMethod = localStorage.getItem("paymentMethod") || "error";
 
   async function fetchBooking() {
     try {
-      //get Listing by ID
-      const data = await getBookingById(bookingId);
-      setBooking(data);
+      //get booking and listing by ids
+      const bookingData = await getBookingById(bookingId);
+      setBooking(bookingData);
     } catch (error) {
       console.log("Error: " + error);
-      //if booking is not found, re-direct user back to home page
-      navigate("/");
+      //if booking or listing not found, navigate back to listingPage
+      navigate("/" + listingId);
     } finally {
       setLoading(false);
     }
@@ -31,46 +35,42 @@ function BookingConfirmationPage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div className=" flex flex-col m-5">
-      <div className="w-full flex flex-col gap-2 justify-center items-center p-5">
-      <div className="flex items-center justify-center w-120">
-          {/* Step 1 */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl border-1 border-gray-400">
-              1
-            </div>
-            <span className="mt-2 text-black">Listing</span>
-          </div>
-          {/* Line 1 */}
-          <div className="h-1 w-16 bg-gray-200 -mr-1 ml-1 mb-7"></div>
-          {/* Step 2 (Current) */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-gray-300 flex items-center justify-center text-2xl border-1 border-gray-400">
-              2
-            </div>
-            <span className="mt-2 text-black">Payment</span>
-          </div>
-          {/* Line 2 */}
-          <div className="h-1 w-16 bg-gray-200 -mr-5 -ml-1 mb-7"></div>
-          {/* Step 3 */}
-          <div className="flex flex-col items-center">
-            <div className="w-14 h-14 rounded-full bg-red-400 flex items-center justify-center text-2xl border-1 border-gray-400 text-white">
-              3
-            </div>
-            <span className="mt-2 text-black">Confirmation</span>
-          </div>
+    <div className=" flex flex-col items-center m-10 gap-10">
+      <ProgressBar stage={3} />
+
+      {/*confirmation message*/}
+      <div className="rounded-xl p-8 border-2 bg-green-100 border-green-200 gap-4 flex items-center text-[15px]">
+        <div className="rounded-full h-12 w-12 min-w-12 bg-green-600 flex justify-center items-center ">
+          <Checkmark className="h-9 w-9" />
         </div>
-   
-      
-        
+        <span>
+          Your reservation request has been completed. The request is pending
+          until accepted by the host.
+        </span>
       </div>
-    
-    <div>
-      {booking.id}, {booking.numberOfGuests}, {booking.endDate},{" "}
-      {booking.startDate}
+
+      {/*Booking Summary*/}
+      <BookingSummaryCard booking={booking} showStatus={false} />
+
+      {/*Payment Summary*/}
+      <div className="rounded-xl w-full border-2 border-gray-200 flex flex-col text-[14px]">
+        <div className="font-bold w-full h-15 border-2 border-gray-200 relative bottom-1 rounded-xl bg-gray-100 px-5 flex items-center">
+          Payment Details
+        </div>
+        <div className="w-full flex-col flex p-8 pt-4 gap-4">
+          <p className="flex justify-between w-full">
+            <span>Payment Method</span>
+            <span>
+              {paymentMethod === '"paypal"' ? "PayPal" : "Credit Card"}
+            </span>
+          </p>
+          <p className="flex justify-between w-full">
+            <span>Total Charged</span>
+            <span>{booking.totalPrice} SEK</span>
+          </p>
+        </div>
+      </div>
     </div>
-    </div>
-    
   );
 }
 

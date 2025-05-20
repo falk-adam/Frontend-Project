@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Menu from "../../assets/icons/Menu";
 
 const PriceFilterDropdown = ({ onFilter, initialValues }) => {
   const [open, setOpen] = useState(false);
@@ -59,7 +58,7 @@ const PriceFilterDropdown = ({ onFilter, initialValues }) => {
             ? `${minPrice}kr - ${maxPrice}kr`
             : "Filter"}
         </div>
-        <FontAwesomeIcon icon={faBars} className="text-gray-600 ml-2" />
+        <Menu className="h-5 w-5" />
       </button>
 
       {/*The filtering for max/min price is currently manually set by changing max="10000"*/}

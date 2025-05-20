@@ -141,7 +141,9 @@ function BookingCard({ listing, positionClasses }) {
       </div>
 
       {/*if user is logged in (and has roles), show button with onClick=submitBooking(), else show div with text "Log in to reserve"*/}
-      {currentUser && currentUser.roles ? (
+      {currentUser &&
+      currentUser.roles &&
+      currentUser.username !== listing.host.name ? (
         <button
           className="w-full bg-red-400 hover:bg-red-500 text-white text-[16px] font-semibold py-2 rounded-lg transition-colors cursor-pointer duration-200 h-15"
           onClick={() => submitBooking()}
@@ -150,7 +152,9 @@ function BookingCard({ listing, positionClasses }) {
         </button>
       ) : (
         <div className="w-full bg-gray-200 flex justify-center items-center text-[16px] font-semibold py-2 rounded-lg h-15">
-          Log in to Reserve
+          {currentUser?.username === listing.host.name
+            ? "Cannot reserve your own listing"
+            : "Log in to Reserve"}
         </div>
       )}
 

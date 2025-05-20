@@ -66,7 +66,8 @@ function BookingCalendar({
   const months = createBookingCalendar(availableDates);
 
   //const for styling classes used by mutliple elements
-  const classNameGrid = "w-10 h-9 flex justify-center items-center rounded-3xl";
+  const classNameGrid =
+    "w-10 h-9 flex justify-center items-center rounded-full";
 
   return (
     <div className="bg-white absolute bottom-20 -right-9 border-2 border-gray-300 rounded-lg z-5 shadow-lg flex items-center p-2 max-md:flex-col max-mobile:fixed max-mobile:w-screen max-mobile:right-0 max-mobile:my-auto max-mobile:bottom:auto">
@@ -124,7 +125,7 @@ function BookingCalendar({
           <div className="grid grid-cols-7 grid-rows-7">
             {weekdays.map((day, index) => (
               <div key={index} className={classNameGrid}>
-                {day}
+                {day.slice(0, 3)}
               </div>
             ))}
 

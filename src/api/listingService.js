@@ -34,3 +34,13 @@ export const getListingsByCapacity = async (minCapacity, maxCapacity) => {
   });
   return response.data;
 };
+
+export const getHostProfileByListingId = async (listingId) => {
+  try {
+    const response = await api.get(`listings/${listingId}/hostprofile`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching host profile: ", error);
+    throw error;
+  }
+};
