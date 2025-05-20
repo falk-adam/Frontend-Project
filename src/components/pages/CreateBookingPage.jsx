@@ -15,6 +15,10 @@ function CreateBookingPage() {
   const navigate = useNavigate();
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
+  // state for saving payment method into localStorage for later use
+  const [paymentMethod, setPaymentMethod] = useState(() => {
+    return localStorage.getItem("paymentMethod") || "creditCard";
+  });
 
   //useStates for nrOfGuest, nrOfNights and BookingDates from LocalStorage (saved to local storage by BookingCard comp. on ListinPage)
   const startDate = JSON.parse(localStorage.getItem("startDate"));
@@ -47,6 +51,12 @@ function CreateBookingPage() {
     fetchListingAndBookingData();
   }, []);
 
+  // updates the localStorage on click for method
+  const handleMethodChange = (method) => {
+    setPaymentMethod(method);
+    console.log(method);
+  };
+
   //completeBooking button function
   async function completeBooking() {
     const bookingData = {
@@ -57,7 +67,7 @@ function CreateBookingPage() {
     };
 
     localStorage.clear();
-    localStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
+    localStorage.setItem("paymentMethod", paymentMethod);
 
     try {
       const newBooking = await createBooking(bookingData);
@@ -74,11 +84,14 @@ function CreateBookingPage() {
   return (
     <div className=" flex flex-col items-center m-10 gap-10">
       <ProgressBar stage={2} />
-      <div className="flex flex-row gap-10 m-5">
-        <div className="border-2 border-gray-200 rounded-xl shadow-xlx grow w-full">
-          <PaymentForm />
+      <div className="flex flex-row w-full gap-10 m-5">
+        <div className="border-2 border-gray-200 rounded-xl w-200 shadow-xl grow">
+          <PaymentForm
+            paymentMethod={paymentMethod}
+            handleMethodChange={handleMethodChange}
+          />
         </div>
-        <div className="h-full w-10/17 flex flex-col gap-10 ">
+        <div className="h-full w-[30%] min-w-100 flex flex-col gap-10 ">
           <div className="rounded-xl shadow-xl w-full border-2 border-gray-200 flex flex-col p-8 gap-6 text-[14px]">
             <ListingCard
               listing={listing}

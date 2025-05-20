@@ -12,9 +12,7 @@ function BookingConfirmationPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
-  const paymentMethod = JSON.parse(
-    localStorage.getItem("paymentMethod") || "error"
-  );
+  const paymentMethod = localStorage.getItem("paymentMethod") || "error";
 
   async function fetchBooking() {
     try {
@@ -47,7 +45,7 @@ function BookingConfirmationPage() {
         </div>
         <span>
           Your reservation request has been completed. The request is pending
-          until accepted by the listing host
+          until accepted by the host.
         </span>
       </div>
 
