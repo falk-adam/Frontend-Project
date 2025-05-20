@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import ListingCard from "./ListingCard";
 import { reformatDateString } from "../bookingSelection/GenerateCalendarData";
 
-function BookingSummaryCard({ booking, showStatus = true }) {
+function BookingSummaryCard({ booking, showStatus = true, showUser = false }) {
   const statusColor =
     booking.status === "ACCEPTED"
       ? "green"
@@ -28,28 +28,45 @@ function BookingSummaryCard({ booking, showStatus = true }) {
       </div>
 
       <div className="w-full flex-col flex p-8 pt-4 gap-5">
-        <Link to={`/${booking.listing.id}`}>
-          <ListingCard
-            listing={booking.listing}
-            isDescriptionUnderImage={false}
-            cardSize="w-full h-40"
-            descriptionBoxWidth="w-[50%]"
-            showReviewScore={false}
-            showPricePerNight={false}
-            additionalClassesImageCard="max-w-40"
-          />
-        </Link>
+        <div className="flex flex-row justify-between w-full">
+          <Link to={`/${booking.listing.id}`} className="w-full">
+            <ListingCard
+              listing={booking.listing}
+              isDescriptionUnderImage={false}
+              cardSize="w-full h-40"
+              descriptionBoxWidth="w-[50%]"
+              showReviewScore={false}
+              showPricePerNight={false}
+              additionalClassesImageCard="max-w-40"
+            />
+          </Link>
+          {showUser && (
+            <div className="p-3 w-[30%] flex flex-col bg-gray-100 rounded-xl">
+              <span className="border-b-1 border-gray-600 uppercase text-[13px]">
+                User Details
+              </span>
+              <span className="font-bold mt-3">Username </span>
+              {booking.username}
+              <span className="font-bold mt-3">Email </span>
+              {booking.userEmail}
+            </div>
+          )}
+        </div>
 
-        <div className="flex w-full grow justify-between border-t-1 px-2 pt-5 border-gray-400">
-          <p className="flex flex-col gap-4 w-[38%]">
+        <div
+          className={`flex w-full grow justify-between border-t-1 px-2 pt-5 border-gray-400 ${
+            showUser && "h-22"
+          }`}
+        >
+          <p className="flex flex-col justify-between w-[38%]">
             <span>Check-in</span>
             <span>{reformatDateString(booking.startDate)}</span>
           </p>
-          <p className="flex flex-col gap-4 w-[38%]">
+          <p className="flex flex-col justify-between w-[38%]">
             <span>Check-out</span>
             <span>{reformatDateString(booking.endDate)}</span>
           </p>
-          <p className="flex flex-col gap-4 grow">
+          <p className="flex flex-col justify-between grow">
             <span>Guests</span>
             <span>{booking.numberOfGuests} total</span>
           </p>

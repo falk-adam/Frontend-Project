@@ -6,7 +6,7 @@ import Footer from "./components/other/Footer";
 import HomePage from "./components/pages/HomePage";
 import ListingPage from "./components/pages/ListingPage";
 import CreateBookingPage from "./components/pages/CreateBookingPage";
-import CreateListingPage from "./components/pages/CreateListingPage";
+import ListingBookingRequests from "./components/pages/ListingBookingRequests";
 import UserProfilePage from "./components/pages/UserProfilePage";
 import MyBookingsPage from "./components/pages/MyBookingsPage";
 import MyListingsPage from "./components/pages/MyListingsPage";
@@ -44,8 +44,8 @@ function AppLayout() {
             <Route path="/user/listings" element={<MyListingsPage />} />
             {/*Create Listings is accessed via MyListingsPage*/}
             <Route
-              path="/user/listings/create"
-              element={<CreateListingPage />}
+              path="/user/listings/requests"
+              element={<ListingBookingRequests />}
             />
           </Route>
           {/*Probably will not be implemented, but added it here as a placeholder*/}

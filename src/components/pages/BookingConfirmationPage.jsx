@@ -12,13 +12,16 @@ function BookingConfirmationPage() {
   const { bookingId } = useParams();
   const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
-  const paymentMethod = localStorage.getItem("paymentMethod") || "error";
+  const paymentMethod = localStorage.getItem("paymentMethod");
 
   async function fetchBooking() {
     try {
       //get booking and listing by ids
       const bookingData = await getBookingById(bookingId);
       setBooking(bookingData);
+      if (paymentMethod) {
+        localStorage.clear();
+      }
     } catch (error) {
       console.log("Error: " + error);
       //if booking or listing not found, navigate back to listingPage

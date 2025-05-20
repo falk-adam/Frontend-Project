@@ -40,3 +40,33 @@ export const deleteBooking = async (bookingId) => {
     throw error;
   }
 };
+
+export const getMyListingBookings = async () => {
+  try {
+    const response = await api.get(`/bookings/host`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching bookings current user's listings: ", error);
+    throw error;
+  }
+};
+
+export const acceptBooking = async (bookingId) => {
+  try {
+    const response = await api.patch(`/bookings/accept/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error accepting booking: ", error);
+    throw error;
+  }
+};
+
+export const rejectBooking = async (bookingId) => {
+  try {
+    const response = await api.patch(`/bookings/reject/${bookingId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error accepting booking: ", error);
+    throw error;
+  }
+};
