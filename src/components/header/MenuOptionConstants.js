@@ -14,6 +14,7 @@ const MENU_ALL_OPTIONS = [
   { text: "My User Profile", url: "/user" },
   { text: "My Bookings", url: "/user/bookings" },
   { text: "My Listings", url: "/user/listings" },
+  { text: "Booking Requests", url: "/user/listings/requests" },
   { text: "Admin Dashboard", url: "/admin" },
 ];
 
@@ -25,8 +26,8 @@ export const MENU_OPTIONS = {
   MENU_USER: MENU_ALL_OPTIONS.slice(2, 4),
 
   //options for user with role HOST
-  MENU_HOST: MENU_ALL_OPTIONS.slice(2, 5),
+  MENU_HOST: MENU_ALL_OPTIONS.slice(2, 6),
 
   //options for user with role ADMIN
-  MENU_ADMIN: MENU_ALL_OPTIONS.slice(2, 6),
+  MENU_ADMIN: MENU_ALL_OPTIONS.slice(2, 7),
 };

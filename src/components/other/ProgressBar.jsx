@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+//ProgressBar
+//shown on CreateBooking and BookingConfirmationPage
 
 const ProgressBar = ({ stage }) => {
+
   const circle = (number, name) => (
     <div className="flex flex-col items-center w-12">
       <div

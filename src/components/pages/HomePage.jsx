@@ -55,11 +55,13 @@ const HomePage = () => {
     }
   };
 
-  //execute fetch all listings, done once per loading of the page
+  //execute fetch all listings and fetch users favoite listings, done once per loading of the page
   useEffect(() => {
     //run method
     fetchAllListings();
-    fetchUserFavorites();
+    if (currentUser) {
+      fetchUserFavorites();
+    }
   }, []);
 
   // Function to handle search from Searchbar
@@ -135,6 +137,7 @@ const HomePage = () => {
     }
   };
 
+  //add/remove listing from user favorites
   async function handleAddOrRemoveFavorite(listingId) {
     try {
       const data = await addOrRemoveFavorite(listingId);
@@ -233,6 +236,8 @@ const HomePage = () => {
               key={listing.id}
               className="h-[25vw] max-lg:h-[33vw] max-md:h-[45vw] max-mobile:h-[80vw] relative"
             >
+              {/*If user is logged in, show heart icon (filled or empty depending on if listing is already in usre favorites)
+              that add/removes listing from favorites when clicked*/}
               {currentUser && (
                 <div
                   className="absolute top-4 right-4 z-10 cursor-pointer"

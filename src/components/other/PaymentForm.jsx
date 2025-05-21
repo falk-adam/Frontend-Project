@@ -10,7 +10,6 @@ function PaymentForm({handleMethodChange, paymentMethod}) {
     }));
   };
 
-  // saves card number to localStorage for later visual use (UNSAFE), all information ready for use if implemented
   const [paymentInfo, setPaymentInfo] = useState(() => ({
     cardNr: "",
     expiryDate: "",
