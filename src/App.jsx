@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
+import { UserProvider } from "./contexts/UserContext";
 import ProtectedRoute from "./components/other/ProtectedRoute";
 import Header from "./components/header/Header";
 import Footer from "./components/other/Footer";
@@ -63,7 +64,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppLayout />
+        <UserProvider>
+          <AppLayout />
+        </UserProvider>
       </AuthProvider>
     </BrowserRouter>
   );
