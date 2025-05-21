@@ -1,5 +1,8 @@
 import api from "./axios";
 
+//BookingService
+//connects to "/bookings/**"-backend endpoints
+
 //create new booking (w. current user as owner of booking)
 export const createBooking = async (bookingData) => {
   try {
@@ -11,6 +14,7 @@ export const createBooking = async (bookingData) => {
   }
 };
 
+//get a single booking by id
 export const getBookingById = async (bookingId) => {
   try {
     const response = await api.get(`/bookings/${bookingId}`);
@@ -21,6 +25,7 @@ export const getBookingById = async (bookingId) => {
   }
 };
 
+//get bookings current user
 export const getMyBookings = async () => {
   try {
     const response = await api.get(`/bookings/user`);
@@ -31,6 +36,7 @@ export const getMyBookings = async () => {
   }
 };
 
+//delete booking by id
 export const deleteBooking = async (bookingId) => {
   try {
     const response = await api.delete(`/bookings/${bookingId}`);
@@ -41,6 +47,7 @@ export const deleteBooking = async (bookingId) => {
   }
 };
 
+//get all bookings for the LISTINGS of the current user
 export const getMyListingBookings = async () => {
   try {
     const response = await api.get(`/bookings/host`);
@@ -51,6 +58,7 @@ export const getMyListingBookings = async () => {
   }
 };
 
+//accept a bookingRequest w. status pending
 export const acceptBooking = async (bookingId) => {
   try {
     const response = await api.patch(`/bookings/accept/${bookingId}`);
@@ -61,6 +69,7 @@ export const acceptBooking = async (bookingId) => {
   }
 };
 
+//reject a bookingRequest w. status pending
 export const rejectBooking = async (bookingId) => {
   try {
     const response = await api.patch(`/bookings/reject/${bookingId}`);

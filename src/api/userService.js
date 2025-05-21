@@ -1,5 +1,9 @@
 import api from "./axios";
 
+//UserService
+//connects to "/users/**"-backend endpoints
+
+//get favorited listings for current user
 export const getMyFavorites = async () => {
   try {
     const response = await api.get(`/users/favorites`);
@@ -10,6 +14,7 @@ export const getMyFavorites = async () => {
   }
 };
 
+//add or remove favorited listings for current user by listing id (if already in favorites: remove, else: add listing)
 export const addOrRemoveFavorite = async (listingId) => {
   try {
     const response = await api.patch(`/users/favorites/${listingId}`);

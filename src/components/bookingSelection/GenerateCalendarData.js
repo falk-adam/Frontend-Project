@@ -1,8 +1,8 @@
-/**
- * Calendar constans
+/***
+ * GenerateCalendarData
  * Holds constants and functions relevant for creating a calendar and handling dates
  * Used by BookingCalendar and BookingCard
- */
+ **/
 
 //names of weekdays in an array
 export const weekdays = [

@@ -6,13 +6,17 @@ import {
   rejectBooking,
 } from "../../api/bookingService";
 
-/*ListingBookingRequests:
-Page w. booking requests for users listings*/
+/***
+ * ListingBookingRequests:
+ * See all booking requests for current user's listings
+ * Uses BookingSummaryCard and adds accept/reject buttons to each card of a booking request w status "PENDING"
+ * */
 
 function ListingBookingRequests() {
   const [listingBookings, setListingBookings] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  //get all booking requests
   async function fetchMyListingBookings() {
     try {
       const data = await getMyListingBookings();
@@ -28,6 +32,7 @@ function ListingBookingRequests() {
     fetchMyListingBookings();
   }, []);
 
+  //accept booking request
   async function handleAcceptBooking(bookingId) {
     try {
       const response = await acceptBooking(bookingId);
@@ -38,6 +43,7 @@ function ListingBookingRequests() {
     }
   }
 
+  //reject booking request
   async function handleRejectBooking(bookingId) {
     try {
       const response = await rejectBooking(bookingId);
@@ -56,20 +62,22 @@ function ListingBookingRequests() {
       {listingBookings.map((booking) => (
         <div className="relative" key={booking.id}>
           <BookingSummaryCard booking={booking} showUser={true} />
-          <div className="absolute bottom-8 right-8 flex flex-col w-20 gap-2 uppercase text-[13px]">
-            <div
-              className="rounded-xl border-1 border-gray-500 bg-green-300 p-1.5 font-semibold text-center cursor-pointer"
-              onClick={() => handleAcceptBooking(booking.id)}
-            >
-              accept
+          {booking.status === "PENDING" && (
+            <div className="absolute bottom-8 right-8 flex flex-col w-20 gap-2 uppercase text-[13px]">
+              <div
+                className="rounded-xl border-1 border-gray-500 bg-green-300 p-1.5 font-semibold text-center cursor-pointer"
+                onClick={() => handleAcceptBooking(booking.id)}
+              >
+                accept
+              </div>
+              <div
+                className="uppercase rounded-xl border-1 border-gray-500 bg-red-300 p-1.5 font-semibold text-center cursor-pointer"
+                onClick={() => handleRejectBooking(booking.id)}
+              >
+                reject
+              </div>
             </div>
-            <div
-              className="uppercase rounded-xl border-1 border-gray-500 bg-red-300 p-1.5 font-semibold text-center cursor-pointer"
-              onClick={() => handleRejectBooking(booking.id)}
-            >
-              reject
-            </div>
-          </div>
+          )}
         </div>
       ))}
     </div>

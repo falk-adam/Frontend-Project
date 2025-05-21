@@ -18,7 +18,7 @@ function ListingPage() {
   const [host, setHost] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // method for getting specific listing via id
+  // method for getting specific listing and host information via listing id
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -58,18 +58,6 @@ function ListingPage() {
           />
         ))}
       </div>
-      {/*
-      
-      <img
-          className="h-full sm:col-span-2 sm:row-span-2 object-cover rounded-xl"
-          src={listing.imageUrls[0]}
-        ></img>
-        <img
-            key={index}
-            alt={`Image ${index + 1}`}
-            src={url}
-            className="w-full h-full object-cover rounded-xl hidden sm:block"
-          ></img>*/}
 
       <div className="w-full h-full flex flex-row justify-between max-md:flex-col">
         <div className="flex flex-col gap-15 w-[calc(100%-25rem)] max-md:w-full">
@@ -95,6 +83,7 @@ function ListingPage() {
             <p>{listing.description}</p>
           </div>
 
+          {/*host information*/}
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <ImageCard
@@ -118,6 +107,8 @@ function ListingPage() {
             </h3>
           </div>
         </div>
+
+        {/*BookingCard for filling in bookingDates and seeing totalprice*/}
         <div className="w-[22.6rem] pt-10 max-sm:w-full">
           <BookingCard
             listing={listing}

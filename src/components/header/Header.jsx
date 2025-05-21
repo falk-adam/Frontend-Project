@@ -1,4 +1,3 @@
-//imports
 import { Link, useLocation } from "react-router-dom";
 import HeaderMenu from "./HeaderMenu";
 import ToggleButton from "../other/ToggleButton";
@@ -9,7 +8,7 @@ import Menu from "../../assets/icons/Menu";
 /***
  * Header component
  *
- * Inludes an airbnb logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side
+ * Inludes an logo (that links to the homepage) on the left side and a dropdown navigation menu on the right side
  ****/
 
 function Header() {
