@@ -37,7 +37,7 @@ function BookingCalendar({
       setBookingPeriod(date.bookingPeriod);
 
       //else if: the clicked date is after the startDate, set clicked date as startDate
-    } else if (bookingStartDate.getTime() > date.fullDate.getTime()) {
+    } else if (bookingStartDate.getTime() >= date.fullDate.getTime()) {
       handleSetBookingStartDate(date.fullDate);
       //else if: there is not enddate, set clicked date as enddate
     } else if (bookingEndDate === 0) {
